@@ -1,8 +1,5 @@
 <?php
     session_start();
-    if($_SESSION['a77in_admin'] !== true){
-        header('Location: /404');
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,98 +56,56 @@
 <body>
     <div id="layout-wrapper">
         <?php 
-                include_once('inc-pages/nav.php');
-                include_once('inc-pages/sidebar.php');
+            include_once('inc-page/nav.php');
+            include_once('inc-page/sidebar.php');
         ?>
         <div class="main-content">
 
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">ค้นหาสมาชิก</h4>
+                    <div id="detail">
+                        <div class="row">
+                            <div class="col-10 col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mb-4 font-size-18">รายการจองทั้งหมดของ <?php echo strtoupper($branch); ?></h4>
 
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Alpha 77</a></li>
-                                        <li class="breadcrumb-item active">ค้นหา</li>
-                                    </ol>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>    
+                                        <table id="datatable" class="table dt-responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>รหัสจอง</th>
+                                                    <th>ชื่อ - สกุล</th>
+                                                    <th>เบอร์โทรศัพท์</th>
+                                                    <th>โมเดล</th>
+                                                    <th>วันที่จอง</th>
+                                                    <th>เวลาที่จอง</th>
+                                                    <th>เซลล์</th>
+                                                    <th>สถานะ</th>
+                                                    <th>จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
 
-                    <div class="row" id="search">
-                        <div class="col-5">
-                            <div class="card">
-                                <div class="card-body">
-
-                                    <h4 class="mb-2 font-size-18">ค้นหาเอเจน</h4>
-                                    <p class="card-subtitle mb-2">กรอกชื่อ หรือนามสกุล ของเอเจนเพื่อให้ระบบค้นหา</p>
-                                    <div class="mb-3">
-                                        <div class="form-group">
-                                            <input type="text" v-model="strsearch" class="form-control" placeholder="กรอกชื่อ หรือนามสกุล">
-                                        </div>
-                                        <button class="btn btn-primary waves-effect waves-light" @click="chkAgrnt">ค้นหา</button>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                <div id="detail">
-                    <div class="row">
-                        <div class="col-10">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="mb-2 font-size-18">ข้อมูลเอเจนที่ค้นหา</h4>
-
-                                    <table id="datatable" class="table dt-responsive nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>รหัส</th>
-                                                <th>ชื่อ - สกุล</th>
-                                                <th>เพศ</th>
-                                                <th>โทรศัพท์</th>
-                                                <th>เลขบัตร ปชช.</th>
-                                                <th>จังหวัด</th>
-                                                <th>เซลล์</th>
-                                                <th>ทีม</th>
-                                                <th>จัดการ</th>
-                                                <th>สถานะ</th>
-                                                <th>วันที่สมัคร</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                       
-
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                  
-
-</div>    
 
                 </div>
             </div>
@@ -207,11 +162,53 @@
 
     <!-- Datatables init -->
     <script>
-       
+       $('#datatable').DataTable({
+            "language": {
+                "paginate": {
+                    "previous": "<i class='mdi mdi-chevron-left'>",
+                    "next": "<i class='mdi mdi-chevron-right'>"
+                },
+                "lengthMenu": "แสดง _MENU_ รายชื่อ",
+                "zeroRecords": "ขออภัย ไม่มีข้อมูล",
+                "info": "หน้า _PAGE_ ของ _PAGES_",
+                "infoEmpty": "ไม่มีข้อมูล",
+                "search": "ค้นหา:",
+            },
+            "drawCallback": function () {
+                $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+            },
+            ajax: '/inbound/system/list.api.php?b=<?php echo $branch; ?>',
+            "columns" : [
+                {'data':'0'},
+                {'data':'1'},
+                {'data':'2'},
+                {'data':'3'},
+                {'data':'4'},
+                {'data':'5'},
+                {'data':'6'},
+                {'data':'7',
+                    "render": function ( data, type, full, meta ) {
+                        if(data == '0'){
+                            return '<span class="badge badge-warning">ยังไม่ทดลองขับ</span>';
+                        }else if(data == '1'){
+                            return '<span class="badge badge-primary">รับกุญแจ</span>';
+                        }else if(data == '2'){
+                            return '<span class="badge badge-success">สำเร็จ</span>';
+                        }else if(data == '10'){
+                            return '<span class="badge badge-danger">ยกเลิก</span>';
+                        }
+                    }
+                },
+                { 
+                    'data': '0',
+                    sortable: false,
+                    "render": function ( data, type, full, meta ) {
+                        return '<a href="/admin/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
+                    }
+                }
+            ],
+        });
     </script>
-
-
-    <!-- App js -->
     <script src="/assets/js/theme.js"></script>
 
 </body>

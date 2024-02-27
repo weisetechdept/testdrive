@@ -1,13 +1,12 @@
 <?php
     session_start();
- 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
-    <title>Test Drive</title>
+    <title>Alpha 77 Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="A77" name="description" />
     <meta content="A77" name="author" />
@@ -51,64 +50,54 @@
         .card {
             margin-bottom: 10px;
         }
-
-        .home-content {
-            margin-top: 60px;
-        }
     </style>
 </head>
 
 <body>
-    <?php include_once('include/nav.php'); ?>
-    <?php include_once('include/sidebar.php'); ?>
     <div id="layout-wrapper">
-
+        <?php 
+            include_once('inc-page/nav.php');
+            include_once('inc-page/sidebar.php');
+        ?>
         <div class="main-content">
 
-            <div class="page-content pt-4">
+            <div class="page-content">
                 <div class="container-fluid">
 
-                    <div class="row home-content">
-                        <div class="col-12">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">การจองทั้งหมด</h4>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="detail">
+                        <div class="row">
+                            <div class="col-10 col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mb-4 font-size-18">โควต้า</h4>
 
-                    <div class="row mt-2">
-                        <div class="col-12">
-                            <div class="card m-b-30">
-                                <div class="card-body">
-                                   
-                                    <table id="datatable" class="table dt-responsive nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>ลูกค้า</th>
-                                                <th>รถยนต์</th>
-                                                <th>วัน</th>
-                                                <th>เวลา</th>
-                                                <th>สถานะ</th>
-                                                <th>จัดการ</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                        <table id="datatable" class="table dt-responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>รหัส</th>
+                                                    <th>ชื่อ - สกุล</th>
+                                                    <th>สถานะ</th>
+                                                    <th>วันที่เพิ่ม</th>
+                                                    <th>จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                 </div>
             </div>
@@ -180,48 +169,31 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/sales/system/list.api.php',
+            ajax: '/inbound/system/quota.api.php',
             "columns" : [
+                {'data':'0'},
                 {'data':'1'},
-                {'data':'2'},
-                {'data':'3',
-                    "render": function ( data, type, full, meta ) {
-                        var d = new Date(data);
-                        var month = d.getMonth()+1;
-                        var day = d.getDate();
-                        var output = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month;
-                        return output;
-                    }
-                },
-                {'data':'4'},
-                { 
-                    'data': '5',
+                {'data':'2',
                     sortable: false,
                     "render": function ( data, type, full, meta ) {
-                        if(data == '0'){
-                            return '<span class="badge badge-soft-warning">ยังไม่ทดลองขับ</span>';
-                        } else if(data == '1') {
-                            return '<span class="badge badge-soft-primary">เบิกกุญแจ</span>';
-                        } else if(data == '2') {
-                            return '<span class="badge badge-soft-success">สำเร็จ</span>';
+                        if(data == '1') {
+                            return '<span class="badge badge-success">จัดสรร</span>';
                         } else if(data == '10') {
-                            return '<span class="badge badge-soft-danger">ยกเลิก</span>';
+                            return '<span class="badge badge-danger">เลิกจัดสรร</span>';
                         }
                     }
                 },
+                {'data':'3'},
                 { 
                     'data': '0',
                     sortable: false,
                     "render": function ( data, type, full, meta ) {
-                        return '<a href="/sales/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
+                        return '<a href="/admin/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
                     }
                 }
             ],
         });
     </script>
-
-
-    <!-- App js -->
     <script src="/assets/js/theme.js"></script>
 
 </body>
