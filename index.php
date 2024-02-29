@@ -8,6 +8,10 @@
 
     /* sales */
 
+    $router->get( '/sales/auth', function() {
+        require_once('sales/pages/auth.php');
+    });
+
     $router->get( '/sales/home', function() {
         require_once('sales/pages/home.php');
     });

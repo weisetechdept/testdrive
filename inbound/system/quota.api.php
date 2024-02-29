@@ -1,6 +1,9 @@
 <?php
     session_start();
     require_once '../../db-conn.php';
+    if($_SESSION['testdrive_admin'] !== true){
+        header('Location: /404');
+    }
     date_default_timezone_set("Asia/Bangkok");
 
     function DateThai($strDate)
@@ -32,4 +35,13 @@
         );
     }
 
+
+
     echo json_encode($api);
+    
+
+    //$user_data = $db_nms->where('id','271')->getOne('db_member');
+
+    //echo json_encode($user_data);
+
+  

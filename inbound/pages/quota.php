@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if($_SESSION['testdrive_admin'] !== true){
+        header('Location: /404');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -205,7 +208,6 @@
                         return '<button value="'+data+'" id="changeSta" class="btn btn-outline-warning btn-sm">เปลี่ยนสถานะ</button>';
                     }
                 }
-                
             ]
         });
 
@@ -224,12 +226,14 @@
                         id: id
                     })
                     .then(function (response) {
-                        swal("สำเร็จ!", "เปลี่ยนสถานะเรียบร้อยแล้ว", "success");
-                        $('#datatable').DataTable().ajax.reload();
+                        if(response.data.status == 'success'){
+                            swal("สำเร็จ!", "เปลี่ยนสถานะเรียบร้อยแล้ว", "success").then((value) => {
+                                location.reload();
+                            });
+                        } else {
+                            swal("ผิดพลาด!", "กรุณาลองใหม่อีกครั้ง", "error");
+                        }
                     })
-                    .catch(function (error) {
-                        swal("ผิดพลาด!", "กรุณาลองใหม่อีกครั้ง", "error");
-                    });
                 }
             });
         });

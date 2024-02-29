@@ -1,6 +1,10 @@
 <?php
     session_start();
     date_default_timezone_set("Asia/Bangkok");
+
+    if($_SESSION['pp_login'] !== true && $_SESSION['a77permission'] !== 'user'){
+        header('Location: /404');
+    }
  
 ?>
 <!DOCTYPE html>
@@ -320,6 +324,7 @@
                     });
                 },
                 sendData() {
+                    
                     if(testdrive.selected.branch == '0' || testdrive.selected.car == '0' || testdrive.selected.date == '0' || testdrive.selected.time == '' || testdrive.selected.fname == '' || testdrive.selected.lname == '' || testdrive.selected.tel == ''){
                         swal("โปรดตรวจสอบ","กรุณากรอกข้อมูลให้ครบถ้วน", {
                             icon: "warning",

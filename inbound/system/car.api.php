@@ -1,6 +1,9 @@
 <?php
     session_start();
     require_once '../../db-conn.php';
+    if($_SESSION['testdrive_admin'] !== true){
+        header('Location: /404');
+    }
     date_default_timezone_set("Asia/Bangkok");
 
     

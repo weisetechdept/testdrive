@@ -3,6 +3,10 @@
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
 
+    if($_SESSION['pp_login'] !== true && $_SESSION['a77permission'] !== 'user'){
+        header('Location: /404');
+    }
+
     $request = json_decode(file_get_contents("php://input"));
     $id = $request->id;
 

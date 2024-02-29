@@ -4,7 +4,11 @@
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
 
-    $id = '271';
+    if($_SESSION['pp_login'] !== true && $_SESSION['a77permission'] !== 'user'){
+        header('Location: /404');
+    }
+
+    $id = $_SESSION['sales_user'];
 
     $request = json_decode(file_get_contents('php://input'));
        
