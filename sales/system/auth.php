@@ -4,10 +4,12 @@
     
     $request = json_decode(file_get_contents('php://input'));
     $userId = $request->userId;
-    
+
     if(!empty($userId)){
-        $profile = $db_nms->where('line_usrid',$userId)->getOne('db_member');
+        $profile = $db_nms->where('line_usrid','U6f5da61c00cd349634881dafa7a6e624')->getOne('db_member');
+        echo json_encode($profile);
         //echo json_encode($profile);
+        /*
         if($profile['verify'] == '1') {
             $_SESSION['sales_user'] = $profile['id'];
             $_SESSION['pp_permission'] = $profile['status'];
@@ -18,6 +20,7 @@
             unset($_SESSION['sales_user']);
             unset($_SESSION['pp_permission']);
         }
+        */
     }
     //$db->join("tpf_point_trans p", "c.camp_id=p.poit_campaign", "LEFT");
 	//$db->where("p.poit_parent", $profile['memb_id']);
