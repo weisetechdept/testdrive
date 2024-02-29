@@ -7,7 +7,7 @@
 
     if(!empty($userId)){
         $profile = $db_nms->where('line_usrid','U6f5da61c00cd349634881dafa7a6e624')->getOne('db_member');
-        echo json_encode($profile);
+        echo json_encode(array('status' => '200'));
         //echo json_encode($profile);
         /*
         if($profile['verify'] == '1') {

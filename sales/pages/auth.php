@@ -41,6 +41,7 @@
 							axios.post('/sales/system/auth.php', {
 								userId: profile.userId,
 							}).then(response => {
+                                
 								if(response.data.status == '200'){
                                         if(response.data.permission == 'user'){
 										    window.location.href = "/sales/home";
