@@ -4,7 +4,8 @@
     
     $request = json_decode(file_get_contents('php://input'));
     $userId = $request->userId;
-    if(empty($userId)){
+    
+    if(!empty($userId)){
         $profile = $db_nms->where('line_usrid',$userId)->getOne('db_member');
         //echo json_encode($profile);
         if($profile['verify'] == '1') {
