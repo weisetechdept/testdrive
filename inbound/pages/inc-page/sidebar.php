@@ -6,6 +6,9 @@
             
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">เมนู</li>
+                <li>
+                    <a href="/admin/home" class="waves-effect"><i class="mdi mdi-view-dashboard"></i><span>ภาพรวม</span></a>
+                </li>
                 <li class="mm-active">
                     <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true"><i class="mdi mdi-format-list-numbered"></i><span>รายการจอง</span></a>
                     <ul class="sub-menu mm-collapse mm-show" aria-expanded="false" style="">

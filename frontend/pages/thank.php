@@ -9,8 +9,8 @@
     <meta charset="utf-8" />
     <title>ขอบคุณสำหรับการจองรถทดลองขับ Toyota Paragon Motor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta content="Admin" name="description" />
-    <meta content="Admin" name="author" />
+    <meta content="Toyota Paragon Motor Test Drive" name="description" />
+    <meta content="Toyota Paragon Motor Test Drive" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <link rel="shortcut icon" href="/assets/images/favicon.ico">

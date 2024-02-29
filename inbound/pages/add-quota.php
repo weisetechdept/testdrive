@@ -64,34 +64,20 @@
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <div class="row">
-                        <div class="col-10 col-md-4 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <a href="/admin/addquota" type="button" class="btn btn-primary btn-block">
-                                        <i class="mdi mdi-plus"></i> เพิ่มโควต้า
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div id="detail">
                         <div class="row">
                             <div class="col-10 col-lg-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="mb-4 font-size-18">โควต้า</h4>
+                                        <h4 class="mb-4 font-size-18">รายชื่อพนักงานขายที่ต้องการเพิ่ม</h4>
 
                                         <table id="datatable" class="table dt-responsive nowrap">
                                             <thead>
                                                 <tr>
+                                                    <th>เลือก</th>
                                                     <th>รหัส</th>
+                                                    <th width="15px">ชื่อเล่น</th>
                                                     <th>ชื่อ - สกุล</th>
-                                                    <th>จัดสรรแล้ว</th>
-                                                    <th>สถานะ</th>
-                                                    <th>วันที่เพิ่ม</th>
-                                                    <th>จัดการ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -100,12 +86,14 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td></td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        
+                                        <div id="sendQuota">
+                                            <button type="button" class="btn btn-success mt-4" @click="sendQuota" id="add-quota">
+                                                <i class="mdi mdi-plus"></i> เพิ่มโควต้า
+                                            </button>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -183,59 +171,68 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/inbound/system/quota.api.php',
+            ajax: '/inbound/system/add-quota.api.php',
             "columns" : [
-                {'data':'0'},
-                {'data':'1'},
-                {'data':'4'},
-                {'data':'2',
-                    sortable: false,
-                    "render": function ( data, type, full, meta ) {
-                        if(data == '1') {
-                            return '<span class="badge badge-success">จัดสรร</span>';
-                        } else if(data == '10') {
-                            return '<span class="badge badge-danger">เลิกจัดสรร</span>';
-                        }
+                {'data':'0',
+                    "render": function ( data, type, row, meta ) {
+                        return '<input type="checkbox" name="chk[]" value="'+data+'">';
                     }
                 },
-                {'data':'3'},
-                {'data':'0',
-                    sortable: false,
-                    "render": function ( data, type, full, meta ) {
-                        return '<button value="'+data+'" id="changeSta" class="btn btn-outline-warning btn-sm">เปลี่ยนสถานะ</button>';
-                    }
-                }
-                
+                {'data':'0'},
+                {'data':'2'},
+                {'data':'1'}
             ]
         });
 
-        $('#datatable').on('click', '#changeSta', function() { 
-            var id = $(this).val();
-            swal({
-                title: "เปลี่ยนสถานะ?",
-                text: "คุณต้องการเปลี่ยนสถานะของโควต้านี้ใช่หรือไม่?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willChange) => {
-                if (willChange) {
-                    axios.post('/inbound/system/change-quota.api.php', {
-                        id: id
-                    })
-                    .then(function (response) {
-                        swal("สำเร็จ!", "เปลี่ยนสถานะเรียบร้อยแล้ว", "success");
-                        $('#datatable').DataTable().ajax.reload();
-                    })
-                    .catch(function (error) {
-                        swal("ผิดพลาด!", "กรุณาลองใหม่อีกครั้ง", "error");
-                    });
+        var sendQuota = new Vue({
+            el: '#sendQuota',
+            data () {
+                return {
+               
                 }
-            });
+            },
+            methods: {
+                sendQuota() {
+                    var checkboxes = Array.from(document.querySelectorAll('input[name="chk[]"]:checked')).map(checkbox => checkbox.value)
+                    if(checkboxes.length == 0) {
+                        swal("เกิดข้อผิดพลาดบางอย่าง", "กรุณาเลือกสมาชิกที่ต้องการเพิ่มโควต้า", "warning");
+                        return false;
+                    } else {
+                        swal({
+                            title: "คุณแน่ใจหรือไม่?",
+                            text: "โปรดตรวจสอบข้อมูลให้ครบถ้วนรก่อนกดยืนยันการทำรายการ",
+                            icon: "warning",
+                            buttons: ["ยกเลิก", "ยืนยัน"],
+                            dangerMode: true,
+                        }).then((willSend) => {
+
+                            if (willSend) {
+                                axios.post('/inbound/system/add-quota.ins.php', {
+                                    memb_id: checkboxes
+                                }).then(function (response) {
+                                    console.log(response.data);
+                                    if(response.data.status == 'success') {
+                                        swal("สำเร็จ", response.data.message, "success").then(function() {
+                                            window.location.href = '/admin/quota';
+                                        });
+                                    } else {
+                                        swal("เกิดข้อผิดพลาดบางอย่าง", response.data.message, "error");
+                                    }
+                                })
+                            } 
+
+                        });
+
+                        
+                    }
+                    
+                }
+            }
         });
 
     </script>
     <script src="/assets/js/theme.js"></script>
+
 </body>
 
 </html>

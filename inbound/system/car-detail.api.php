@@ -16,20 +16,17 @@
 		return "$strDay $strMonthThai $strYear";
 	}
 
-    $quota = $db->get('man_quota');
+    $id = $_GET['id'];
 
-    foreach($quota as $q) {
+    $car = $db->where('car_id',$id)->getOne('car');
 
-        $user_data = $db_nms->where('id',$q['qt_user_id'])->getOne('db_member');
-        $assigned = $db->where('bk_parent',$q['qt_user_id'])->where('bk_where',1)->getValue('booking','count(*)');
-
-        $api['data'][] = array(
-            $q['qt_id'],
-            $user_data['first_name'].' ('.$user_data['nickname'].')',
-            $q['qt_status'],
-            DateThai($q['qt_datetime']),
-            $assigned
-        );
-    }
-
+    $api['detail'] = array(
+        'id' => $car['car_id'],
+        'model' => $car['car_model'],
+        'img' => $car['car_img'],
+        'branch' => $car['car_branch'],
+        'status' => $car['car_status'],
+        'datetime' => DateThai(date('Y-m-d', strtotime($car['car_datetime'])))
+    );
+    
     echo json_encode($api);

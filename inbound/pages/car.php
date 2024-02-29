@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Alpha X</title>
+    <title>Alpha 77 Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="A77" name="description" />
     <meta content="A77" name="author" />
@@ -64,21 +64,22 @@
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <div class="row">
-                        <div class="col-10 col-md-4 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <a href="/admin/addquota" type="button" class="btn btn-primary btn-block">
-                                        <i class="mdi mdi-plus"></i> เพิ่มโควต้า
-                                    </a>
+                    <div id="detail">
+                        
+                        <div class="row">
+                            <div class="col-10 col-md-4 col-lg-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="/admin/addcar" type="button" class="btn btn-primary btn-block">
+                                            <i class="mdi mdi-plus"></i> เพิ่มรถยนต์ใหม่
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="detail">
                         <div class="row">
-                            <div class="col-10 col-lg-6">
+                            <div class="col-10 col-lg-8">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="mb-4 font-size-18">โควต้า</h4>
@@ -87,8 +88,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>รหัส</th>
-                                                    <th>ชื่อ - สกุล</th>
-                                                    <th>จัดสรรแล้ว</th>
+                                                    <th>รุ่นรถยนต์</th>
+                                                    <th>สาขา</th>
                                                     <th>สถานะ</th>
                                                     <th>วันที่เพิ่ม</th>
                                                     <th>จัดการ</th>
@@ -105,7 +106,6 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        
 
                                     </div>
                                 </div>
@@ -183,59 +183,35 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/inbound/system/quota.api.php',
+            ajax: '/inbound/system/car.api.php',
             "columns" : [
                 {'data':'0'},
                 {'data':'1'},
-                {'data':'4'},
-                {'data':'2',
-                    sortable: false,
+                {'data':'3'},
+                {'data':'4',
                     "render": function ( data, type, full, meta ) {
                         if(data == '1') {
-                            return '<span class="badge badge-success">จัดสรร</span>';
-                        } else if(data == '10') {
-                            return '<span class="badge badge-danger">เลิกจัดสรร</span>';
+                            return '<span class="badge badge-soft-success">เปิดใช้งาน</span>';
+                        } else if(data == '10'){
+                            return '<span class="badge badge-soft-danger">ปิดใช้งาน</span>';
                         }
                     }
                 },
-                {'data':'3'},
-                {'data':'0',
+                {'data':'5'},
+                { 
+                    'data': '0',
                     sortable: false,
                     "render": function ( data, type, full, meta ) {
-                        return '<button value="'+data+'" id="changeSta" class="btn btn-outline-warning btn-sm">เปลี่ยนสถานะ</button>';
+                        return '<a href="/admin/cd/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
                     }
                 }
-                
-            ]
+            ],
         });
 
-        $('#datatable').on('click', '#changeSta', function() { 
-            var id = $(this).val();
-            swal({
-                title: "เปลี่ยนสถานะ?",
-                text: "คุณต้องการเปลี่ยนสถานะของโควต้านี้ใช่หรือไม่?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willChange) => {
-                if (willChange) {
-                    axios.post('/inbound/system/change-quota.api.php', {
-                        id: id
-                    })
-                    .then(function (response) {
-                        swal("สำเร็จ!", "เปลี่ยนสถานะเรียบร้อยแล้ว", "success");
-                        $('#datatable').DataTable().ajax.reload();
-                    })
-                    .catch(function (error) {
-                        swal("ผิดพลาด!", "กรุณาลองใหม่อีกครั้ง", "error");
-                    });
-                }
-            });
-        });
-
+        
     </script>
     <script src="/assets/js/theme.js"></script>
+
 </body>
 
 </html>

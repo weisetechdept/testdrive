@@ -16,19 +16,13 @@
 		return "$strDay $strMonthThai $strYear";
 	}
 
-    $quota = $db->get('man_quota');
+    $man = $db_nms->where('verify',1)->get('db_member');
 
-    foreach($quota as $q) {
-
-        $user_data = $db_nms->where('id',$q['qt_user_id'])->getOne('db_member');
-        $assigned = $db->where('bk_parent',$q['qt_user_id'])->where('bk_where',1)->getValue('booking','count(*)');
-
+    foreach ($man as $value) {
         $api['data'][] = array(
-            $q['qt_id'],
-            $user_data['first_name'].' ('.$user_data['nickname'].')',
-            $q['qt_status'],
-            DateThai($q['qt_datetime']),
-            $assigned
+            $value['id'],
+            $value['first_name'].' '.$value['last_name'],
+            $value['nickname']
         );
     }
 

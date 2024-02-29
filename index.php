@@ -36,6 +36,18 @@
 
     /* inbound */
 
+    $router->get( '/admin/auth', function() {
+        require_once('inbound/pages/auth.php');
+    });
+
+    $router->get( '/admin/addcar', function() {
+        require_once('inbound/pages/add-car.php');
+    });
+
+    $router->get( '/admin/home', function() {
+        require_once('inbound/pages/home.php');
+    });
+
     $router->get( '/admin/booking/(.*)', function($branch) {
         require_once('inbound/pages/booking.php');
     });
@@ -46,6 +58,22 @@
 
     $router->get( '/admin/quota', function() {
         require_once('inbound/pages/quota.php');
+    });
+
+    $router->get( '/admin/car', function() {
+        require_once('inbound/pages/car.php');
+    });
+
+    $router->get( '/admin/cd/(.*)', function($id) {
+        require_once('inbound/pages/car-detail.php');
+    });
+
+    $router->get( '/admin/ce/(.*)', function($id) {
+        require_once('inbound/pages/car-edit.php');
+    });
+
+    $router->get( '/admin/addquota/', function() {
+        require_once('inbound/pages/add-quota.php');
     });
 
     $router->run();
