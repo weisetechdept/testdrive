@@ -10,13 +10,13 @@
         if($profile['verify'] == '1') {
             $_SESSION['pp_login'] = true;
             $_SESSION['sales_user'] = $profile['id'];
-            $_SESSION['a77permission'] = $profile['status'];
+            $_SESSION['pp_permission'] = $profile['status'];
             echo json_encode(array('status' => '200', 'permission' => $profile['status']));
         } else {
             echo json_encode(array('status' => '400'));
             unset($_SESSION['pp_login']);
             unset($_SESSION['sales_user']);
-            unset($_SESSION['a77permission']);
+            unset($_SESSION['pp_permission']);
         }
     
     //$db->join("tpf_point_trans p", "c.camp_id=p.poit_campaign", "LEFT");

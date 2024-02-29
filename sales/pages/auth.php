@@ -41,9 +41,12 @@
 							axios.post('/sales/system/auth.php', {
 								userId: profile.userId,
 							}).then(response => {
-								console.log(response.data);
 								if(response.data.status == '200'){
-										window.location.href = "/sales/home";
+                                        if(response.data.permission == 'user'){
+										    window.location.href = "/sales/home";
+                                        } else {
+                                            window.location.href = "/404";
+                                        }
 								}
 								if(response.data.status == '400'){
 									swal("ท่านยังไม่ได้ลงทะเบียน", "โปรดติดต่อผู้ดูแลระบบ", "warning",{ 
