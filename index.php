@@ -6,6 +6,10 @@
         header('Location: /booking');
     });
 
+    $router->get( '/404', function() {
+        header('Location: /404.php');
+    });
+
     /* sales */
 
     $router->get( '/sales/login', function() {
