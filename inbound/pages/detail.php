@@ -137,6 +137,12 @@
                                                 <td>วันที่ขอจอง</td>
                                                 <td>{{ detail.create }}</td>
                                             </tr>
+                                            <tr>
+                                                <td>แหล่งที่มา</td>
+                                                <td v-if="detail.where == '1'"><span class="badge badge-soft-success">ออนไลน์</span></td>
+                                                <td v-else-if="detail.where == '2'"><span class="badge badge-soft-primary">เซลล์</span></td>
+                                                <td v-else-if="detail.where == '3'"><span class="badge badge-soft-info">TBR</span></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

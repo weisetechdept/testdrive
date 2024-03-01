@@ -26,7 +26,7 @@
         $request = json_decode(file_get_contents('php://input'));
         $branch = $request->branch;
        
-        $car = $db->where('car_branch',$branch)->where("car_status",1)->get("car");
+        $car = $db->where('car_branch',$branch)->where("car_status",1)->orderBy('car_sort','ASC')->get("car");
         if(!$car){
             $api['status'] = 'failed';
             $api['message'] = 'No car available';

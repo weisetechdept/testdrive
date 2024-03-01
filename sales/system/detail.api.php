@@ -55,6 +55,7 @@
             'bk_date' => $value['bk_date'],
             'bk_time' => customTime($value['bk_time']),
             'docs_status' => $status,
+            'where' => $value['bk_where'],
             'status' => $value['bk_status'],
             'create' => $value['bk_datetime']
         );

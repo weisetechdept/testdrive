@@ -18,6 +18,7 @@
         'car_img' => '',
         'car_branch' => $request->branch,
         'car_status' => '10',
+        'car_sort' => '99',
         'car_datetime' => date('Y-m-d H:i:s'),
     );
 

@@ -39,7 +39,15 @@
 
     foreach ($bk as $value) {
 
-        $api['data'][] = array($value['bk_id'],$value['bk_fname'],$value['car_model'],$value['bk_date'],customTime($value['bk_time']),$value['bk_status']);
+        $api['data'][] = array(
+            $value['bk_id'],
+            $value['bk_fname'],
+            $value['car_model'],
+            $value['bk_date'],
+            customTime($value['bk_time']),
+            $value['bk_status'],
+            $value['bk_where'],
+        );
     }
 
     echo json_encode($api);

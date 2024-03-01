@@ -51,7 +51,8 @@
             customTime($value['bk_time']),
             $value['bk_parent'],
             $value['bk_status'],
-            $value['bk_datetime']
+            $value['bk_datetime'],
+            $value['bk_where']
         );
     }
 

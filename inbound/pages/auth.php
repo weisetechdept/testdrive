@@ -42,7 +42,7 @@
     <div>
         <div class="container">
             <div class="row justify-content-md-center">
-                <div class="col-6">
+                <div class="col-12 col-lg-6">
                     <div class="d-flex align-items-center min-vh-100">
                         <div class="w-100 d-block bg-white shadow-lg rounded my-5">
                             <div class="row">

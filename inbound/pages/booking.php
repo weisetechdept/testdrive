@@ -84,12 +84,14 @@
                                                     <th>วันที่จอง</th>
                                                     <th>เวลาที่จอง</th>
                                                     <th>เซลล์</th>
+                                                    <th>ที่มา</th>
                                                     <th>สถานะ</th>
                                                     <th>จัดการ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -189,6 +191,17 @@
                 {'data':'4'},
                 {'data':'5'},
                 {'data':'6'},
+                {'data':'9',
+                    "render": function ( data, type, full, meta ) {
+                        if(data == '1'){
+                            return '<span class="badge badge-success">ออนไลน์</span>';
+                        }else if(data == '2'){
+                            return '<span class="badge badge-primary">เซลล์</span>';
+                        } else if(data == '3') {
+                            return '<span class="badge badge-info">TBR</span>';
+                        }
+                    }
+                },
                 {'data':'7',
                     "render": function ( data, type, full, meta ) {
                         if(data == '0'){

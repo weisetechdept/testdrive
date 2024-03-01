@@ -7,7 +7,7 @@
     });
 
     $router->get( '/404', function() {
-        header('Location: /404.php');
+        require_once('404.php');
     });
 
     /* sales */

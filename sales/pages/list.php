@@ -91,12 +91,14 @@
                                                 <th>รถยนต์</th>
                                                 <th>วัน</th>
                                                 <th>เวลา</th>
+                                                <th>ที่มา</th>
                                                 <th>สถานะ</th>
                                                 <th>จัดการ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -197,6 +199,17 @@
                     }
                 },
                 {'data':'4'},
+                {'data':'6',
+                    "render": function ( data, type, full, meta ) {
+                        if(data == '1'){
+                            return '<span class="badge badge-success">ออนไลน์</span>';
+                        }else if(data == '2'){
+                            return '<span class="badge badge-primary">เซลล์</span>';
+                        } else if(data == '3') {
+                            return '<span class="badge badge-info">TBR</span>';
+                        }
+                    }
+                },
                 { 
                     'data': '5',
                     sortable: false,
