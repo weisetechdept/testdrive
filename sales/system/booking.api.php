@@ -6,7 +6,7 @@
 
     $id = $_SESSION['sales_user'];
 
-    if($_GET['get'] == "sales"){
+    if($_GET['get'] == "sales"){ 
         
         $quota = $db->where("bk_parent",$id)->where('bk_where',2)->where("bk_status",array(0,1),'BETWEEN')->getValue("booking","count(*)");
         if($quota){
