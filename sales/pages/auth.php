@@ -38,9 +38,8 @@
 			liff.init({ liffId: "1654391121-4BxBKYO3" }, () => {
 				if (liff.isLoggedIn()) {
 						liff.getProfile().then(profile => {
-							console.log(profile);
-							/*
-							axios.post('/sales/system/auth.php', {
+							
+							axios.post('/sales/system/auth.api.php', {
 								userId: profile.userId,
 							}).then(response => {
                                 console.log(response.data);
@@ -58,7 +57,7 @@
 									);
 								}
 							});
-							*/
+							
 
 						}).catch(err => console.error(err));
 				} else {
