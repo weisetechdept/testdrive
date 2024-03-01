@@ -44,7 +44,7 @@
                     'bk_car' => $request->car,
                     'bk_date' => $request->date,
                     'bk_time' => $request->time,
-                    'bk_parent' => '271',
+                    'bk_parent' => $id,
                     'bk_where' => '2',
                     'bk_status' => 0,
                     'bk_datetime' => date('Y-m-d H:i:s')
