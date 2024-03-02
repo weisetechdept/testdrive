@@ -245,7 +245,7 @@ pointer-events: none;
     border: 1px solid #e5e5e5;
     cursor: pointer;
     transition: all 0.3s;
-    width: 120px;
+    width: 155px;
     
 }
 .select-car {
@@ -294,4 +294,7 @@ a:hover, a:active {
         margin-bottom: 0 !important;
         font-size: 28pt;
     }
+}
+.card ,.btn, input,select {
+    font-size: 14pt !important;
 }
