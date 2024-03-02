@@ -278,29 +278,18 @@
          var dedrive = new Vue({
             el: '#dedrive',
             data: {
-                detail: [],
+                detail: '',
                 file_upload: {
                     type: 0,
                     file: null
                 },
-                docs: [],
-                docs_img: [],
-                up_img: [],
+                docs: '',
+                docs_img: '',
+                up_img: '',
                 mileage: '',
                 car_update: {
                     type: 10,
                     file: null
-                }
-            },
-            computed: {
-                docs1() {
-                    return this.docs.docs1;
-                },
-                docs2() {
-                    return this.docs.docs2;
-                },
-                docs3() {
-                    return this.docs.docs3;
                 }
             },
             mounted () {
