@@ -294,7 +294,7 @@
             },
             mounted () {
                 axios.get('/sales/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
-                    console.log(response.data);
+                    console.log(response.data)
                     /*
                     dedrive.detail = response.data.detail;
                     dedrive.docs = response.data.docs;
@@ -303,7 +303,7 @@
 
                 axios.get('/sales/system/docs.api.php?u=<?php echo $id; ?>')
                 .then(response => (
-                    console.log(response.data);
+                    console.log(response.data)
                     /*
                     dedrive.docs_img = response.data.img,
                     dedrive.up_img = response.data.up_img
