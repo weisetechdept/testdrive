@@ -2,11 +2,11 @@
     session_start();
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
-
+/*
     if($_SESSION['pp_login'] !== true){
         header('Location: /404');
     }
-
+*/
     function DateThai($strDate)
 	{
 		$strYear = date("Y",strtotime($strDate))+543;
