@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Alpha 77 Admin</title>
+    <title>Alpha X Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="A77" name="description" />
     <meta content="A77" name="author" />
@@ -30,6 +30,8 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/theme.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="/assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
     <style>
         body {
             font-family: 'Chakra Petch', sans-serif;
@@ -53,6 +55,17 @@
         .card {
             margin-bottom: 10px;
         }
+        .fc-title {
+            color: #fff;
+        }
+        @media screen and (max-width: 600px){
+            .pr1 {
+                padding-right: 0.25rem !important;
+            }
+            .pl1 {
+                padding-left: 0.25rem !important;
+            }
+        }
     </style>
 </head>
 
@@ -68,7 +81,7 @@
                 <div class="container-fluid">
                     <div class="row">
 
-                        <div class="col-md-6 col-xl-3">
+                        <div class="col-6 col-xl-3 pr1">
                             <div class="card bg-primary border-primary">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -86,9 +99,8 @@
                             </div>
                         </div>
 
-                        
 
-                        <div class="col-md-6 col-xl-3">
+                        <div class="col-6 col-xl-3 pl1">
                             <div class="card bg-success border-success">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -106,7 +118,43 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-xl-3">
+                        <div class="col-6 col-xl-3 pr1">
+                            <div class="card bg-info border-info">
+                                <div class="card-body">
+                                    <div class="mb-1">
+                                        <h5 class="card-title mb-0 text-white">สำนักงานใหญ่</h5>
+                                    </div>
+                                    <div class="row d-flex align-items-center mb-0">
+                                        <div class="col-8">
+                                            <h2 class="d-flex align-items-center mb-0 text-white">
+                                                {{ summary.ho }}
+                                            </h2>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-xl-3 pl1">
+                            <div class="card bg-info border-info">
+                                <div class="card-body">
+                                    <div class="mb-1">
+                                        <h5 class="card-title mb-0 text-white">สาขา ตลาดไท</h5>
+                                    </div>
+                                    <div class="row d-flex align-items-center mb-0">
+                                        <div class="col-8">
+                                            <h2 class="d-flex align-items-center mb-0 text-white">
+                                                {{ summary.tm }}
+                                            </h2>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-xl-3 pr1">
                             <div class="card bg-danger border-danger">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -127,43 +175,29 @@
                     </div>
 
                     <div class="row">
-
-                        <div class="col-md-6 col-xl-3">
-                            <div class="card bg-info border-info">
+                        <div class="col-12 col-lg-6">
+                            <div class="card m-b-30">
                                 <div class="card-body">
-                                    <div class="mb-1">
-                                        <h5 class="card-title mb-0 text-white">สำนักงานใหญ่</h5>
+                                    <div class="row ml-1">
+                                        <h5>ปฏิทินการจอง</h5>
                                     </div>
-                                    <div class="row d-flex align-items-center mb-0">
-                                        <div class="col-8">
-                                            <h2 class="d-flex align-items-center mb-0 text-white">
-                                                {{ summary.ho }}
-                                            </h2>
+                                    
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <select class="form-control mb-2">
+                                                <option value="0">= เลือกรุ่นรถยนต์ =</option>
+                                            </select>
                                         </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div id='calendar' class="col-lg-12 mt-1 mt-lg-0"></div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6 col-xl-3">
-                            <div class="card bg-info border-info">
-                                <div class="card-body">
-                                    <div class="mb-1">
-                                        <h5 class="card-title mb-0 text-white">สาขา ตลาดไท</h5>
-                                    </div>
-                                    <div class="row d-flex align-items-center mb-0">
-                                        <div class="col-8">
-                                            <h2 class="d-flex align-items-center mb-0 text-white">
-                                                {{ summary.tm }}
-                                            </h2>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div> 
 
                 </div>
                     
@@ -215,6 +249,11 @@
     <script src="/assets/plugins/datatables/pdfmake.min.js"></script>
     <script src="/assets/plugins/datatables/vfs_fonts.js"></script>
 
+    <script src="/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/assets/plugins/moment/moment.js"></script>
+    <script src='/assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -233,6 +272,31 @@
                 });
             }
         });
+
+   
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();
+        var currentMonth = currentDate.getMonth() + 1;
+        var currentDay = currentDate.getDate();
+        var formattedDate = currentYear + '-' + currentMonth + '-' + currentDay;
+
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                defaultDate: formattedDate,
+                editable: true,
+                eventLimit: true,
+                events: []
+            });
+
+            axios.get('/inbound/system/event.api.php').then(function(response) {
+                var events = response.data.events;
+                for (var i = 0; i < events.length; i++) {
+                    $('#calendar').fullCalendar('renderEvent', events[i], true);
+                }
+
+            });
+        });
+        
     </script>
     <script src="/assets/js/theme.js"></script>
 

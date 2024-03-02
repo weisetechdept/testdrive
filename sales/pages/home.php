@@ -71,6 +71,9 @@
         .home-content {
             margin-top: 50px;
         }
+        .fc-title {
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -106,7 +109,7 @@
                         </div>
                     </div>
 
-                    <div class="row" style="display: none;">
+                    <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="card-body">
@@ -221,6 +224,29 @@
                     testdrive.sales.quota = response.data.sales.quota;
                 });
             }
+        });
+
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();
+        var currentMonth = currentDate.getMonth() + 1;
+        var currentDay = currentDate.getDate();
+        var formattedDate = currentYear + '-' + currentMonth + '-' + currentDay;
+
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                defaultDate: formattedDate,
+                editable: true,
+                eventLimit: true,
+                events: []
+            });
+
+            axios.get('/inbound/system/event.api.php').then(function(response) {
+                var events = response.data.events;
+                for (var i = 0; i < events.length; i++) {
+                    $('#calendar').fullCalendar('renderEvent', events[i], true);
+                }
+
+            });
         });
     </script>
 
