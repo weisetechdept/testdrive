@@ -3,7 +3,7 @@
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
 
-    if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'user'){
+    if($_SESSION['pp_login'] !== true){
         header('Location: /404');
     }
 
