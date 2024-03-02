@@ -223,6 +223,10 @@
                     }
                 }
             ],
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'print'
+            ]
         });
     </script>
     <script src="/assets/js/theme.js"></script>

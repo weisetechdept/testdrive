@@ -42,6 +42,8 @@
 
     foreach ($bk as $value) {
 
+        $sales = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+
         $api['data'][] = array(
             $value['bk_id'],
             $value['bk_fname'].' '.$value['bk_lname'],
@@ -49,7 +51,7 @@
             $value['car_model'],
             $value['bk_date'],
             customTime($value['bk_time']),
-            $value['bk_parent'],
+            $sales['first_name'].' ('.$sales['nickname'].')',
             $value['bk_status'],
             $value['bk_datetime'],
             $value['bk_where']
