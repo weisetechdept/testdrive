@@ -34,5 +34,13 @@
 
     $api = array('all' => $ho+$tm,'ho' => $ho, 'tm' => $tm,'success' => $success,'cancel' => $cancel);
 
+    $car = $db->where('car_status',1)->get('car');
+    foreach($car as $c){
+        $api['car'][] = array(
+            'id' => $c['car_id'],
+            'name' => '('.strtoupper($c['car_branch']).') '.$c['car_model'],
+        );
+    }
+
     echo json_encode($api);
     

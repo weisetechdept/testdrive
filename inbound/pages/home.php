@@ -184,8 +184,9 @@
                                     
                                     <div class="row">
                                         <div class="col-12">
-                                            <select class="form-control mb-2">
+                                            <select v-model="select.car" class="form-control mb-2">
                                                 <option value="0">= เลือกรุ่นรถยนต์ =</option>
+                                                <option v-for="c in car" :value="c.id">{{ c.name }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -261,40 +262,46 @@
 
     <!-- Datatables init -->
     <script>
-       var dedrive = new Vue({
+
+        var dedrive = new Vue({
             el: '#dedrive',
             data: {
-                summary: ''
+                summary: '',
+                car: [],
+                select: {
+                    car: 0
+                }
             },
             mounted () {
                 axios.get('/inbound/system/home.api.php').then(function(response) {
                     dedrive.summary = response.data;
+                    dedrive.car = response.data.car;
                 });
-            }
-        });
 
-   
-        var currentDate = new Date();
-        var currentYear = currentDate.getFullYear();
-        var currentMonth = currentDate.getMonth() + 1;
-        var currentDay = currentDate.getDate();
-        var formattedDate = currentYear + '-' + currentMonth + '-' + currentDay;
+                var currentDate = new Date();
+                var currentYear = currentDate.getFullYear();
+                var currentMonth = currentDate.getMonth() + 1;
+                var currentDay = currentDate.getDate();
+                var formattedDate = currentYear + '-' + currentMonth + '-' + currentDay;
 
-        $(document).ready(function() {
-            $('#calendar').fullCalendar({
-                defaultDate: formattedDate,
-                editable: true,
-                eventLimit: true,
-                events: []
-            });
-
-            axios.get('/inbound/system/event.api.php').then(function(response) {
-                var events = response.data.events;
-                for (var i = 0; i < events.length; i++) {
-                    $('#calendar').fullCalendar('renderEvent', events[i], true);
+                $('#calendar').fullCalendar({
+                    defaultDate: formattedDate,
+                    editable: true,
+                    eventLimit: true,
+                    events: []
+                });
+            },
+            watch: {
+                function() {
+                    var scar = dedrive.select.car;
+                    axios.get('/inbound/system/event.api.php?c='+scar).then(function(response) {
+                        var events = response.data.events;
+                        for (var i = 0; i < events.length; i++) {
+                            $('#calendar').fullCalendar('renderEvent', events[i], true);
+                        }
+                    });
                 }
-
-            });
+            },
         });
         
     </script>
