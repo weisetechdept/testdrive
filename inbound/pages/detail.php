@@ -292,6 +292,17 @@
                     file: null
                 }
             },
+            computed: {
+                docs1() {
+                    return this.docs.docs1;
+                },
+                docs2() {
+                    return this.docs.docs2;
+                },
+                docs3() {
+                    return this.docs.docs3;
+                }
+            },
             mounted () {
                 axios.get('/sales/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
                     dedrive.detail = response.data.detail;
