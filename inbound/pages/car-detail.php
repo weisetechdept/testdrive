@@ -223,7 +223,7 @@
 
     <script>
          var dedrive = new Vue({
-            el: '#dedrive',
+            el: '#dedrive', 
             data: {
                 detail: '',
                 file_upload: {
