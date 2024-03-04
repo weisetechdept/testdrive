@@ -95,7 +95,7 @@
                     </div>
 
                     <div class="row mt-2">
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-6 col-md-12">
                             <div class="card m-b-30">
                                 <div class="card-body">
                                     <h4 class="card-title">ข้อมูล</h4>
@@ -107,7 +107,7 @@
                                             </tr>
                                             <tr>
                                                 <td>ชื่อ - นามสกุล</td>
-                                                <td>{{ detail.model }}</td>
+                                                <td>{{ detail.name }}</td>
                                             </tr>
                                             <tr>
                                                 <td>สาขา</td>
@@ -119,18 +119,34 @@
                                             </tr>
                                             <tr>
                                                 <td>รถยนต์</td>
-                                                <td> </td>
+                                                <td>{{ detail.model }}</td>
                                             </tr>
                                             <tr>
                                                 <td>วันที่ขอย้ายการจอง</td>
-                                                <td> </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d'); ?>" @change="getTime">
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>เวลาขอย้ายการจอง</td>
-                                                <td> </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <select id="time" name="time" v-model="selected.time" class="form-control" disabled>
+                                                            <option value="0">= เลือกเวลา =</option>
+                                                            <option v-for="t in bk.time" v-if="t.status == 1" :value="t.id">{{ t.time }}</option>
+                                                            <option v-for="t in bk.time" v-if="t.status == 0" :value="t.id" disabled>{{ t.time }} (ไม่ว่าง)</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
                                             </tr>
+
+                                           
                                         </tbody>
                                     </table>
+
+                                    <buttons class="btn btn-success mt-3 ml-2" @click="edtData">ย้ายการจอง</buttons>
                                 </div>
                             </div>
                         </div>
@@ -190,20 +206,69 @@
          var dedrive = new Vue({
             el: '#dedrive', 
             data: {
-                detail: '',
-                file_upload: {
-                    file: null,
+                detail: {
+                    id: '',
+                    model: '',
+                    branch: '',
+                    car: '',
+                    name: ''
                 },
-                id: '<?php echo $id; ?>'
-
+                selected: {
+                    date: '',
+                    time: ''
+                },
+                bk: {
+                    time: []
+                }
             },
             mounted () {
-                axios.get('/inbound/system/car-detail.api.php?id=<?php echo $id; ?>').then(function(response) {
-                    dedrive.detail = response.data.detail;
+                axios.get('/inbound/system/move-bk.api.php?id=<?php echo $id; ?>&get=data').then(function(response) {
+                    dedrive.detail.id = response.data.id;
+                    dedrive.detail.name = response.data.name;
+                    dedrive.detail.branch = response.data.branch;
+                    dedrive.detail.model = response.data.model;
+                    dedrive.detail.car = response.data.model_id;
                 });
             },
             methods: {
-                
+                getTime(e) {
+                    document.getElementById('time').disabled = false;
+                    axios.post('/inbound/system/move-bk.api.php?get=time', {
+                        date: dedrive.selected.date,
+                        car: dedrive.detail.car
+                    }).then(function(response) {
+                        console.log(response.data);
+                        dedrive.bk.time = response.data.time;
+                        dedrive.selected.time = '0';
+                    });
+                },
+                edtData() {
+                    if(dedrive.selected.time == '0'){
+                        swal("เกิดข้อผิดพลาด","กรุณาเลือกวันที่ และเวลาที่ต้องการย้าย", {
+                            icon: "warning",
+                        });
+                        return;
+                    } else {
+                        axios.post('/inbound/system/move-bk.api.php?get=edit', {
+                            id: dedrive.detail.id,
+                            date: dedrive.selected.date,
+                            time: dedrive.selected.time
+                        }).then(function(response) {
+                            if(response.data.status == 'success'){
+                                swal("สำเร็จ", "ย้ายการจองสำเร็จ", {
+                                    icon: "success",
+                                }).then((value) => {
+                                    window.location.href = '/admin/de/<?php echo $id; ?>';
+                                });
+                            } else if(response.data.status == 'failed') {
+                                swal("เกิดข้อผิดพลาด", "ไม่สามารถย้ายการจองได้", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+                    }
+                    
+                }
             }
         });
 

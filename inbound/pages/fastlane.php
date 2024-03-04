@@ -67,9 +67,9 @@
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <div id="detail">
+                    <div id="testdrive">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12 col-md-6">
                             <div class="card">
                                 <div class="card-body">
 
@@ -122,7 +122,7 @@
                                     <div class="mb-3">
                                         <div class="form-group">
                                             <label for="date">วันที่จอง</label>
-                                            <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>" max="<?php echo date('Y-m-d', strtotime('+7 days')); ?>" @change="getTime" disabled>
+                                            <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d') ?>" @change="getTime" disabled>
                                         </div>
 
                                         <div class="form-group">
@@ -216,17 +216,6 @@
                     tel:''
                 }
             },
-            mounted: function() {
-
-                var currentDate = new Date();
-                currentDate.setDate(currentDate.getDate() + 7);
-                var year = currentDate.getFullYear();
-                var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-                var day = currentDate.getDate().toString().padStart(2, '0');
-                var maxDate = year + '-' + month + '-' + day;
-                document.getElementById('date').setAttribute('max', maxDate);
-
-            },
             methods: {
                 getCar(e) {
                     axios.post('/inbound/system/booking.api.php?get=car', {
@@ -234,7 +223,6 @@
                     }).then(function(response) {
                         
                         testdrive.bk.car = response.data.car;
-                        
                         document.getElementById('car').disabled = false;
 
                         testdrive.selected.car = '0';
@@ -294,7 +282,7 @@
                                 swal("สำเร็จ", "เพิ่มสมาชิกเรียบร้อย", "success",{ 
                                     button: "ตกลง"
                                 }).then((value) => {
-                                    window.location.href = "/sales/de/"+response.data.id;
+                                    window.location.href = "/admin/de/"+response.data.id;
                                 });
                                 
                             } else if(response.data.status == 'failed'){

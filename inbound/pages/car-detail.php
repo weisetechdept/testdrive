@@ -170,6 +170,36 @@
                         </div>
                     </div>
 
+                    <div class="row mt-2">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card m-b-30">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h4 class="card-title mb-0">ประวัติการใช้งานรถยนต์</h4>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless mb-0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>วันที่</th>
+                                                    <th>เลขไมล์</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="h in detail.history">
+                                                    <td>{{ h.date }}</td>
+                                                    <td>{{ h.mileage }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>

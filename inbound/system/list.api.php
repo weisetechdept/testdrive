@@ -42,7 +42,12 @@
 
     foreach ($bk as $value) {
 
-        $sales = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+        if($value['bk_parent'] == 'TBR'){
+            $owner = 'TBR Fastlane';
+        } else {
+            $parent = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+            $owner = $parent['first_name'].' ('.$parent['nickname'].')';
+        }
 
         $api['data'][] = array(
             $value['bk_id'],
@@ -51,7 +56,7 @@
             $value['car_model'],
             $value['bk_date'],
             customTime($value['bk_time']),
-            $sales['first_name'].' ('.$sales['nickname'].')',
+            $owner,
             $value['bk_status'],
             $value['bk_datetime'],
             $value['bk_where']

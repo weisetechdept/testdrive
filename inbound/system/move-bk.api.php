@@ -1,35 +1,31 @@
-<?php
-
+<?php 
     session_start();
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
 
+    $id = $_GET['id'];
 
-    if($_GET['get'] == "car"){
+    if($_GET['get'] == "data"){
 
-        $request = json_decode(file_get_contents('php://input'));
-        $branch = $request->branch;
-       
-        $car = $db->where('car_branch',$branch)->where("car_status",1)->orderBy('car_sort','ASC')->get("car");
-        if(!$car){
-            $api['status'] = 'failed';
-            $api['message'] = 'No car available';
-            echo json_encode($api);
-            exit();
-        }else{
-            foreach($car as $c){
-                $api['car'][] = array(
-                    'id' => $c['car_id'],
-                    'model' => $c['car_model'],
-                    'img' => $c['car_img']
-                );
-            }
+        $db->join('car c','c.car_id = b.bk_car','LEFT');
+        $move = $db->where('bk_id',$id)->get('booking b');
+
+        foreach($move as $m){
+
+            $api = array(
+                'id' => $m['bk_id'],
+                'name' => $m['bk_fname'].' '.$m['bk_lname'],
+                'branch' => $m['car_branch'],
+                'model' => $m['car_model'],
+                'model_id' => $m['car_id'],
+                'date' => $m['bk_date'],
+                'time' => $m['bk_time']
+            );
         }
-       
-        
     }
 
     if($_GET['get'] == "time"){
+
         $i = 1;
         $request = json_decode(file_get_contents('php://input'));
         $date = $request->date;
@@ -66,19 +62,30 @@
         //$api = array($date,$car);
     }
 
-    if($_GET['get'] == "carInfo"){
+    if($_GET['get'] == "edit"){
 
         $request = json_decode(file_get_contents('php://input'));
-        $car = $request->car;
-        
-        $car = $db->where("car_id",$car)->getOne("car");
-        $api['car'] = array(
-            'id' => $car['car_id'],
-            'model' => $car['car_model']
+        $id = $request->id;
+        $date = $request->date;
+        $time = $request->time;
+
+        $data = array(
+            'bk_date' => $date,
+            'bk_time' => $time
         );
-        
+        $move = $db->where('bk_id',$id)->update('booking',$data);
+        if($move){
+            $api = array(
+                'status' => 'success',
+                'message' => 'Booking has been moved'
+            );
+        }else{
+            $api = array(
+                'status' => 'failed',
+                'message' => 'Booking cannot be moved'
+            );
+        }
+
     }
 
     echo json_encode($api);
-
-    

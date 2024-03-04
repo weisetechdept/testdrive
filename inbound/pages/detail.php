@@ -164,7 +164,7 @@
                                         <button v-if="detail.status == '0'" type="button" class="btn btn-info waves-effect waves-light" @click="giveKey">จ่ายกุญแจแล้ว</button>
                                         <button v-if="detail.status == '1'" type="button" class="btn btn-success waves-effect waves-light" @click="reKey">คืนกุญแจแล้ว</button>
                                         <button v-if="detail.status == '0'" type="button" class="btn btn-danger waves-effect waves-light" @click="deBooking">ยกเลิกการจอง</button>
-                                        <button href="/admin/detail/mv" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light">ย้ายการจอง</button>
+                                        <a href="/admin/detail/mv/<?php echo $id; ?>" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light">ย้ายการจอง</a>
                                     </div>
                                     
                                 </div>

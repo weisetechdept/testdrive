@@ -47,7 +47,12 @@
 
     foreach ($bk as $value) {
 
-        $parent = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+        if($value['bk_parent'] == 'TBR'){
+            $owner = 'TBR Fastlane';
+        } else {
+            $parent = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+            $owner = $parent['first_name'].' ('.$parent['nickname'].')';
+        }
 
         $api['detail'] = array(
             'id' => $value['bk_id'],
@@ -58,7 +63,7 @@
             'bk_time' => customTime($value['bk_time']),
             'docs_status' => $status,
             'where' => $value['bk_where'],
-            'parent' => $parent['first_name'].' ('.$parent['nickname'].')',
+            'parent' => $owner,
             'status' => $value['bk_status'],
             'create' => $value['bk_datetime']
         );
