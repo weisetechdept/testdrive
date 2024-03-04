@@ -184,7 +184,7 @@
                                     
                                     <div class="row">
                                         <div class="col-12">
-                                            <select v-model="select.car" class="form-control mb-2">
+                                            <select v-model="select.car" @change="getEvent" class="form-control mb-2">
                                                 <option value="0">= เลือกรุ่นรถยนต์ =</option>
                                                 <option v-for="c in car" :value="c.id">{{ c.name }}</option>
                                             </select>
@@ -290,18 +290,18 @@
                     eventLimit: true,
                     events: []
                 });
+
+                
+                
             },
-            watch: {
-                function() {
-                    var scar = dedrive.select.car;
-                    axios.get('/inbound/system/event.api.php?c='+scar).then(function(response) {
-                        var events = response.data.events;
-                        for (var i = 0; i < events.length; i++) {
-                            $('#calendar').fullCalendar('renderEvent', events[i], true);
-                        }
+            methods: {
+                getEvent(){
+                    axios.get('/inbound/system/event.api.php?c='+dedrive.select.car).then(function(response) {
+                        $('#calendar').fullCalendar('removeEvents');
+                        $('#calendar').fullCalendar('addEventSource', response.data);
                     });
                 }
-            },
+            }
         });
         
     </script>

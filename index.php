@@ -48,6 +48,10 @@
 
     /* inbound */
 
+    $router->get( '/admin/fastlane', function() {
+        require_once('inbound/pages/fastlane.php');
+    });
+
     $router->get( '/admin/auth', function() {
         require_once('inbound/pages/auth.php');
     });
@@ -84,8 +88,16 @@
         require_once('inbound/pages/car-edit.php');
     });
 
+    $router->get( '/admin/detail/mv/(.*)', function($id) {
+        require_once('inbound/pages/move-booking.php');
+    });
+
     $router->get( '/admin/addquota/', function() {
         require_once('inbound/pages/add-quota.php');
+    });
+
+    $router->get( '/admin/report/', function() {
+        require_once('inbound/pages/report.php');
     });
 
     $router->run();

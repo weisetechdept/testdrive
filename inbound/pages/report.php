@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Alpha 77 Admin</title>
+    <title>Alpha X Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="A77" name="description" />
     <meta content="A77" name="author" />
@@ -68,34 +68,47 @@
                 <div class="container-fluid">
 
                     <div id="detail">
-                        
                         <div class="row">
-                            <div class="col-10 col-md-4 col-lg-3">
+                            <div class="col-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <a href="/admin/addcar" type="button" class="btn btn-primary btn-block">
-                                            <i class="mdi mdi-plus"></i> เพิ่มรถยนต์ใหม่
-                                        </a>
+                                        <h4 class="mb-4 font-size-18">รายการจองทั้งหมด</h4>
+
+                                        <div class="form-row">
+                                          <div class="col-md-6 mb-3">
+                                            <label>ตั้งแต่วันที่</label>
+                                            <input type="date" id="formdate" class="form-control" value="<?php echo date('Y-m-01'); ?>">
+                                          </div>
+                                          <div class="col-md-6 mb-3">
+                                            <label>ถึงวันที่</label>
+                                            <input type="date" id="todate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                                          </div>
+                                        </div>
+                                        <button class="btn btn-primary" id="search">ค้นหา</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-10 col-lg-8">
+                            <div class="col-10 col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="mb-4 font-size-18">โควต้า</h4>
+                                        <h4 class="mb-4 font-size-18">รายการจองทั้งหมดของ <?php echo strtoupper($branch); ?></h4>
+                                        
 
                                         <table id="datatable" class="table dt-responsive nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>รหัส</th>
-                                                    <th>รุ่นรถยนต์</th>
-                                                    <th>สาขา</th>
-                                                    <th>เลขไมล์</th>
+                                                    <th>รหัสจอง</th>
+                                                    <th>ชื่อ - สกุล</th>
+                                                    <th>เบอร์โทรศัพท์</th>
+                                                    <th>โมเดล</th>
+                                                    <th>วันที่จอง</th>
+                                                    <th>เวลาที่จอง</th>
+                                                    <th>เซลล์</th>
+                                                    <th>ที่มา</th>
                                                     <th>สถานะ</th>
-                                                    <th>วันที่เพิ่ม</th>
                                                     <th>จัดการ</th>
                                                 </tr>
                                             </thead>
@@ -108,9 +121,27 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
                                             </tbody>
+                                            <tfoot>
+          <tr>
+          <th>รหัสจอง</th>
+                                                    <th>ชื่อ - สกุล</th>
+                                                    <th>เบอร์โทรศัพท์</th>
+                                                    <th>โมเดล</th>
+                                                    <th>วันที่จอง</th>
+                                                    <th>เวลาที่จอง</th>
+                                                    <th>เซลล์</th>
+                                                    <th>ที่มา</th>
+                                                    <th>สถานะ</th>
+                                                    <th>จัดการ</th>
+          </tr>
+        </tfoot>
                                         </table>
+                                        
 
                                     </div>
                                 </div>
@@ -173,48 +204,79 @@
 
     <!-- Datatables init -->
     <script>
-       $('#datatable').DataTable({
-            "language": {
-                "paginate": {
-                    "previous": "<i class='mdi mdi-chevron-left'>",
-                    "next": "<i class='mdi mdi-chevron-right'>"
-                },
-                "lengthMenu": "แสดง _MENU_ รายชื่อ",
-                "zeroRecords": "ขออภัย ไม่มีข้อมูล",
-                "info": "หน้า _PAGE_ ของ _PAGES_",
-                "infoEmpty": "ไม่มีข้อมูล",
-                "search": "ค้นหา:",
+    $('#datatable').DataTable({
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
             },
-            "drawCallback": function () {
-                $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-            },
-            ajax: '/inbound/system/car.api.php',
-            "columns" : [
-                {'data':'0'},
-                {'data':'1'},
-                {'data':'3'},
-                {'data':'6'},
-                {'data':'4',
-                    "render": function ( data, type, full, meta ) {
-                        if(data == '1') {
-                            return '<span class="badge badge-soft-success">เปิดใช้งาน</span>';
-                        } else if(data == '10'){
-                            return '<span class="badge badge-soft-danger">ปิดใช้งาน</span>';
-                        }
-                    }
-                },
-                {'data':'5'},
-                { 
-                    'data': '0',
-                    sortable: false,
-                    "render": function ( data, type, full, meta ) {
-                        return '<a href="/admin/cd/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
+            "lengthMenu": "แสดง _MENU_ รายชื่อ",
+            "zeroRecords": "ขออภัย ไม่มีข้อมูล",
+            "info": "หน้า _PAGE_ ของ _PAGES_",
+            "infoEmpty": "ไม่มีข้อมูล",
+            "search": "ค้นหา:",
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        },
+        ajax: '/inbound/system/report.api.php',
+        "columns" : [
+            {'data':'0'},
+            {'data':'1'},
+            {'data':'2'},
+            {'data':'3'},
+            {'data':'4'},
+            {'data':'5'},
+            {'data':'6'},
+            {'data':'9',
+                "render": function ( data, type, full, meta ) {
+                    if(data == '1'){
+                        return '<span class="badge badge-success">ออนไลน์</span>';
+                    }else if(data == '2'){
+                        return '<span class="badge badge-primary">เซลล์</span>';
+                    } else if(data == '3') {
+                        return '<span class="badge badge-info">TBR</span>';
                     }
                 }
-            ],
-        });
-
+            },
+            {'data':'7',
+                "render": function ( data, type, full, meta ) {
+                    if(data == '0'){
+                        return '<span class="badge badge-warning">ยังไม่ทดลองขับ</span>';
+                    }else if(data == '1'){
+                        return '<span class="badge badge-primary">รับกุญแจ</span>';
+                    }else if(data == '2'){
+                        return '<span class="badge badge-success">สำเร็จ</span>';
+                    }else if(data == '10'){
+                        return '<span class="badge badge-danger">ยกเลิก</span>';
+                    }
+                }
+            },
+            { 
+                'data': '0',
+                sortable: false,
+                "render": function ( data, type, full, meta ) {
+                    return '<a href="/admin/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
+                }
+            }
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'print'
+        ],
         
+    });
+
+
+    $('#search').on('click', function(){
+        // Your code for handling the search button click event goes here
+        var formdate = $('#formdate').val();
+        var todate = $('#todate').val();
+        $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?formdate=' + formdate + '&todate=' + todate).load(function() {
+            swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+formdate+" ถึง "+todate+" สำเร็จ!", "success");
+        });
+    });
+   
     </script>
     <script src="/assets/js/theme.js"></script>
 

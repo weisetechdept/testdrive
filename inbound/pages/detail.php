@@ -127,6 +127,10 @@
                                                 <td>{{ detail.bk_time }}</td>
                                             </tr>
                                             <tr>
+                                                <td>เซลล์ผู้ดูแล</td>
+                                                <td>{{ detail.parent }}</td>
+                                            </tr>
+                                            <tr>
                                                 <td>สถานะ</td>
                                                 <td v-if="detail.status == '0'"><span class="badge badge-soft-warning">ยังไม่ทดลองขับ</span></td>
                                                 <td v-else-if="detail.status == '1'"><span class="badge badge-soft-primary">เบิกกุญแจ</span></td>
@@ -160,6 +164,7 @@
                                         <button v-if="detail.status == '0'" type="button" class="btn btn-info waves-effect waves-light" @click="giveKey">จ่ายกุญแจแล้ว</button>
                                         <button v-if="detail.status == '1'" type="button" class="btn btn-success waves-effect waves-light" @click="reKey">คืนกุญแจแล้ว</button>
                                         <button v-if="detail.status == '0'" type="button" class="btn btn-danger waves-effect waves-light" @click="deBooking">ยกเลิกการจอง</button>
+                                        <button href="/admin/detail/mv" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light">ย้ายการจอง</button>
                                     </div>
                                     
                                 </div>
@@ -293,7 +298,7 @@
                 }
             },
             mounted () {
-                axios.get('/sales/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
+                axios.get('/inbound/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
          
                     
                     dedrive.detail = response.data.detail;

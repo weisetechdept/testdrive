@@ -17,10 +17,16 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="/admin/fastlane" class="waves-effect"><i class="mdi mdi-car"></i><span>จองด่วน</span></a>
+                </li>
+                <li>
                     <a href="/admin/car" class="waves-effect"><i class="mdi mdi-car"></i><span>รถทดลองขับ</span></a>
                 </li>
                 <li>
                     <a href="/admin/quota" class="waves-effect"><i class="mdi mdi-account"></i><span>โควต้า</span></a>
+                </li>
+                <li>
+                    <a href="/admin/report" class="waves-effect"><i class="mdi mdi-chart-bar"></i><span>รายงาน</span></a>
                 </li>
             </ul>
 

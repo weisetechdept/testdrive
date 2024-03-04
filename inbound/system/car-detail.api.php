@@ -31,5 +31,14 @@
         'status' => $car['car_status'],
         'datetime' => DateThai(date('Y-m-d', strtotime($car['car_datetime'])))
     );
+
+    $history = $db->where('up_parent',$id)->get('car_update');
+
+    foreach($history as $h){
+        $api['history'][] = array(
+            'date' => DateThai(date('Y-m-d', strtotime($h['up_datetime']))),
+            'mileage' => $h['up_mileage']
+        );
+    }
     
     echo json_encode($api);

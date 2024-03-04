@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Alpha 77 Admin</title>
+    <title>Alpha X Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="A77" name="description" />
     <meta content="A77" name="author" />
@@ -222,10 +222,6 @@
                         return '<a href="/admin/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
                     }
                 }
-            ],
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'print'
             ]
         });
     </script>

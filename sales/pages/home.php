@@ -109,7 +109,7 @@
                         </div>
                     </div>
 
-                    <div class="row" style="display:none;">
+                    <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="card-body">
@@ -119,8 +119,9 @@
                                     
                                     <div class="row">
                                         <div class="col-12">
-                                            <select class="form-control mb-2">
+                                            <select class="form-control mb-2" @change="getEvent">
                                                 <option value="0">= เลือกรุ่นรถยนต์ =</option>
+                                                <option v-for="c in car" :value="c.id">{{ c.model }} ({{ c.branch }})</option>
                                             </select>
                                         </div>
                                     </div>
@@ -204,7 +205,6 @@
     <script src="/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="/assets/plugins/moment/moment.js"></script>
     <script src='/assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
-    <script src="/assets/pages/calendar-demo.js?r=<?php echo rand(0,999999);?>"></script>
     
     <script src="/assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="/assets/js/theme.js"></script>
@@ -216,6 +216,10 @@
                 sales:{
                     id: '',
                     quota: 0
+                },
+                car: [],
+                select: {
+                    car: 0
                 }
             },
             mounted: function() {
@@ -223,31 +227,35 @@
                     testdrive.sales.id = response.data.sales.id;
                     testdrive.sales.quota = response.data.sales.quota;
                 });
+
+                axios.get('/sales/system/car-event.api.php').then(function(response) {
+                    testdrive.car = response.data.car;
+                });
+
+                var currentDate = new Date();
+                var currentYear = currentDate.getFullYear();
+                var currentMonth = currentDate.getMonth() + 1;
+                var currentDay = currentDate.getDate();
+                var formattedDate = currentYear + '-' + currentMonth + '-' + currentDay;
+
+                $('#calendar').fullCalendar({
+                    defaultDate: formattedDate,
+                    editable: true,
+                    eventLimit: true,
+                    events: []
+                });
+
+            },
+            methods: {
+                getEvent(){
+                    axios.get('/sales/system/event.api.php?c='+this.select.car).then(function(response) {
+                        $('#calendar').fullCalendar('removeEvents');
+                        $('#calendar').fullCalendar('addEventSource', response.data);
+                    });
+                }
             }
         });
 
-        var currentDate = new Date();
-        var currentYear = currentDate.getFullYear();
-        var currentMonth = currentDate.getMonth() + 1;
-        var currentDay = currentDate.getDate();
-        var formattedDate = currentYear + '-' + currentMonth + '-' + currentDay;
-
-        $(document).ready(function() {
-            $('#calendar').fullCalendar({
-                defaultDate: formattedDate,
-                editable: true,
-                eventLimit: true,
-                events: []
-            });
-
-            axios.get('/inbound/system/event.api.php').then(function(response) {
-                var events = response.data.events;
-                for (var i = 0; i < events.length; i++) {
-                    $('#calendar').fullCalendar('renderEvent', events[i], true);
-                }
-
-            });
-        });
     </script>
 
 </body>

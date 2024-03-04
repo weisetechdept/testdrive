@@ -6,11 +6,11 @@
     }
     date_default_timezone_set("Asia/Bangkok");
 
-    
-
     $quota = $db->get('car');
 
     foreach($quota as $q) {
+
+        $mileage = $db->where('up_parent',$q['car_id'])->orderBy('up_id','DESC')->getOne('car_update');
 
         if($q['car_branch'] == 'ho'){
             $branch = 'สำนักงานใหญ่';
@@ -24,7 +24,8 @@
             $q['car_img'],
             $branch,
             $q['car_status'],
-            date('Y-m-d', strtotime($q['car_datetime']))
+            date('Y-m-d', strtotime($q['car_datetime'])),
+            $mileage['up_mileage']
         );
     }
 
