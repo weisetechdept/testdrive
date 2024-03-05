@@ -309,12 +309,11 @@
         methods: {
             searchData(){
                 $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?ac=search&formdate=' + dedrive.search.formdate + '&todate=' + dedrive.search.todate +'&status=' + dedrive.search.status +'&model=' + dedrive.search.model).load(function() {
-                    if(this.data.length == 0){
+                    if($('#datatable').DataTable().ajax.json().data.length == 0){
                         swal("ไม่พบข้อมูล", "ไม่พบข้อมูลในช่วงเวลา "+dedrive.search.formdate+" ถึง "+dedrive.search.todate+" กรุณาลองใหม่อีกครั้ง", "error");
                     } else {
-                        swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+dedrive.search.formdate+" ถึง "+dedrive.search.todate+" สำเร็จ!", "success");
+                        swal("ค้นหาสำเร็จ", "ค้นหาข้อมูลช่วงเวลา "+dedrive.search.formdate+" ถึง "+dedrive.search.todate+" สำเร็จ!", "success");
                     }
-                    
                 });
             }
         }
