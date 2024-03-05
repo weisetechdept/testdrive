@@ -81,22 +81,22 @@
                                         <div class="form-row">
                                           <div class="col-md-3 mb-3">
                                             <label>ตั้งแต่วันที่</label>
-                                            <input type="date" id="formdate" class="form-control" value="<?php echo date('Y-m-01'); ?>">
+                                            <input type="date" id="formdate" class="form-control" v-model="search.formdate">
                                           </div>
                                           <div class="col-md-3 mb-3">
                                             <label>ถึงวันที่</label>
-                                            <input type="date" id="todate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                                            <input type="date" id="todate" class="form-control" v-model="search.todate">
                                           </div>
                                           <div class="col-md-3 mb-3">
                                             <label>โมเดลรถยนต์</label>
-                                            <select class="form-control" id="model">
+                                            <select class="form-control" v-model="search.model" id="model">
                                                 <option value="all">ทั้งหมด</option>
                                                 <option v-for="item in model" :value="item.id">{{ item.model }}</option>
                                             </select>
                                           </div>
                                           <div class="col-md-3 mb-3">
                                             <label>สถานะ</label>
-                                            <select class="form-control" id="status">
+                                            <select class="form-control" v-model="search.status" id="status">
                                                 <option value="all">ทั้งหมด</option>
                                                 <option value="0">ยังไม่ทดลองขับ</option>
                                                 <option value="1">รับกุญแจ</option>
@@ -105,7 +105,7 @@
                                             </select>
                                           </div>
                                         </div>
-                                        <button class="btn btn-primary" id="search">ค้นหา</button>
+                                        <button class="btn btn-primary" @click="searchData">ค้นหา</button>
                                     </div>
                                 </div>
                             </div>
@@ -224,6 +224,9 @@
 
     <!-- Datatables init -->
     <script>
+
+   
+
     $('#datatable').DataTable({
         "language": {
             "paginate": {
@@ -287,22 +290,16 @@
         
     });
 
-    $(document).ready(function() {
-        $('#search').on('click', function(){
-            var formdate = $('#formdate').val();
-            var todate = $('#todate').val();
-            var model = $('#model').val();
-            var status = $('#status').val();
-            $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?ac=search&formdate=' + formdate + '&todate=' + todate +'&status=' + status +'&model=' + model).load(function() {
-                swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+formdate+" ถึง "+todate+" สำเร็จ!", "success");
-            });
-        });
-    });
-
     var dedrive = new Vue({
         el: '#dedrive', 
         data: {
             model: [],
+            search: {
+                formdate: '<?php echo date('Y-m-01');?>',
+                todate: '<?php echo date('Y-m-d');?>',
+                model: 'all',
+                status: 'all'
+            }
         },
         mounted () {
             axios.get('/inbound/system/report.api.php?ac=car').then(function(response) {
@@ -310,10 +307,14 @@
             });
         },
         methods: {
-            
+            searchData(){
+                $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?ac=search&formdate=' + dedrive.search.formdate + '&todate=' + dedrive.search.todate +'&status=' + dedrive.search.status +'&model=' + dedrive.search.model).load(function() {
+                    swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+formdate+" ถึง "+todate+" สำเร็จ!", "success");
+                });
+            }
         }
     });
-   
+
     </script>
     <script src="/assets/js/theme.js"></script>
 
