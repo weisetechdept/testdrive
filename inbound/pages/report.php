@@ -74,8 +74,8 @@
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <div id="dedrive">
-                        <div class="row">
+                    <div>
+                        <div class="row" id="dedrive">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -245,7 +245,7 @@
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         },
-        ajax: '/inbound/system/report.api.php?ac=search',
+        ajax: '/inbound/system/report.api.php?ac=search&formdate=<?php echo date('Y');?>-01-1&todate=<?php echo date('Y');?>-12-31&status=all&model=all',
         "columns" : [
             {'data':'0'},
             {'data':'1'},
@@ -254,7 +254,7 @@
             {'data':'4'},
             {'data':'5'},
             {'data':'6'},
-            {'data':'9',
+            {'data':'7',
                 "render": function ( data, type, full, meta ) {
                     if(data == '1'){
                         return '<span class="badge badge-success">ออนไลน์</span>';
@@ -265,7 +265,7 @@
                     }
                 }
             },
-            {'data':'7',
+            {'data':'8',
                 "render": function ( data, type, full, meta ) {
                     if(data == '0'){
                         return '<span class="badge badge-warning">ยังไม่ทดลองขับ</span>';

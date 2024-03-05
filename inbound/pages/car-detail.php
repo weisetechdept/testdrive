@@ -106,7 +106,7 @@
                                                 <td>{{ detail.id }}</td>
                                             </tr>
                                             <tr>
-                                                <td>ชื่อ - นามสกุล</td>
+                                                <td>รุ่นรถยนต์</td>
                                                 <td>{{ detail.model }}</td>
                                             </tr>
                                             <tr>
