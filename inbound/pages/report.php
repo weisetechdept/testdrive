@@ -57,6 +57,9 @@
             margin-bottom: 45px;
             text-align: center;
         }
+        .swal-text {
+            text-align: center !important;
+        }
     </style>
 </head>
 
