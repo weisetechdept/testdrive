@@ -15,8 +15,8 @@
         $status = $_GET['status'];
 
         if($form_date == '' || $to_date == ''){
-
-            $api['data'] = null;
+    
+               $api['data'] = []; // Set an empty array if there is no data
 
         } else {
 
@@ -63,22 +63,27 @@
                 }
             }
 
-            foreach ($bk as $value) {
+            if($bk == null){
+                $api['data'] = []; // Set an empty array if there is no data
+            } else {
 
-                $sales = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+                foreach ($bk as $value) {
 
-                $api['data'][] = array(
-                    $value['bk_id'],
-                    $value['bk_fname'].' '.$value['bk_lname'],
-                    $value['bk_tel'],
-                    $value['car_model'],
-                    $value['bk_date'],
-                    customTime($value['bk_time']),
-                    $sales['first_name'].' ('.$sales['nickname'].')',
-                    $value['bk_status'],
-                    $value['bk_datetime'],
-                    $value['bk_where']
-                );
+                    $sales = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+
+                    $api['data'][] = array(
+                        $value['bk_id'],
+                        $value['bk_fname'].' '.$value['bk_lname'],
+                        $value['bk_tel'],
+                        $value['car_model'],
+                        $value['bk_date'],
+                        customTime($value['bk_time']),
+                        $sales['first_name'].' ('.$sales['nickname'].')',
+                        $value['bk_status'],
+                        $value['bk_datetime'],
+                        $value['bk_where']
+                    );
+                }
             }
         }
 
