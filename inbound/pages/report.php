@@ -293,12 +293,6 @@
             var todate = $('#todate').val();
             var model = $('#model').val();
             var status = $('#status').val();
-            swal({
-                title: "กำลังค้นหาข้อมูล",
-                text: "ค้าหาข้อมูลช่วงเวลา " + formdate + " ถึง " + todate + " และเงื่อนใขที่เกี่ยวข้อง!",
-                icon: "info",
-                button: false
-            });
             $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?ac=search&formdate=' + formdate + '&todate=' + todate +'&status=' + status +'&model=' + model).load(function() {
                 swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+formdate+" ถึง "+todate+" สำเร็จ!", "success");
             });
