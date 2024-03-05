@@ -300,7 +300,11 @@
                 button: false
             });
             $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?ac=search&formdate=' + formdate + '&todate=' + todate +'&status=' + status +'&model=' + model).load(function() {
-                swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+formdate+" ถึง "+todate+" สำเร็จ!", "success");
+                if($('#datatable').DataTable().data().count() == 0){
+                    swal("ไม่พบข้อมูล", "ไม่พบข้อมูลในช่วงเวลา "+formdate+" ถึง "+todate+" ที่ค้นหา!", "error");
+                } else {
+                    swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+formdate+" ถึง "+todate+" สำเร็จ!", "success");
+                }
             });
         });
     });
