@@ -53,6 +53,10 @@
         .card {
             margin-bottom: 10px;
         }
+        .swal-text:last-child {
+            margin-bottom: 45px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -67,21 +71,38 @@
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <div id="detail">
+                    <div id="dedrive">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="mb-4 font-size-18">รายการจองทั้งหมด</h4>
 
                                         <div class="form-row">
-                                          <div class="col-md-6 mb-3">
+                                          <div class="col-md-3 mb-3">
                                             <label>ตั้งแต่วันที่</label>
                                             <input type="date" id="formdate" class="form-control" value="<?php echo date('Y-m-01'); ?>">
                                           </div>
-                                          <div class="col-md-6 mb-3">
+                                          <div class="col-md-3 mb-3">
                                             <label>ถึงวันที่</label>
                                             <input type="date" id="todate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                                          </div>
+                                          <div class="col-md-3 mb-3">
+                                            <label>โมเดลรถยนต์</label>
+                                            <select class="form-control" id="model">
+                                                <option value="all">ทั้งหมด</option>
+                                                <option v-for="item in model" :value="item.id">{{ item.model }}</option>
+                                            </select>
+                                          </div>
+                                          <div class="col-md-3 mb-3">
+                                            <label>สถานะ</label>
+                                            <select class="form-control" id="status">
+                                                <option value="all">ทั้งหมด</option>
+                                                <option value="0">ยังไม่ทดลองขับ</option>
+                                                <option value="1">รับกุญแจ</option>
+                                                <option value="2">สำเร็จ</option>
+                                                <option value="10">ยกเลิก</option>
+                                            </select>
                                           </div>
                                         </div>
                                         <button class="btn btn-primary" id="search">ค้นหา</button>
@@ -91,7 +112,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-10 col-lg-12">
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="mb-4 font-size-18">รายการจองทั้งหมดของ <?php echo strtoupper($branch); ?></h4>
@@ -127,8 +148,8 @@
                                                 </tr>
                                             </tbody>
                                             <tfoot>
-          <tr>
-          <th>รหัสจอง</th>
+                                                <tr>
+                                                    <th>รหัสจอง</th>
                                                     <th>ชื่อ - สกุล</th>
                                                     <th>เบอร์โทรศัพท์</th>
                                                     <th>โมเดล</th>
@@ -138,10 +159,9 @@
                                                     <th>ที่มา</th>
                                                     <th>สถานะ</th>
                                                     <th>จัดการ</th>
-          </tr>
-        </tfoot>
+                                                </tr>
+                                            </tfoot>
                                         </table>
-                                        
 
                                     </div>
                                 </div>
@@ -219,7 +239,7 @@
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         },
-        ajax: '/inbound/system/report.api.php',
+        ajax: '/inbound/system/report.api.php?ac=search',
         "columns" : [
             {'data':'0'},
             {'data':'1'},
@@ -263,18 +283,41 @@
         dom: 'Bfrtip',
         buttons: [
             'copy', 'print'
-        ],
+        ]
         
     });
 
-
-    $('#search').on('click', function(){
-        // Your code for handling the search button click event goes here
-        var formdate = $('#formdate').val();
-        var todate = $('#todate').val();
-        $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?formdate=' + formdate + '&todate=' + todate).load(function() {
-            swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+formdate+" ถึง "+todate+" สำเร็จ!", "success");
+    $(document).ready(function() {
+        $('#search').on('click', function(){
+            var formdate = $('#formdate').val();
+            var todate = $('#todate').val();
+            var model = $('#model').val();
+            var status = $('#status').val();
+            swal({
+                title: "กำลังค้นหาข้อมูล",
+                text: "ค้าหาข้อมูลช่วงเวลา " + formdate + " ถึง " + todate + " และเงื่อนใขที่เกี่ยวข้อง!",
+                icon: "info",
+                button: false
+            });
+            $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?ac=search&formdate=' + formdate + '&todate=' + todate +'&status=' + status +'&model=' + model).load(function() {
+                swal("ค้นหาสำเร็จ", "ค้าหาข้อมูลช่วงเวลา "+formdate+" ถึง "+todate+" สำเร็จ!", "success");
+            });
         });
+    });
+
+    var dedrive = new Vue({
+        el: '#dedrive', 
+        data: {
+            model: [],
+        },
+        mounted () {
+            axios.get('/inbound/system/report.api.php?ac=car').then(function(response) {
+                dedrive.model = response.data.car;
+            });
+        },
+        methods: {
+            
+        }
     });
    
     </script>
