@@ -50,7 +50,7 @@
             $id = $db->insert('booking',$data);
             if($id){
                 $api['status'] = 'success';
-                $api['id'] = $id_sales;
+                $api['id'] = $id;
 
                 if($where == '4'){
                     $uid = $db_nms->where('id',$id_sales)->getOne('db_member');
