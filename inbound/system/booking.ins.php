@@ -52,7 +52,7 @@
                 $api['status'] = 'success';
                 $api['id'] = $id;
 
-                if($type == 'walkin'){
+                if($where == '4'){
                     $uid = $db_nms->where('id',$id)->getOne('db_member');
                     $access_token = 'GtacKYhQw2Y7U9Wzc8GeNUW32big3VZs4oeUU7U8wEtlPUDq1kLKQYBpD1HbwP/nFetgiLI0GA8pxPG7fAxvOYO001rJ6WXN4uNp7d+pxM43hKKZ1klmScK6z8jr3XJZno1X1AGGwwQWUP9lBjUuEAdB04t89/1O/w1cDnyilFU=';
                     $userId = $uid['line_usrid'];
