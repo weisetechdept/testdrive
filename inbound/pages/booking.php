@@ -69,7 +69,7 @@
 
                     <div id="detail">
                         <div class="row">
-                            <div class="col-10 col-lg-12">
+                            <div class="col-12 col-lg-10">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="mb-4 font-size-18">รายการจองทั้งหมดของ <?php echo strtoupper($branch); ?></h4>

@@ -4,9 +4,16 @@
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
 
-    $id = 'TBR';
-
     $request = json_decode(file_get_contents('php://input'));
+    $type = $request->type;
+    $walk = $request->sales;
+    $note = $request->note;
+
+   if($type == 'walkin'){
+    $id = $walk;
+   } else {
+    $id = 'TBR';
+   }
 
     $quota = $db->where("bk_parent",$id)->where('bk_where',2)->where("bk_status",array(0,1),'BETWEEN')->getValue("booking","count(*)");
 
@@ -33,6 +40,7 @@
                 'bk_time' => $request->time,
                 'bk_parent' => $id,
                 'bk_where' => '3',
+                'bk_note' => $note,
                 'bk_status' => 0,
                 'bk_datetime' => date('Y-m-d H:i:s')
             );

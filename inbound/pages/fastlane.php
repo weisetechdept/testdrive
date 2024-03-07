@@ -30,6 +30,8 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/theme.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Chakra Petch', sans-serif;
@@ -52,6 +54,10 @@
         }
         .card {
             margin-bottom: 10px;
+        }
+        .select2-container {
+            width: 100% !important;
+            height: 30px !important;
         }
     </style>
 </head>
@@ -90,7 +96,7 @@
                                     <div class="mb-3">
                                         <div class="form-group">
                                             <label for="car">เบอร์โทรศัพท์</label>
-                                            <input type="text" id="tel" v-model="selected.tel" class="form-control">
+                                            <input type="text" id="tel" v-model="selected.tel" class="form-control" maxlength="10">
                                         </div>
                                     </div>
 
@@ -133,6 +139,26 @@
                                                 <option v-for="t in bk.time" v-if="t.status == 0" :value="t.id" disabled>{{ t.time }} (ไม่ว่าง)</option>
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="type">ประเภทการจอง</label><br />
+                                            <input type="radio" name="typeAdd" @click="typeQuick" value="quick">
+                                            <label class="mr-4" for="quick"> จองด่วน</label>
+
+                                            <input type="radio" name="typeAdd" @click="typeWalk" value="walkin">
+                                            <label for="walkin"> ลูกค้า Walk-in</label>
+                                        </div>
+
+                                        <div class="form-group" id="owner" style="display:none;">
+                                            <label>เซลล์ผู้ดูแล</label><br />
+                                            <select class="form-control search-sales">
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group" id="note" style="display:none;">
+                                            <label>หมายเหตุ (เหตุผล, งานที่นำไปใช้งาน หรืออื่นๆ)</label>
+                                            <textarea v-model="selected.note" class="form-control" id="note" rows="3"></textarea>
+                                        </div>
+
                                         <button class="btn btn-primary waves-effect waves-light" @click="sendData">จองรถ</button>
                                     </div>
                                        
@@ -194,6 +220,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
        var testdrive = new Vue({
             el: '#testdrive',
@@ -213,10 +240,34 @@
                     date: '',
                     time: '0',
                     carimg: '',
-                    tel:''
-                }
+                    tel:'',
+                    sales:'',
+                    note:''
+                },
+                owner: []
+            },
+            mounted() {
+                
             },
             methods: {
+                typeQuick() {
+                    document.getElementById('owner').style.display = 'none';
+                    document.getElementById('note').style.display = 'block';
+                },
+                typeWalk() {
+                    document.getElementById('owner').style.display = 'block';
+                    document.getElementById('note').style.display = 'none';
+
+                    axios.post('/inbound/system/booking.api.php?get=sales').then(function(response) {
+                        //testdrive.owner = response.data;
+                        $('.search-sales').select2({
+                            data: response.data
+                        });
+                        $('.search-sales').on('change', function(e) {
+                            testdrive.selected.sales = e.target.value;
+                        });
+                    });
+                },
                 getCar(e) {
                     axios.post('/inbound/system/booking.api.php?get=car', {
                         branch: e.target.value
@@ -260,22 +311,41 @@
                     });
                 },
                 sendData() {
-                    
+
                     if(testdrive.selected.branch == '0' || testdrive.selected.car == '0' || testdrive.selected.date == '0' || testdrive.selected.time == '' || testdrive.selected.fname == '' || testdrive.selected.lname == '' || testdrive.selected.tel == ''){
                         swal("โปรดตรวจสอบ","กรุณากรอกข้อมูลให้ครบถ้วน", {
                             icon: "warning",
                         });
                         return;
+
+                    } else if(!document.querySelector('input[name="typeAdd"]:checked')) {
+                        swal("โปรดตรวจสอบ","โปรดเลือกประเภทการจอง", {
+                            icon: "warning",
+                        });
+                    } else if(document.querySelector('input[name="typeAdd"]:checked').value == 'walkin' && testdrive.selected.sales == ''){
+                        swal("โปรดตรวจสอบ","กรุณากรอกข้อมูลให้ครบถ้วน - เลือกเซลล์ผู้ดูแล", {
+                            icon: "warning",
+                        });
+                        return;
+                    } else if(document.querySelector('input[name="typeAdd"]:checked').value == 'quick' && this.selected.note == ''){
+                        swal("โปรดตรวจสอบ","กรุณากรอกข้อมูลให้ครบถ้วน - กรอกหมายเหตุ", {
+                            icon: "warning",
+                        });
                     } else {
-                        
+
                         axios.post('/inbound/system/booking.ins.php',{
+
                             id: testdrive.sales.id,
                             car: testdrive.selected.car,
                             date: testdrive.selected.date,
                             time: testdrive.selected.time,
                             fname: testdrive.selected.fname,
                             lname: testdrive.selected.lname,
-                            tel: testdrive.selected.tel
+                            tel: testdrive.selected.tel,
+                            note: testdrive.selected.note,
+                            sales: testdrive.selected.sales,
+                            type: document.querySelector('input[name="typeAdd"]:checked').value
+
                         }).then(function(response) {
                             //console.log(response.data);
                             if(response.data.status == 'success'){
@@ -299,6 +369,8 @@
                 }
             }
         });
+
+        
 
         
     </script>

@@ -46,6 +46,7 @@
                     'bk_time' => $request->time,
                     'bk_parent' => $id,
                     'bk_where' => '2',
+                    'bk_note' => '',
                     'bk_status' => 0,
                     'bk_datetime' => date('Y-m-d H:i:s')
                 );

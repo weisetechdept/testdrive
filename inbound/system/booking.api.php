@@ -79,6 +79,16 @@
         
     }
 
+    if($_GET['get'] == "sales"){
+        $sales = $db_nms->where('verify',1)->where('status','user')->orderBy('id','ASC')->get('db_member');
+        foreach($sales as $s){
+            $api[] = array(
+                'id' => $s['id'],
+                'text' => $s['first_name'].' '.$s['last_name'].' ('.$s['nickname'].')'
+            );
+        }
+    }
+
     echo json_encode($api);
 
     

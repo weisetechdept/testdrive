@@ -68,7 +68,7 @@
                 <div class="container-fluid">
 
                     <div class="row">
-                        <div class="col-10 col-md-4 col-lg-3">
+                        <div class="col-12 col-md-4 col-lg-3">
                             <div class="card">
                                 <div class="card-body">
                                     <a href="/admin/addquota" type="button" class="btn btn-primary btn-block">
@@ -81,7 +81,7 @@
 
                     <div id="detail">
                         <div class="row">
-                            <div class="col-10 col-lg-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="mb-4 font-size-18">โควต้า</h4>

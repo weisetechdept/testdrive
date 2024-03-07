@@ -70,7 +70,7 @@
                     <div id="detail">
                         
                         <div class="row">
-                            <div class="col-10 col-md-4 col-lg-3">
+                            <div class="col-12 col-md-4 col-lg-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <a href="/admin/addcar" type="button" class="btn btn-primary btn-block">
@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-10 col-lg-8">
+                            <div class="col-12 col-lg-8">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="mb-4 font-size-18">โควต้า</h4>
