@@ -10,14 +10,14 @@
     $note = $request->note;
 
     if($type == 'walkin'){
-        $id = $walk;
+        $id_sales = $walk;
         $where = '4';
     } else {
-        $id = 'TBR';
+        $id_sales = 'TBR';
         $where = '3';
     }
 
-    $quota = $db->where("bk_parent",$id)->where('bk_where',2)->where("bk_status",array(0,1),'BETWEEN')->getValue("booking","count(*)");
+    $quota = $db->where("bk_parent",$id_sales)->where('bk_where',2)->where("bk_status",array(0,1),'BETWEEN')->getValue("booking","count(*)");
 
         $chk_uniq = $db->where('bk_date',$request->date)->where('bk_time',$request->time)->where('bk_car',$request->car)->where('bk_status',array('0','1','2'),'IN')->getValue('booking','count(*)');
         if($chk_uniq){
@@ -40,7 +40,7 @@
                 'bk_car' => $request->car,
                 'bk_date' => $request->date,
                 'bk_time' => $request->time,
-                'bk_parent' => $id,
+                'bk_parent' => $id_sales,
                 'bk_where' => $where,
                 'bk_note' => $note,
                 'bk_status' => 0,
@@ -50,10 +50,10 @@
             $id = $db->insert('booking',$data);
             if($id){
                 $api['status'] = 'success';
-                $api['id'] = $id;
+                $api['id'] = $id_sales;
 
                 if($where == '4'){
-                    $uid = $db_nms->where('id',$id)->getOne('db_member');
+                    $uid = $db_nms->where('id',$id_sales)->getOne('db_member');
                     $access_token = 'GtacKYhQw2Y7U9Wzc8GeNUW32big3VZs4oeUU7U8wEtlPUDq1kLKQYBpD1HbwP/nFetgiLI0GA8pxPG7fAxvOYO001rJ6WXN4uNp7d+pxM43hKKZ1klmScK6z8jr3XJZno1X1AGGwwQWUP9lBjUuEAdB04t89/1O/w1cDnyilFU=';
                     $userId = $uid['line_usrid'];
 
