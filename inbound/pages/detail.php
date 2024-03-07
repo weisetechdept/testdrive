@@ -131,6 +131,9 @@
                                                 <td>{{ detail.parent }}</td>
                                             </tr>
                                             <tr>
+                                                <td>หมายเหตุ</td>
+                                                <td>{{ detail.bk_note }}</td>
+                                            <tr>
                                                 <td>สถานะ</td>
                                                 <td v-if="detail.status == '0'"><span class="badge badge-soft-warning">ยังไม่ทดลองขับ</span></td>
                                                 <td v-else-if="detail.status == '1'"><span class="badge badge-soft-primary">เบิกกุญแจ</span></td>
@@ -146,6 +149,7 @@
                                                 <td v-if="detail.where == '1'"><span class="badge badge-soft-success">ออนไลน์</span></td>
                                                 <td v-else-if="detail.where == '2'"><span class="badge badge-soft-primary">เซลล์</span></td>
                                                 <td v-else-if="detail.where == '3'"><span class="badge badge-soft-info">TBR</span></td>
+                                                <td v-else-if="detail.where == '4'"><span class="badge badge-soft-secondary">Walk-in</span></td>
                                             </tr>
                                         </tbody>
                                     </table>

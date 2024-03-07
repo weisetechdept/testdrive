@@ -57,7 +57,8 @@
             'docs_status' => $status,
             'where' => $value['bk_where'],
             'status' => $value['bk_status'],
-            'create' => $value['bk_datetime']
+            'create' => $value['bk_datetime'],
+            'bk_note' => $value['bk_note']
         );
     }
 

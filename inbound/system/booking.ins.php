@@ -9,11 +9,13 @@
     $walk = $request->sales;
     $note = $request->note;
 
-   if($type == 'walkin'){
-    $id = $walk;
-   } else {
-    $id = 'TBR';
-   }
+    if($type == 'walkin'){
+        $id = $walk;
+        $where = '4';
+    } else {
+        $id = 'TBR';
+        $where = '3';
+    }
 
     $quota = $db->where("bk_parent",$id)->where('bk_where',2)->where("bk_status",array(0,1),'BETWEEN')->getValue("booking","count(*)");
 
@@ -39,7 +41,7 @@
                 'bk_date' => $request->date,
                 'bk_time' => $request->time,
                 'bk_parent' => $id,
-                'bk_where' => '3',
+                'bk_where' => $where,
                 'bk_note' => $note,
                 'bk_status' => 0,
                 'bk_datetime' => date('Y-m-d H:i:s')

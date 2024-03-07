@@ -199,6 +199,8 @@
                             return '<span class="badge badge-primary">เซลล์</span>';
                         } else if(data == '3') {
                             return '<span class="badge badge-info">TBR</span>';
+                        } else if(data == '4') {
+                            return '<span class="badge badge-secondary">Walk-in</span>';
                         }
                     }
                 },
