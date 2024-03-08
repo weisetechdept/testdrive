@@ -36,6 +36,7 @@
         $to_date = $_GET['todate'];
         $model = $_GET['model'];
         $status = $_GET['status'];
+        $where = $_GET['where'];
 
         if($form_date == '' || $to_date == ''){
     
@@ -61,8 +62,14 @@
                 $where_status = array(0,1,2,3,4);
             }
 
+            if($where !== 'all'){
+                $where_where = array($where);
+            } else {
+                $where_where = array('1','2','3','4');
+            }
+
             $db->join('car c','c.car_id = b.bk_car','LEFT');
-            $bk = $db->where('bk_date',$form_date,'>=')->where('bk_date',$to_date,'<=')->where('bk_status',$where_status,'IN')->where('bk_car',$where_model,'IN')->get('booking b');
+            $bk = $db->where('bk_date',$form_date,'>=')->where('bk_date',$to_date,'<=')->where('bk_status',$where_status,'IN')->where('bk_car',$where_model,'IN')->where('bk_where',$where_where,'IN')->get('booking b');
 
             if($bk == null){
                 $api['data'] = []; // Set an empty array if there is no data

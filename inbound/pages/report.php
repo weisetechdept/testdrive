@@ -107,6 +107,16 @@
                                                 <option value="10">ยกเลิก</option>
                                             </select>
                                           </div>
+                                          <div class="col-md-3 mb-3">
+                                            <label>ที่มา</label>
+                                            <select class="form-control" v-model="search.where" id="where">
+                                                <option value="all">ทั้งหมด</option>
+                                                <option value="1">ออนไลน์</option>
+                                                <option value="2">เซลล์</option>
+                                                <option value="3">TBR</option>
+                                                <option value="4">Walk-in</option>
+                                            </select>
+                                          </div>
                                         </div>
                                         <button class="btn btn-primary" @click="searchData">ค้นหา</button>
                                     </div>
@@ -303,7 +313,8 @@
                 formdate: '<?php echo date('Y-m-01');?>',
                 todate: '<?php echo date('Y-m-d');?>',
                 model: 'all',
-                status: 'all'
+                status: 'all',
+                where: 'all'
             }
         },
         mounted () {
@@ -313,7 +324,7 @@
         },
         methods: {
             searchData(){
-                $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?ac=search&formdate=' + dedrive.search.formdate + '&todate=' + dedrive.search.todate +'&status=' + dedrive.search.status +'&model=' + dedrive.search.model).load(function() {
+                $('#datatable').DataTable().ajax.url('/inbound/system/report.api.php?ac=search&formdate=' + dedrive.search.formdate + '&todate=' + dedrive.search.todate +'&status=' + dedrive.search.status +'&model=' + dedrive.search.model +'&where=' + dedrive.search.where).load(function() {
                     if($('#datatable').DataTable().ajax.json().data.length == 0){
                         swal("ไม่พบข้อมูล", "ไม่พบข้อมูลในช่วงเวลา "+dedrive.search.formdate+" ถึง "+dedrive.search.todate+" กรุณาลองใหม่อีกครั้ง", "error");
                     } else {
