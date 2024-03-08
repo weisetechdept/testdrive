@@ -59,7 +59,7 @@
 
                     $messages = array(
                         'type' => 'text',
-                        'text' => '[Walk-in] คุณได้ลูกค้าทดลองขับรถใหม่ "คุณ'.$fname.' '.$lname.'" โปรดติดต่อยืนยันการนัดหมายโดยเร็วที่สุด'
+                        'text' => '[Walk-in] คุณได้ลูกค้าทดลองขับรถใหม่ "คุณ'.$request->fname.' '.$request->lname.'" โปรดติดต่อยืนยันการนัดหมายโดยเร็วที่สุด'
                     );
                     $post = json_encode(array(
                         'to' => array($userId),
