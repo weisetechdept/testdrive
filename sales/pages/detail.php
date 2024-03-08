@@ -195,8 +195,6 @@
                                 <div class="card-body">
                                     <h4 class="mb-2 font-size-18">เอกสารที่ต้องใช้</h4>
                                     <div class="check-list">
-                                        <p v-if="docs.docs1 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> บัตร ปชช.</p>
-                                        <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> บัตร ปชช.</p>
                                         <p v-if="docs.docs2 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> ใบขับขี่ผู้ทดลองขับ</p>
                                         <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> ใบขับขี่ผู้ทดลองขับ</p>
                                         <p v-if="docs.docs3 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> เอกสารยินยอมข้อตกลงทดลองขับ</p>

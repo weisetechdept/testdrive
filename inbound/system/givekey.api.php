@@ -11,16 +11,14 @@
 
     $chk = $db->where('img_parent', $id)->get('document');
     foreach($chk as $chk){
-        if($chk['img_type'] == '1'){
-            $docs1 += 1;
-        } elseif($chk['img_type'] == '2'){
+       if($chk['img_type'] == '2'){
             $docs2 += 1;
         } elseif($chk['img_type'] == '3'){
             $docs3 += 1;
         } 
     }
 
-    if($docs1 == 0 || $docs2 == 0 || $docs3 == 0){
+    if( $docs2 == 0 || $docs3 == 0){
         $api = array('status' => '400');
     } else {
         $data = Array (

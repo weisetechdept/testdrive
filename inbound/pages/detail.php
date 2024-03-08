@@ -205,13 +205,39 @@
                                 <div class="card-body">
                                     <h4 class="mb-2 font-size-18">เอกสารที่ต้องใช้</h4>
                                     <div class="check-list">
-                                        <p v-if="docs.docs1 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> บัตร ปชช.</p>
-                                        <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> บัตร ปชช.</p>
                                         <p v-if="docs.docs2 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> ใบขับขี่ผู้ทดลองขับ</p>
                                         <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> ใบขับขี่ผู้ทดลองขับ</p>
                                         <p v-if="docs.docs3 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> เอกสารยินยอมข้อตกลงทดลองขับ</p>
                                         <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> เอกสารยินยอมข้อตกลงทดลองขับ</p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <h4 class="mb-2 font-size-18">อัพโหลดเอกสาร</h4>
+                                    <form @submit.prevent="sendData">
+                                        <div class="form-group">
+                                            <select class="form-control" v-model="file_upload.type">
+                                                <option value="0">เลือกประเภทเอกสาร</option>
+                                                <option value="1">บัตร ปชช.</option>
+                                                <option value="2">ใบขับขี่ผู้ทดลองขับ</option>
+                                                <option value="3">เอกสารยินยอมข้อตกลงทดลองขับ</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="file" name="file_upload" id="file_upload" @change="onFileChange">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">อัพโหลด</button>
+                                        </div>
+                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -374,18 +400,19 @@
                         });
 
                     
-                        axios.post('/sales/system/cfimg.api.php',formData
+                        axios.post('/inbound/system/cfimg.api.php',formData
                         ,{
                             headers: { 
                                 'Content-Type': 'multipart/form-data'
                             },
                         }).then(res => {
+                            console.log(res);
                             var cfimg_id =  res.data.result.id;
                             var cfimg_link =  res.data.result.variants[1];
 
                             if(res.data.success == true) 
 
-                                axios.post('/sales/system/cfimg_verify.api.php',{
+                                axios.post('/inbound/system/cfimg_verify.api.php',{
                                     aimg_type: this.file_upload.type,
                                     aimg_img_id: cfimg_id,
                                     aimg_link:  cfimg_link,
@@ -414,68 +441,7 @@
                     }
 
                 },
-                onFileChangeUp(e) {
-                    this.car_update.file = e.target.files[0];
-                },
-                sendDataUp() {
-                    if(this.car_update.file == null || this.mileage == '') {
-                        swal("โปรดตรวจสอบ", "คุณอาจยังไม่ได้กรอกเลขไมล์ หรือเลือกไฟล์เอกสาร", "warning",{ 
-                            button: "ตกลง"
-                        }) 
-                    } else {
-                        var formData = new FormData();
-                        formData.append('file_upload', this.car_update.file);
-                        
-                        swal({
-                            title: "กำลังอัพโหลด...",
-                            text: "โปรดรอสักครู่ ระบบกำลังอัพโหลดเอกสารของคุณ",
-                            icon: "info",
-                            buttons: false,
-                            closeOnClickOutside: false,
-                            closeOnEsc: false
-                        });
-
-                    
-                        axios.post('/sales/system/cfimg.api.php',formData
-                        ,{
-                            headers: { 
-                                'Content-Type': 'multipart/form-data'
-                            },
-                        }).then(res => {
-                            var cfimg_up_id =  res.data.result.id;
-                            var cfimg_up_link =  res.data.result.variants[1];
-
-                            if(res.data.success == true) 
-
-                                axios.post('/sales/system/cfimg_update.api.php',{
-                                    aimg_img_id: cfimg_up_id,
-                                    aimg_link:  cfimg_up_link,
-                                    aimg_parent: <?php echo $id; ?>,
-                                    aimg_mileage: this.mileage
-                                }).then(res => {
-                                    if(res.data.status == 200) 
-                                        swal("สำเร็จ", "อัพโหลดเอกสารสำเร็จ", "success",{ 
-                                            button: "ตกลง"
-                                        }).then((value) => {
-                                            location.reload(true)
-                                        });
-                                    if(res.data.status == 400) 
-                                        swal("ทำรายการไม่สำเร็จ", "อัพโหลดเอกสารไม่สำเร็จ อาจมีบางอย่างผิดปกติ (error : 400)", "warning",{ 
-                                            button: "ตกลง"
-                                        }
-                                    );
-                                });
-
-                            if(res.data.success == false) 
-                                swal("ทำรายการไม่สำเร็จ", "อัพโหลดเอกสารไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
-                                    button: "ตกลง"
-                                }
-                            );
-
-                        });
-                    }
-
-                },
+                
                 giveKey() {
                     swal({
                         title: "ยืนยันการเบิกกุญแจ",
