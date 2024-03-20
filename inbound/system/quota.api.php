@@ -21,7 +21,25 @@
 
     $quota = $db->get('man_quota');
 
+    function getTeam($uid){
+        global $db_nms;
+        $team = $db_nms->get('db_user_group');
+        foreach($team as $t){
+            $team_data = json_decode($t['detail']);
+            if(in_array($uid,$team_data)){
+                if($t['name'] == 'S'){
+                    return 'E2';
+                } else {
+                    return $t['name'];
+                }
+            } 
+        }
+
+    }
+
     foreach($quota as $q) {
+
+
 
         $user_data = $db_nms->where('id',$q['qt_user_id'])->getOne('db_member');
         $assigned = $db->where('bk_parent',$q['qt_user_id'])->where('bk_where',1)->getValue('booking','count(*)');
@@ -31,7 +49,8 @@
             $user_data['first_name'].' ('.$user_data['nickname'].')',
             $q['qt_status'],
             DateThai($q['qt_datetime']),
-            $assigned
+            $assigned,
+            getTeam($q['qt_user_id'])
         );
     }
 

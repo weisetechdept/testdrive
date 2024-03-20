@@ -1,15 +1,17 @@
 <?php
     session_start();
-    if($_SESSION['testdrive_admin'] !== true){
+
+    if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'leader'){
         header('Location: /404');
     }
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
-    <title>Alpha X</title>
+    <title>Test Drive</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="A77" name="description" />
     <meta content="A77" name="author" />
@@ -53,70 +55,87 @@
         .card {
             margin-bottom: 10px;
         }
+
+        .home-content {
+            margin-top: 60px;
+        }
     </style>
 </head>
 
 <body>
+    <?php include_once('include/nav.php'); ?>
+    <?php include_once('include/sidebar.php'); ?>
     <div id="layout-wrapper">
-        <?php 
-            include_once('inc-page/nav.php');
-            include_once('inc-page/sidebar.php');
-        ?>
+
         <div class="main-content">
 
-            <div class="page-content">
+            <div class="page-content pt-4">
                 <div class="container-fluid">
 
-                    <div class="row">
-                        <div class="col-12 col-md-4 col-lg-3">
-                            <div class="card">
+                    <div class="row home-content">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h4 class="mb-0 font-size-18">รอส่งต่อให้ลูกทีมทั้งหมด</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2" id="count">
+                        <div class="col-12 pl1">
+                            <div class="card bg-warning border-warning">
                                 <div class="card-body">
-                                    <a href="/admin/addquota" type="button" class="btn btn-primary btn-block">
-                                        <i class="mdi mdi-plus"></i> เพิ่มโควต้า
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="detail">
-                        <div class="row">
-                            <div class="col-12 col-lg-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="mb-4 font-size-18">โควต้า</h4>
-
-                                        <table id="datatable" class="table dt-responsive nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>รหัส</th>
-                                                    <th>ชื่อ - สกุล</th>
-                                                    <th>ทีม</th>
-                                                    <th>จัดสรรแล้ว</th>
-                                                    <th>สถานะ</th>
-                                                    <th>วันที่เพิ่ม</th>
-                                                    <th>จัดการ</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        
-
+                                    <div class="mb-1">
+                                        <h5 class="card-title mb-0 text-white">รอส่งต่อ</h5>
                                     </div>
+                                    <div class="row d-flex align-items-center mb-0">
+                                        <div class="col-8">
+                                            <h2 class="d-flex align-items-center mb-0 text-white">
+                                                {{ all }}
+                                            </h2>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div class="card m-b-30">
+                                <div class="card-body">
+                                   
+                                    <table id="datatable" class="table dt-responsive nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>ลูกค้า</th>
+                                                <th>รถยนต์</th>
+                                                <th>วัน</th>
+                                                <th>เวลา</th>
+                                                <th>ที่มา</th>
+                                                <th>สถานะ</th>
+                                                <th>จัดการ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                 </div>
             </div>
@@ -188,61 +207,75 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/inbound/system/quota.api.php',
+            ajax: '/mgr/system/adsign.api.php?get=list',
             "columns" : [
-                {'data':'0'},
                 {'data':'1'},
-                {'data':'5'},
-                {'data':'4'},
-                {'data':'2',
-                    sortable: false,
+                {'data':'2'},
+                {'data':'3',
                     "render": function ( data, type, full, meta ) {
-                        if(data == '1') {
-                            return '<span class="badge badge-success">จัดสรร</span>';
-                        } else if(data == '10') {
-                            return '<span class="badge badge-danger">เลิกจัดสรร</span>';
+                        var d = new Date(data);
+                        var month = d.getMonth()+1;
+                        var day = d.getDate();
+                        var output = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month;
+                        return output;
+                    }
+                },
+                {'data':'4'},
+                {'data':'6',
+                    "render": function ( data, type, full, meta ) {
+                        if(data == '1'){
+                            return '<span class="badge badge-success">ออนไลน์</span>';
+                        }else if(data == '2'){
+                            return '<span class="badge badge-primary">เซลล์</span>';
+                        } else if(data == '3') {
+                            return '<span class="badge badge-info">TBR</span>';
+                        }  else if(data == '4') {
+                            return '<span class="badge badge-secondary">Walk-in</span>';
                         }
                     }
                 },
-                {'data':'3'},
-                {'data':'0',
+                { 
+                    'data': '5',
                     sortable: false,
                     "render": function ( data, type, full, meta ) {
-                        return '<button value="'+data+'" id="changeSta" class="btn btn-outline-warning btn-sm">เปลี่ยนสถานะ</button>';
+                        if(data == '0'){
+                            return '<span class="badge badge-soft-warning">ยังไม่ทดลองขับ</span>';
+                        } else if(data == '1') {
+                            return '<span class="badge badge-soft-primary">เบิกกุญแจ</span>';
+                        } else if(data == '2') {
+                            return '<span class="badge badge-soft-success">สำเร็จ</span>';
+                        } else if(data == '10') {
+                            return '<span class="badge badge-soft-danger">ยกเลิก</span>';
+                        }
+                    }
+                },
+                { 
+                    'data': '0',
+                    sortable: false,
+                    "render": function ( data, type, full, meta ) {
+                        return '<a href="/mgr/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn mr-2" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a> <a href="/mgr/send/'+data+'" class="btn btn-sm btn-warning editBtn" role="button">ส่งลูกค้าต่อ</a>';
                     }
                 }
-            ]
+            ],
         });
 
-        $('#datatable').on('click', '#changeSta', function() { 
-            var id = $(this).val();
-            swal({
-                title: "เปลี่ยนสถานะ?",
-                text: "คุณต้องการเปลี่ยนสถานะของโควต้านี้ใช่หรือไม่?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willChange) => {
-                if (willChange) {
-                    axios.post('/inbound/system/change-quota.api.php', {
-                        id: id
-                    })
-                    .then(function (response) {
-                        if(response.data.status == 'success'){
-                            swal("สำเร็จ!", "เปลี่ยนสถานะเรียบร้อยแล้ว", "success").then((value) => {
-                                location.reload();
-                            });
-                        } else {
-                            swal("ผิดพลาด!", "กรุณาลองใหม่อีกครั้ง", "error");
-                        }
-                    })
-                }
-            });
+        var count = new Vue({
+            el: '#count',
+            data: {
+                all: 0,
+            },
+            mounted: function () {
+                axios.get('/mgr/system/adsign.api.php?get=count').then(response => {
+                    this.all = response.data.count.all;
+                });
+            }
         });
-
     </script>
+
+
+    <!-- App js -->
     <script src="/assets/js/theme.js"></script>
+
 </body>
 
 </html>

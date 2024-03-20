@@ -210,7 +210,7 @@
                                     <div class="mb-3">
                                         <div class="form-group">
                                             <p>
-                                                <input type="checkbox" class="mr-1" id="condition" v-model="selected.condition">
+                                                <input type="checkbox" class="mr-1" id="condition">
                                                 ข้าพเจ้าได้อ่าน รับทราบและเข้าใจ<a href="https://home.toyotaparagon.com/%e0%b8%99%e0%b9%82%e0%b8%a2%e0%b8%9a%e0%b8%b2%e0%b8%a2%e0%b8%84%e0%b8%a7%e0%b8%b2%e0%b8%a1%e0%b9%80%e0%b8%9b%e0%b9%87%e0%b8%99%e0%b8%aa%e0%b9%88%e0%b8%a7%e0%b8%99%e0%b8%95%e0%b8%b1%e0%b8%a7/" target="_blank">รายละเอียด ข้อกำหนดและเงื่อนไข</a>ในการเก็บรวบรวม ใช้ และ/หรือเปิดเผยข้อมูลส่วนบุคคล ซึ่งเกี่ยวกับข้าพเจ้าในเว็บไซต์นี้โดยตลอดแล้วเห็นว่าถูกต้องตามความประสงค์ของข้าพเจ้า
                                             </p>
                                         </div>

@@ -21,13 +21,30 @@
 		return "$strDay $strMonthThai $strYear";
 	}
 
+    function getTeam($uid){
+        global $db_nms;
+        $team = $db_nms->get('db_user_group');
+        foreach($team as $t){
+            $team_data = json_decode($t['detail']);
+            if(in_array($uid,$team_data)){
+                if($t['name'] == 'S'){
+                    return 'E2';
+                } else {
+                    return $t['name'];
+                }
+            } 
+        }
+
+    }
+
     $man = $db_nms->where('verify',1)->get('db_member');
 
     foreach ($man as $value) {
         $api['data'][] = array(
             $value['id'],
             $value['first_name'].' '.$value['last_name'],
-            $value['nickname']
+            $value['nickname'],
+            getTeam($value['id'])
         );
     }
 

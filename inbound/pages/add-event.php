@@ -95,8 +95,8 @@
 
                                     <div class="mb-3">
                                         <div class="form-group">
-                                            <label for="car">เบอร์โทรศัพท์</label>
-                                            <input type="text" id="tel" v-model="selected.tel" class="form-control" maxlength="10">
+                                            <label for="car">หมายเหตุ: งานที่นำไปใช้</label>
+                                            <textarea id="note" v-model="selected.tel" class="form-control"></textarea>
                                         </div>
                                     </div>
 
@@ -127,36 +127,13 @@
                                 
                                     <div class="mb-3">
                                         <div class="form-group">
-                                            <label for="date">วันที่จอง</label>
+                                            <label for="date">วันที่ใช้งาน</label>
                                             <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d') ?>" @change="getTime" disabled>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="time">เวลาจอง</label>
-                                            <select id="time" name="time" v-model="selected.time" class="form-control" disabled>
-                                                <option value="0">= เลือกเวลา =</option>
-                                                <option v-for="t in bk.time" v-if="t.status == 1" :value="t.id">{{ t.time }}</option>
-                                                <option v-for="t in bk.time" v-if="t.status == 0" :value="t.id" disabled>{{ t.time }} (ไม่ว่าง)</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="type">ประเภทการจอง</label><br />
-                                            <input type="radio" name="typeAdd" @click="typeQuick" value="quick">
-                                            <label class="mr-4" for="quick"> จองด่วน</label>
-
-                                            <input type="radio" name="typeAdd" @click="typeWalk" value="walkin">
-                                            <label for="walkin"> ลูกค้า Walk-in</label>
-                                        </div>
-
-                                        <div class="form-group" id="owner" style="display:none;">
-                                            <label>เซลล์ผู้ดูแล</label><br />
-                                            <select class="form-control search-sales">
-                                            </select>
-
-                                        </div>
-                                        <div class="form-group" id="note" style="display:none;">
-                                            <label>หมายเหตุ</label>
-                                            <textarea v-model="selected.note" class="form-control" id="note" rows="3"></textarea>
+                                            <label for="date">ถึงวันที่</label>
+                                            <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d') ?>" @change="getTime" disabled>
                                         </div>
 
                                         <button class="btn btn-primary waves-effect waves-light" @click="sendData">จองรถ</button>

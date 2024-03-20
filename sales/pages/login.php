@@ -1,1 +1,0 @@
-<img style="width:100%;" src="/assets/images/1000.png">

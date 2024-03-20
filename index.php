@@ -10,15 +10,13 @@
         require_once('404.php');
     });
 
-    /* sales */
-
-    $router->get( '/sales/login', function() {
-        require_once('sales/pages/login.php');
-    });
+    /* Login */
 
     $router->get( '/sales/auth', function() {
         require_once('sales/pages/auth.php');
     });
+
+    /* sales */
 
     $router->get( '/sales/home', function() {
         require_once('sales/pages/home.php');
@@ -99,6 +97,49 @@
     $router->get( '/admin/report/', function() {
         require_once('inbound/pages/report.php');
     });
+
+    $router->get( '/admin/event', function() {
+        require_once('inbound/pages/event.php');
+    });
+
+    $router->get( '/admin/addevent', function() {
+        require_once('inbound/pages/add-event.php');
+    });
+
+    /* mgr */
+
+    $router->get( '/mgr/login', function() {
+        require_once('mgr/pages/login.php');
+    });
+
+    $router->get( '/mgr/auth', function() {
+        require_once('mgr/pages/auth.php');
+    });
+
+    $router->get( '/mgr/home', function() {
+        require_once('mgr/pages/home.php');
+    });
+
+    $router->get( '/mgr/booking', function() {
+        require_once('mgr/pages/booking.php');
+    });
+
+    $router->get( '/mgr/list', function() {
+        require_once('mgr/pages/list.php');
+    });
+
+    $router->get( '/mgr/de/(.*)', function($id) {
+        require_once('mgr/pages/detail.php');
+    });
+
+    $router->get( '/mgr/adsign', function() {
+        require_once('mgr/pages/adsign.php');
+    });
+
+    $router->get( '/mgr/send/(.*)', function($id) {
+        require_once('mgr/pages/send-booking.php');
+    });
+
 
     $router->run();
     

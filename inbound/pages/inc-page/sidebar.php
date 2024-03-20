@@ -20,6 +20,9 @@
                     <a href="/admin/fastlane" class="waves-effect"><i class="mdi mdi-car"></i><span>จองด่วน</span></a>
                 </li>
                 <li>
+                    <a href="/admin/event" class="waves-effect"><i class="mdi mdi-car"></i><span>นำไปทำกิจกรรม</span></a>
+                </li>
+                <li>
                     <a href="/admin/car" class="waves-effect"><i class="mdi mdi-car"></i><span>รถทดลองขับ</span></a>
                 </li>
                 <li>

@@ -81,6 +81,7 @@
                                                     <th>รหัส</th>
                                                     <th width="15px">ชื่อเล่น</th>
                                                     <th>ชื่อ - สกุล</th>
+                                                    <th>ทีม</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -88,6 +89,7 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
+                                                    <td></td>       
                                                     <td></td>
                                                 </tr>
                                             </tbody>
@@ -183,7 +185,8 @@
                 },
                 {'data':'0'},
                 {'data':'2'},
-                {'data':'1'}
+                {'data':'1'},
+                {'data':'3'}
             ]
         });
 

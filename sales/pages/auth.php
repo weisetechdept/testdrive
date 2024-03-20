@@ -43,9 +43,12 @@
 								userId: profile.userId,
 							}).then(response => {
                                 console.log(response.data);
+
 								if(response.data.status == '200'){
 									if(response.data.permission == 'user'){
 										window.location.href = "/sales/home";
+									} else if(response.data.permission == 'leader') {
+										window.location.href = "/mgr/home";
 									} else {
 										window.location.href = "/404";
 									}
