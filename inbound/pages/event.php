@@ -68,19 +68,17 @@
                 <div class="container-fluid">
 
                     <div id="detail">
-
                         <div class="row">
                             <div class="col-12 col-md-4 col-lg-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <a href="/admin/add-event" type="button" class="btn btn-primary btn-block">
-                                            <i class="mdi mdi-plus"></i> เพื่มการทำกิจกรรม
+                                        <a href="/admin/addevent" type="button" class="btn btn-primary btn-block">
+                                            <i class="mdi mdi-plus"></i> เพิ่มการนำรถไปใช้ทำกิจกรรม
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-12 col-lg-10">
                                 <div class="card">
@@ -90,17 +88,21 @@
                                         <table id="datatable" class="table dt-responsive nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>รหัสจอง</th>
+                                                    <th>รหัส</th>
                                                     <th>ชื่อ - สกุล</th>
                                                     <th>หมายเหตุ</th>
-                                                    <th>โมเดล</th>
-                                                    <th>วันที่ใช้งาน</th>
+                                                    <th>รถยนต์</th>
+                                                    <th>จากวันที่</th>
+                                                    <th>ถึงวันที่</th>
                                                     <th>สถานะ</th>
+                                                    <th>วันที่แจ้ง</th>
                                                     <th>จัดการ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                    <td></td>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -189,7 +191,7 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/inbound/system/list.api.php?b=<?php echo $branch; ?>',
+            ajax: '/inbound/system/eventblock.api.php?get=list',
             "columns" : [
                 {'data':'0'},
                 {'data':'1'},
@@ -197,42 +199,54 @@
                 {'data':'3'},
                 {'data':'4'},
                 {'data':'5'},
-                {'data':'6'},
-                {'data':'9',
-                    "render": function ( data, type, full, meta ) {
+                {'data':'6',
+                    render: function(data, type, row, meta){
                         if(data == '1'){
-                            return '<span class="badge badge-success">ออนไลน์</span>';
-                        }else if(data == '2'){
-                            return '<span class="badge badge-primary">เซลล์</span>';
-                        } else if(data == '3') {
-                            return '<span class="badge badge-info">TBR</span>';
-                        } else if(data == '4') {
-                            return '<span class="badge badge-secondary">Walk-in</span>';
-                        }
-                    }
-                },
-                {'data':'7',
-                    "render": function ( data, type, full, meta ) {
-                        if(data == '0'){
-                            return '<span class="badge badge-warning">ยังไม่ทดลองขับ</span>';
-                        }else if(data == '1'){
-                            return '<span class="badge badge-primary">รับกุญแจ</span>';
-                        }else if(data == '2'){
-                            return '<span class="badge badge-success">สำเร็จ</span>';
+                            return '<span class="badge badge-success">ใช้งาน</span>';
                         }else if(data == '10'){
                             return '<span class="badge badge-danger">ยกเลิก</span>';
                         }
                     }
                 },
-                { 
-                    'data': '0',
-                    sortable: false,
-                    "render": function ( data, type, full, meta ) {
-                        return '<a href="/admin/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
+                {'data':'7'},
+                {'data':'0',
+                    render: function(data, type, row, meta){
+                        return '<button onClick="upStatus('+data+')" class="btn btn-outline-warning btn-sm">เปลี่ยนสถานะ</button>';
                     }
                 }
             ]
         });
+
+        function upStatus(id){
+            swal({
+                title: "คุณต้องการเปลี่ยนสถานะใช่หรือไม่?",
+                text: "เมื่อเปลี่ยนสถานะแล้วจะไม่สามารถย้อนกลับได้",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    axios.get('/inbound/system/eventblock.api.php?get=update&id='+id)
+                    .then(function (response) {
+                        if(response.data.status == 'success'){
+                            swal("เปลี่ยนสถานะสำเร็จ", {
+                                icon: "success",
+                            });
+                            $('#datatable').DataTable().ajax.reload();
+                        } else {
+                            swal("เปลี่ยนสถานะไม่สำเร็จ", {
+                                icon: "error",
+                            });
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            });
+        }
+
     </script>
     <script src="/assets/js/theme.js"></script>
 
