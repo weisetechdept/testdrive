@@ -18,7 +18,7 @@ var testdrive = new Vue({
             time: '0',
             carimg: '',
             tel:'',
-            condition: '',
+            condition: false,
             email: ''
         },
         infoDisplay: {
