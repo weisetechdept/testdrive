@@ -1,6 +1,9 @@
+
+
 <?php
     session_start();
     date_default_timezone_set("Asia/Bangkok");
+
     if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'leader'){
         header('Location: /404');
     }
@@ -263,7 +266,7 @@
                 }
             },
             mounted: function() {
-                axios.get('/sales/system/booking.api.php?get=sales').then(function(response) {
+                axios.get('/mgr/system/booking_mgr.api.php?get=sales').then(function(response) {
                     testdrive.sales.id = response.data.sales.id;
                     testdrive.sales.quota = response.data.sales.quota;
                 });
@@ -280,7 +283,7 @@
             },
             methods: {
                 getCar(e) {
-                    axios.post('/sales/system/booking.api.php?get=car', {
+                    axios.post('/mgr/system/booking_mgr.api.php?get=car', {
                         branch: e.target.value
                     }).then(function(response) {
                         
@@ -312,7 +315,7 @@
                 },
                 getTime(e) {
                     document.getElementById('time').disabled = false;
-                    axios.post('/sales/system/booking.api.php?get=time', {
+                    axios.post('/mgr/system/booking_mgr.api.php?get=time', {
                         date: e.target.value,
                         car: testdrive.selected.car
                     }).then(function(response) {
@@ -331,7 +334,7 @@
                         return;
                     } else {
                         
-                        axios.post('/sales/system/booking.ins.php',{
+                        axios.post('/mgr/system/booking.ins.php',{
                             id: testdrive.sales.id,
                             car: testdrive.selected.car,
                             date: testdrive.selected.date,
@@ -345,7 +348,7 @@
                                 swal("สำเร็จ", "เพิ่มสมาชิกเรียบร้อย", "success",{ 
                                     button: "ตกลง"
                                 }).then((value) => {
-                                    window.location.href = "/sales/de/"+response.data.id;
+                                    window.location.href = "/mgr/de/"+response.data.id;
                                 });
                                 
                             } else if(response.data.status == 'failed'){

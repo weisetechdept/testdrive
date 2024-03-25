@@ -15,6 +15,9 @@
                 <li>
                     <a href="/mgr/adsign" class="waves-effect"><i class="mdi mdi-format-list-numbered"></i><span>จัดสรรการจอง</span></a>
                 </li>
+                <li>
+                    <a href="/mgr/booking" class="waves-effect"><i class="mdi mdi-format-list-numbered"></i><span>จองรถทดลองขับ</span></a>
+                </li>
             </ul>
 
         </div>
