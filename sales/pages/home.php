@@ -156,16 +156,7 @@
                             </div>
                         </div>
                     </div> 
-                    <div class="row mt-3">
-                        <a href="/sales/booking">
-                            <img src="/assets/images/bottom-test-drive-1.png" class="img-fluid pr-2 pl-2">
-                        </a>
-                    </div>
-                    <div class="row">
-                        <a href="/sales/list">
-                            <img src="/assets/images/bottom-test-drive-2.png" class="img-fluid pr-2 pl-2">
-                        </a>
-                    </div>
+                    
 
                 </div>
             </div>
