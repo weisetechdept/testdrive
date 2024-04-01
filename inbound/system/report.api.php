@@ -85,6 +85,17 @@
                         $parent = $sales['first_name'].' ('.$sales['nickname'].')';
                     }
 
+                    function getTeam($uid){
+                        global $db_nms;
+                        $team = $db_nms->get('db_user_group');
+                        foreach($team as $t){
+                            $team_data = json_decode($t['detail']);
+                            if(in_array($uid,$team_data)){
+                                return $t['name'];
+                            } 
+                        }
+                    }
+
                     $api['data'][] = array(
                         $value['bk_id'],
                         $value['bk_fname'].' '.$value['bk_lname'],
@@ -93,6 +104,7 @@
                         $value['bk_date'],
                         customTime($value['bk_time']),
                         $parent,
+                        getTeam($value['bk_parent']),
                         $value['bk_where'],
                         $value['bk_status']
                     );
