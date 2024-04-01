@@ -1,10 +1,10 @@
 <?php
     session_start();
-    /*
+    
     if($_SESSION['testdrive_admin'] !== true){
         header('Location: /404');
     }
-    */
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">

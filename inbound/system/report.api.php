@@ -106,7 +106,7 @@
                         $parent,
                         $value['bk_where'],
                         $value['bk_status'],
-                        $value['bk_parent'],
+                        getTeam($value['bk_parent']),
                     );
                 }
             }
