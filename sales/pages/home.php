@@ -239,7 +239,7 @@
                 var formattedDate = currentYear + '-' + currentMonth + '-' + currentDay;
 
                 $('#calendar').fullCalendar({
-                    defaultDate: formattedDate,
+                    defaultDate: new Date(),
                     editable: true,
                     eventLimit: true,
                     events: []
