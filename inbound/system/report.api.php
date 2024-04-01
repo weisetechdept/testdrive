@@ -17,7 +17,7 @@
             } 
         }
     } 
-    
+
 
     if($_GET['ac'] == 'search'){
 
@@ -104,9 +104,9 @@
                         $value['bk_date'],
                         customTime($value['bk_time']),
                         $parent,
-                        getTeam($value['bk_parent']),
                         $value['bk_where'],
-                        $value['bk_status']
+                        $value['bk_status'],
+                        $value['bk_parent'],
                     );
                 }
             }

@@ -1,8 +1,10 @@
 <?php
     session_start();
+    /*
     if($_SESSION['testdrive_admin'] !== true){
         header('Location: /404');
     }
+    */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -267,6 +269,7 @@
             {'data':'4'},
             {'data':'5'},
             {'data':'6'},
+            {'data':'9'},
             {'data':'7',
                 "render": function ( data, type, full, meta ) {
                     if(data == '1'){
