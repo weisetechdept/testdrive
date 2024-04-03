@@ -2,14 +2,14 @@
     session_start();
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
-/*
+
     if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'user'){
         header('Location: /404');
     }
-*/
+
     $id = $_SESSION['sales_user'];
 
-    $db->join('car c','c.car_id = b.bk_car','LEFT');
+    $db->join('car c','c.car_id = b.bk_car','RIGHT');
     $bk = $db->where('bk_parent',$id)->get('booking b');
 
     
