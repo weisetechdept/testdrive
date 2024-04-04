@@ -24,7 +24,8 @@
                     'date' => $date,
                     'title' => 'ว่าง '.$empty,
                     'color' => '#28a745',
-                    'description' => 'ว่าง '.$empty
+                    'description' => 'ว่าง '.$empty,
+                    'url' => '/sales/check?car='.$car.'&date='.$date
                 );
             }
     

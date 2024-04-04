@@ -34,6 +34,10 @@
         require_once('sales/pages/detail.php');
     });
 
+    $router->get( '/sales/check', function() {
+        require_once('sales/pages/checkEvent.php');
+    });
+
     /* frontend */
 
     $router->get( '/booking', function() {

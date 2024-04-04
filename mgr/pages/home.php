@@ -327,7 +327,6 @@
                     axios.get('/mgr/system/event.api.php?c='+this.select.car).then(function(response) {
                         $('#calendar').fullCalendar('removeEvents');
                         $('#calendar').fullCalendar('addEventSource', response.data);
-                        console.log(response.data);
                     });
                 }
             }
