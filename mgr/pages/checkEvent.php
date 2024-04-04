@@ -109,6 +109,10 @@
                                                 <h5>ช่วงเวลาที่ว่าง</h5>
                                             </div>
 
+                                            <div class="row ml-1">
+                                                <h5>รถ {{ car }}</h5>
+                                            </div>
+
                                             <table id="datatable" class="table table-bordered dt-responsive nowrap">
                                                 <thead>
                                                     <tr>
@@ -184,11 +188,13 @@
             el: '#testdrive',
             data: {
                 bked: [],
+                car: ''
             },
             mounted: function() {
                 axios.get('/mgr/system/checkEvent.api.php?date=<?php echo $_GET['date'];?>&car=<?php echo $_GET['car'];?>').then(function(response){
-                    console.log(response.data.bk);
-                    testdrive.bked = response.data.bk
+                    console.log(response.data);
+                    testdrive.bked = response.data.bk,
+                    testdrive.car = response.data.car.model
                 });
             }
         });

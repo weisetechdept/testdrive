@@ -30,6 +30,12 @@
 
     $chk = $db->where('bk_car',$car)->where('bk_date', $date)->get('booking');
 
+    $car_d = $db->where('car_id',$car)->getOne('car');
+
+    $api['car'] = array(
+        'model' => $car_d['car_model'].' - ('.strtoupper($car_d['car_branch']).')'
+    );
+
     $bked = array();
     foreach ($chk as $value) {
         $bked[] = $value['bk_time'];

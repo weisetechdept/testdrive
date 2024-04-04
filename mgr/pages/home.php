@@ -198,7 +198,7 @@
                                     
                                     <div class="row">
                                         <div class="col-12">
-                                            <select class="form-control mb-2" @change="getEvent">
+                                            <select class="form-control mb-2" v-model="select.car" @change="getEvent">
                                                 <option value="0">= เลือกรุ่นรถยนต์ =</option>
                                                 <option v-for="c in car" :value="c.id">{{ c.model }} ({{ c.branch }})</option>
                                             </select>
@@ -324,9 +324,10 @@
             },
             methods: {
                 getEvent(){
-                    axios.get('/sales/system/event.api.php?c='+this.select.car).then(function(response) {
+                    axios.get('/mgr/system/event.api.php?c='+this.select.car).then(function(response) {
                         $('#calendar').fullCalendar('removeEvents');
                         $('#calendar').fullCalendar('addEventSource', response.data);
+                        console.log(response.data);
                     });
                 }
             }

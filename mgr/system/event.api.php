@@ -12,7 +12,7 @@
 
         for ($i = 0; $i < 9; $i++) {
             $date = date('Y-m-d', strtotime($dateToday . ' + ' . $i . ' days'));
-    
+
             $chk = $db->where('bk_car',$car)->where('bk_date', $date)->getValue('booking', 'COUNT(*)');
             $empty = 9-$chk;
     
@@ -29,10 +29,11 @@
                     'title' => 'ว่าง '.$empty,
                     'color' => '#28a745',
                     'description' => 'ว่าง '.$empty,
-                    'url' => '/mgr/check?car='.$car.'&date='.$date,
-                    
+                    'url' => '/mgr/check?car='.$car.'&date='.$date
                 );
             }
+    
+
     
         }
 
