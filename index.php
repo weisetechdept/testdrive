@@ -136,6 +136,10 @@
         require_once('mgr/pages/adsign.php');
     });
 
+    $router->get( '/mgr/check', function() {
+        require_once('mgr/pages/checkEvent.php');
+    });
+
     $router->get( '/mgr/send/(.*)', function($id) {
         require_once('mgr/pages/send-booking.php');
     });

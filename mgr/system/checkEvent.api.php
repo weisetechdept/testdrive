@@ -1,17 +1,11 @@
-<?php 
+<?php
     session_start();
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
 
-    if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'user'){
-        header('Location: /404');
-    }
+    $date = $_GET['date'];
+    $car = $_GET['car'];
 
-    $id = $_SESSION['sales_user'];
-
-    $db->join('car c','c.car_id = b.bk_car','RIGHT');
-    $bk = $db->where('bk_parent',$id)->get('booking b');
-        
     function customTime($time){
         if($time == '1'){
             return '08:00 - 08:45';
@@ -33,19 +27,32 @@
             return '16:00 - 16:45';
         }
     }
-    
 
-    foreach ($bk as $value) {
+    $chk = $db->where('bk_car',$car)->where('bk_date', $date)->get('booking');
 
-        $api['data'][] = array(
-            $value['bk_id'],
-            $value['bk_fname'],
-            $value['car_model'],
-            $value['bk_date'],
-            customTime($value['bk_time']),
-            $value['bk_status'],
-            $value['bk_where'],
-        );
+    $bked = array();
+    foreach ($chk as $value) {
+        $bked[] = $value['bk_time'];
+    }
+
+    for($i=1;$i<=9;$i++){
+
+        if(in_array($i,$bked)){
+            $api['data'][] = array(
+                'date' => $date,
+                'time' => customTime($i),
+                'status' => 'ไม่ว่าง'
+            );
+        }else{
+            $api['data'][] = array(
+                'date' => $date,
+                'time' => customTime($i),
+                'status' => 'ว่าง'
+            );
+        }
     }
 
     echo json_encode($api);
+
+    
+            
