@@ -38,13 +38,13 @@
     for($i=1;$i<=9;$i++){
 
         if(in_array($i,$bked)){
-            $api['data'][] = array(
+            $api['bk'][] = array(
                 'date' => $date,
                 'time' => customTime($i),
                 'status' => 'ไม่ว่าง'
             );
         }else{
-            $api['data'][] = array(
+            $api['bk'][] = array(
                 'date' => $date,
                 'time' => customTime($i),
                 'status' => 'ว่าง'

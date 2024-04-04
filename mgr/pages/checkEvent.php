@@ -1,5 +1,13 @@
 <?php
     session_start();
+
+    if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'leader'){
+        header('Location: /404');
+    }
+
+    if($_GET['date'] == '' || $_GET['car'] == ''){
+        header('Location: /mgr/home');
+    }
  
 ?>
 <!DOCTYPE html>
@@ -88,10 +96,11 @@
 
         <div class="main-content">
 
-            <div class="page-content pt-4" id="testdrive">
+            <div class="page-content pt-4">
                 <div class="container-fluid">
 
-                    <div class="home-content">
+                    <div class="home-content" id="testdrive">
+                        
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card m-b-30">
@@ -109,7 +118,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="bk in booked">
+                                                    <tr v-for="bk in bked">
                                                         <td>{{ bk.date }}</td>
                                                         <td>{{ bk.time }}</td>
                                                         <td>{{ bk.status }}</td>
@@ -147,12 +156,12 @@
             </footer>
         </div>
     </div>
+    
  
 
   
     <div class="menu-overlay"></div>
 
-    <!-- jQuery  -->
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/metismenu.min.js"></script>
@@ -174,12 +183,12 @@
          var testdrive = new Vue({
             el: '#testdrive',
             data: {
-                booked: []
+                bked: [],
             },
-            mounte(){
-                axios.get('/mgr/system/checkEvent.api.php?date=2024-04-04&car=16').then(function(response){
-                    console.log(response.data.data);
-                    this.booked = response.data.data
+            mounted: function() {
+                axios.get('/mgr/system/checkEvent.api.php?date=<?php echo $_GET['date'];?>&car=<?php echo $_GET['car'];?>').then(function(response){
+                    console.log(response.data.bk);
+                    testdrive.bked = response.data.bk
                 });
             }
         });
