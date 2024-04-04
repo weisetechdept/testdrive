@@ -29,7 +29,7 @@
                     'title' => 'ว่าง '.$empty,
                     'color' => '#28a745',
                     'description' => 'ว่าง '.$empty,
-                    'link' => '/mgr/check?car='.$car.'&date='.$date,
+                    'url' => '/mgr/check?car='.$car.'&date='.$date,
                     
                 );
             }
