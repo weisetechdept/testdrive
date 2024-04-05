@@ -21,7 +21,7 @@
         $oneDayLater = date('Y-m-d', strtotime('+1 day'));
         $sevenDaysLater = date('Y-m-d', strtotime('+8 days'));
 
-        if ($date >= $oneDayLater && $date <= $sevenDaysLater) {
+        if ($date <= $sevenDaysLater) {
 
             $chk_uniq = $db->where('bk_date',$request->date)->where('bk_time',$request->time)->where('bk_car',$request->car)->where('bk_status',array('0','1','2'),'IN')->getValue('booking','count(*)');
             if($chk_uniq){
