@@ -33,7 +33,7 @@
 
 		<script src="https://static.line-scdn.net/liff/edge/versions/2.9.0/sdk.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 		<script>
 			liff.init({ liffId: "1654391121-4BxBKYO3" }, () => {
 				if (liff.isLoggedIn()) {
