@@ -202,7 +202,7 @@ var testdrive = new Vue({
                         swal("ไม่สำเร็จ","โปรดทำรายการใหม่อีกครั้ง",response.data.message, {
                             icon: "error",
                         }),
-                        console.log(response.data.message);
+                        console.log(response.data.error);
                         
                     }
                 });
