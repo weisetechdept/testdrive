@@ -82,6 +82,7 @@
             } else {
                 $api['status'] = 'failed';
                 $api['message'] = 'ไม่สามารถจองได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง';
+                $api['error'] = $db->getLastError();
             }
         }
 

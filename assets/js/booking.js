@@ -201,7 +201,9 @@ var testdrive = new Vue({
                     } else {
                         swal("ไม่สำเร็จ","โปรดทำรายการใหม่อีกครั้ง",response.data.message, {
                             icon: "error",
-                        })
+                        }),
+                        console.log(response.data.message);
+                        
                     }
                 });
             }
