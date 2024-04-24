@@ -11,10 +11,12 @@
     $id = $request->id;
     $branch = $request->branch;
     $model = $request->model;
+    $vin = $request->vin;
 
     $data = Array (
         'car_model' => $model,
-        'car_branch' => $branch
+        'car_branch' => $branch,
+        'car_vin' => $vin
     );
 
     $db->where ('car_id', $id);

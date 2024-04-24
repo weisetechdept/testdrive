@@ -110,6 +110,10 @@
                                                 <td><input type="text" v-model="detail.model" class="form-control"></td>
                                             </tr>
                                             <tr>
+                                                <td>เลขถัง</td>
+                                                <td><input type="text" v-model="detail.vin" class="form-control"></td>
+                                            </tr>
+                                            <tr>
                                                 <td>สาขา</td>
                                                 <td>
                                                     <select v-model="detail.branch" class="form-control">
@@ -210,6 +214,7 @@
                                 id: dedrive.detail.id,
                                 model: dedrive.detail.model,
                                 branch: dedrive.detail.branch,
+                                vin: dedrive.detail.vin
                             }).then(function(response) {
                                 if(response.data.status == '200') {
                                     swal("แก้ใขข้อมูลรถทดลองขับเรียบร้อย", {

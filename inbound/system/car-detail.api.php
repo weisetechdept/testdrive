@@ -29,7 +29,8 @@
         'img' => $car['car_img'],
         'branch' => $car['car_branch'],
         'status' => $car['car_status'],
-        'datetime' => DateThai(date('Y-m-d', strtotime($car['car_datetime'])))
+        'datetime' => DateThai(date('Y-m-d', strtotime($car['car_datetime']))),
+        'vin' => $car['car_vin'],
     );
 
     $history = $db->where('up_parent',$id)->get('car_update');

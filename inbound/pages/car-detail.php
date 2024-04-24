@@ -110,6 +110,10 @@
                                                 <td>{{ detail.model }}</td>
                                             </tr>
                                             <tr>
+                                                <td>เลขถัง</td>
+                                                <td>{{ detail.vin }}</td>
+                                            </tr>
+                                            <tr>
                                                 <td>สาขา</td>
                                                 <td>   
                                                     <span v-if="detail.branch == 'ho'">สำนักงานใหญ่ (คลอง 7)</span>
