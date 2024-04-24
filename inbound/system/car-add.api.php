@@ -16,6 +16,7 @@
     $data = array(
         'car_model' => $request->model,
         'car_img' => '',
+        'car_vin' => $request->vin,
         'car_branch' => $request->branch,
         'car_status' => '10',
         'car_sort' => '99',

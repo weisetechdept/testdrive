@@ -93,6 +93,7 @@
                                                     <th>รหัส</th>
                                                     <th>รุ่นรถยนต์</th>
                                                     <th>สาขา</th>
+                                                    <th>เลขถัง</th>
                                                     <th>เลขไมล์</th>
                                                     <th>สถานะ</th>
                                                     <th>วันที่เพิ่ม</th>
@@ -193,6 +194,7 @@
                 {'data':'0'},
                 {'data':'1'},
                 {'data':'3'},
+                {'data':'7'},
                 {'data':'6'},
                 {'data':'4',
                     "render": function ( data, type, full, meta ) {

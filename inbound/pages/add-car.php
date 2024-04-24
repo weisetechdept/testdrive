@@ -106,6 +106,10 @@
                                                 <td><input type="text" v-model="send.model" class="form-control"></td>
                                             </tr>
                                             <tr>
+                                                <td>เลขตัวถัง</td>
+                                                <td><input type="text" v-model="send.vin" class="form-control"></td>
+                                            </tr>
+                                            <tr>
                                                 <td>สาขา</td>
                                                 <td>
                                                     <select v-model="send.branch" class="form-control">
@@ -182,6 +186,7 @@
                 send: {
                     model: '',
                     branch: '0',
+                    vin: ''
                 },
             },
             methods: {
@@ -196,7 +201,8 @@
                         if (willDelete) {
                             axios.post('/inbound/system/car-add.api.php', {
                                 model: dedrive.send.model,
-                                branch: dedrive.send.branch
+                                branch: dedrive.send.branch,
+                                vin: dedrive.send.vin
                             }).then(function(response) {
                                 if(response.data.status == '200') {
 

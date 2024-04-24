@@ -25,7 +25,8 @@
             $branch,
             $q['car_status'],
             date('Y-m-d', strtotime($q['car_datetime'])),
-            $mileage['up_mileage']
+            $mileage['up_mileage'],
+            $q['car_vin']
         );
     }
 
