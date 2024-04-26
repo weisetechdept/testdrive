@@ -175,6 +175,7 @@
     <!-- Datatables init -->
     <script>
        $('#datatable').DataTable({
+            "order": [[ 5, "desc" ]],
             "language": {
                 "paginate": {
                     "previous": "<i class='mdi mdi-chevron-left'>",
