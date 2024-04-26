@@ -176,7 +176,7 @@
     <script>
        $('#datatable').DataTable({
             "order": [[ 5, "desc" ]],
-            "pageLength": 30,
+            "pageLength": 40,
             "language": {
                 "paginate": {
                     "previous": "<i class='mdi mdi-chevron-left'>",
