@@ -265,7 +265,7 @@
                 },
                 id: '<?php echo $id; ?>'
 
-            },
+            }, 
             mounted () {
                 axios.get('/inbound/system/car-detail.api.php?id=<?php echo $id; ?>').then(function(response) {
                     dedrive.detail = response.data.detail;

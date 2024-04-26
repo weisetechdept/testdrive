@@ -9,6 +9,18 @@
 */
     $id = $_GET['id'];
 
+    function getTeam($uid){
+        global $db_nms;
+        $team = $db_nms->get('db_user_group');
+        foreach($team as $t){
+            $tm = array_merge(json_decode($t['detail']),json_decode($t['leader']));
+            //$team_data = json_decode($t['detail']);
+            if(in_array($uid,$tm)){
+                return $t['name'];
+            } 
+        }
+    }
+
     $db->join('car c','c.car_id = b.bk_car','LEFT');
     $bk = $db->where('bk_id',$id)->get('booking b');
         
@@ -51,7 +63,14 @@
             $owner = 'TBR Fastlane';
         } else {
             $parent = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
-            $owner = $parent['first_name'].' ('.$parent['nickname'].')';
+
+            if($parent['nickname'] !== ''){
+                $nickn = ' ('.$parent['nickname'].')';
+            } else {
+                $nickn = '';
+            }
+
+            $owner = $parent['first_name'].''.$nickn.' - '.getTeam($parent['id']);
         }
 
         $api['detail'] = array(

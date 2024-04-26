@@ -58,6 +58,7 @@
             $owner = 'TBR Fastlane';
         } else {
             $parent = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+            
             if($parent['nickname'] !== ''){
                 $nickn = ' ('.$parent['nickname'].')';
             } else {
