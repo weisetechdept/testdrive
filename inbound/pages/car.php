@@ -195,15 +195,7 @@
             "columns" : [
                 {'data':'0'},
                 {'data':'1'},
-                {'data':'3',
-                    "render": function ( data, type, full, meta ) {
-                        if(data == 'ho') {
-                            return '<span class="badge badge-soft-primary">สำนักงานใหญ่</span>';
-                        } else if(data == 'tm'){
-                            return '<span class="badge badge-soft-info">ตลาดไท</span>';
-                        }
-                    }
-                },
+                {'data':'3'},
                 {'data':'8'},
                 {'data':'7'},
                 {'data':'6'},
