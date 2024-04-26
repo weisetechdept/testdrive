@@ -22,7 +22,7 @@
             $q['car_id'],
             $q['car_model'],
             $q['car_img'],
-            $branch,
+            $q['car_branch'],
             $q['car_status'],
             date('Y-m-d', strtotime($q['car_datetime'])),
             $mileage['up_mileage'],
