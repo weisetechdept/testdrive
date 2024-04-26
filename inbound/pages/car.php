@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-12 col-lg-8">
+                            <div class="col-12 col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="mb-4 font-size-18">โควต้า</h4>
@@ -176,6 +176,7 @@
     <script>
        $('#datatable').DataTable({
             "order": [[ 5, "desc" ]],
+            "pageLength": 30,
             "language": {
                 "paginate": {
                     "previous": "<i class='mdi mdi-chevron-left'>",
