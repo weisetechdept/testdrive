@@ -78,7 +78,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>รหัสจอง</th>
-                                                    <th>ชื่อ - สกุล</th>
+                                                    <th>ชื่อลูกค้า</th>
                                                     <th>เบอร์โทรศัพท์</th>
                                                     <th>โมเดล</th>
                                                     <th>วันที่จอง</th>
@@ -168,6 +168,7 @@
     <!-- Datatables init -->
     <script>
        $('#datatable').DataTable({
+            "order": [[ 0, "desc" ]],
             "language": {
                 "paginate": {
                     "previous": "<i class='mdi mdi-chevron-left'>",
