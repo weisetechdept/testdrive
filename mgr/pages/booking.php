@@ -168,7 +168,7 @@
                                     <div class="mb-3">
                                         <div class="form-group">
                                             <label for="date">วันที่จอง</label>
-                                            <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>" max="<?php echo date('Y-m-d', strtotime('+7 days')); ?>" @change="getTime" disabled>
+                                            <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+7 days')); ?>" @change="getTime" disabled>
                                         </div>
 
                                         <div class="form-group">
