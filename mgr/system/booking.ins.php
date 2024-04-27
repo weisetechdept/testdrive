@@ -14,15 +14,16 @@
        
 
     $quota = $db->where("bk_parent",$id)->where('bk_where',2)->where("bk_status",array(0,1),'BETWEEN')->getValue("booking","count(*)");
-
-    if($quota < 3){
+/*
+    if($quota < 3){ 
 
         $date = $request->date;
         $oneDayLater = date('Y-m-d', strtotime('+1 day'));
         $sevenDaysLater = date('Y-m-d', strtotime('+8 days'));
 
         if ($date >= $oneDayLater && $date <= $sevenDaysLater) {
-
+*/
+        if($quota < 3){ 
             $chk_uniq = $db->where('bk_date',$request->date)->where('bk_time',$request->time)->where('bk_car',$request->car)->where('bk_status',array('0','1','2'),'IN')->getValue('booking','count(*)');
             if($chk_uniq){
                 $api['status'] = 'failed';
@@ -60,7 +61,11 @@
                     $api['message'] = 'ไม่สามารถจองได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง';
                 }
             }
-            
+        } else {
+            $api['status'] = 'failed';
+            $api['message'] = 'สิทธิ์การจองคงเหลือไม่เพียงพอ';
+        }
+            /*
         } else {
             $api['status'] = 'failed';
             $api['message'] = 'จองล่วงหน้าอย่างน้อย 1 วัน และไม่เกิน 7 วันเท่านั้น';
@@ -70,7 +75,7 @@
         $api['status'] = 'failed';
         $api['message'] = 'สิทธิ์การจองคงเหลือไม่เพียงพอ';
     }
-
+*/
    
     
 
