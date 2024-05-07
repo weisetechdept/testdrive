@@ -37,7 +37,7 @@
                 exit();
             } else {
                 $rep1 = str_replace(' ','',$request->tel);
-                $tel_fn = str_substr('-','',$rep1);
+                $tel_fn = str_replace('-','',$rep1);
 
                 $data = array(
                     'bk_fname' => $request->fname,
