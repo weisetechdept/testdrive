@@ -15,10 +15,8 @@
     <meta content="A77" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
-    <!-- Plugins css -->
     <link href="/assets/plugins/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css" />
@@ -26,7 +24,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@100;200;300;400;500;600;700;800&family=Kanit:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- App css -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/theme.min.css" rel="stylesheet" type="text/css" />
@@ -309,7 +306,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <!-- third party js ends -->
  
     <script>
          var dedrive = new Vue({
@@ -351,44 +347,23 @@
                     .then((value) => {
                         
                         axios.post('/inbound/system/notify.api.php',{
-                                id: <?php echo $id; ?>,
-                                msg: value
-                            }).then(res => {
-                                console.log(res.data);
-                                if(res.data.status == 200){
-                                    swal("สำเร็จ", "แจ้งเตือนสำเร็จ", "success",{ 
-                                        button: "ตกลง"
-                                    }).then((value) => {
-                                        location.reload(true)
-                                    });
-                                }
-
-                                if(res.data.status == 500){
-                                    swal("ทำรายการไม่สำเร็จ", "แจ้งเตือนไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
-                                        button: "ตกลง"
-                                        }
-                                    );
-                                }
-                            });
-                        
-                        });
-/*
-                    axios.post('/sales/system/notify.api.php',{
-                        id: <?php echo $id; ?>
-                    }).then(res => {
-                        if(res.data.status == 200) 
-                            swal("สำเร็จ", "แจ้งเตือนสำเร็จ", "success",{ 
-                                button: "ตกลง"
-                            }).then((value) => {
-                                location.reload(true)
-                            });
-                        if(res.data.status == 500) 
-                            swal("ทำรายการไม่สำเร็จ", "แจ้งเตือนไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
-                                button: "ตกลง"
+                            id: <?php echo $id; ?>,
+                            msg: value
+                        }).then(res => {
+                            if(res.data.status == 200){
+                                swal("สำเร็จ", "แจ้งเตือนสำเร็จ", "success",{ 
+                                    button: "ตกลง"
+                                })
                             }
-                        );
+                            if(res.data.status == 500){
+                                swal("ทำรายการไม่สำเร็จ", "แจ้งเตือนไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
+                                    button: "ตกลง"
+                                    }
+                                );
+                            }
+                        });
+                        
                     });
-*/
                 },
                 deBooking() {
                     swal({
