@@ -119,21 +119,21 @@
 
                                     <div class="mb-3">
                                         <div class="form-group">
-                                            <label for="car">ชื่อ (ไม่ใส่คำนำหน้า)</label>
+                                            <label for="car">ชื่อลูกค้า (ไม่ใส่คำนำหน้า)</label>
                                             <input type="text" id="fname" v-model="selected.fname" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <div class="form-group">
-                                            <label for="car">นามสกุล</label>
+                                            <label for="car">นามสกุล (ลูกค้า)</label>
                                             <input type="text" id="lname" v-model="selected.lname" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <div class="form-group">
-                                            <label for="car">เบอร์โทรศัพท์</label>
+                                            <label for="car">เบอร์โทรศัพท์ (ลูกค้า)</label>
                                             <input type="text" id="tel" v-model="selected.tel" class="form-control">
                                         </div>
                                     </div>
