@@ -165,10 +165,12 @@
                                     <h4 class="mb-2 font-size-18">จัดการ การจองนี้</h4>
                                     
                                     <div>
-                                        <button v-if="detail.status == '0'" type="button" class="btn btn-info waves-effect waves-light" @click="giveKey">จ่ายกุญแจแล้ว</button>
-                                        <button v-if="detail.status == '1'" type="button" class="btn btn-success waves-effect waves-light" @click="reKey">คืนกุญแจแล้ว</button>
-                                        <button v-if="detail.status == '0'" type="button" class="btn btn-danger waves-effect waves-light" @click="deBooking">ยกเลิกการจอง</button>
-                                        <a href="/admin/detail/mv/<?php echo $id; ?>" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light">ย้ายการจอง</a>
+                                        <button v-if="detail.status == '0'" type="button" class="btn btn-info waves-effect waves-light mb-2" @click="giveKey">จ่ายกุญแจแล้ว</button>
+                                        <button v-if="detail.status == '1'" type="button" class="btn btn-success waves-effect waves-light mb-2" @click="reKey">คืนกุญแจแล้ว</button>
+                                        <button v-if="detail.status == '0'" type="button" class="btn btn-danger waves-effect waves-light mb-2" @click="deBooking">ยกเลิกการจอง</button>
+                                        <a href="/admin/detail/mv/<?php echo $id; ?>" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light  mb-2">ย้ายการจอง</a>
+
+                                        <button v-if="detail.status == '1' || detail.status == '0'" type="button" @click="sendNotify" class="btn btn-outline-info waves-effect waves-light mb-2">แจ้งเอกสารไม่ครบ</button>
                                     </div>
                                     
                                 </div>
@@ -329,25 +331,65 @@
             },
             mounted () {
                 axios.get('/inbound/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
-         
-                    
                     dedrive.detail = response.data.detail;
                     dedrive.docs = response.data.docs;
-                    
                 });
 
                 axios.get('/sales/system/docs.api.php?u=<?php echo $id; ?>')
                 .then(response => (
-                 
-                    
                     dedrive.docs_img = response.data.img,
                     dedrive.up_img = response.data.up_img
-                    
 
                 ))
             },
             
             methods: {
+                sendNotify(){
+                    swal("ใส่ข้อความที่ต้องการแจ้ง (หรือไม่ใส่ก็ได้) :", {
+                        content: "input",
+                    })
+                    .then((value) => {
+                        
+                        axios.post('/inbound/system/notify.api.php',{
+                                id: <?php echo $id; ?>,
+                                msg: value
+                            }).then(res => {
+                                console.log(res.data);
+                                if(res.data.status == 200){
+                                    swal("สำเร็จ", "แจ้งเตือนสำเร็จ", "success",{ 
+                                        button: "ตกลง"
+                                    }).then((value) => {
+                                        location.reload(true)
+                                    });
+                                }
+
+                                if(res.data.status == 500){
+                                    swal("ทำรายการไม่สำเร็จ", "แจ้งเตือนไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
+                                        button: "ตกลง"
+                                        }
+                                    );
+                                }
+                            });
+                        
+                        });
+/*
+                    axios.post('/sales/system/notify.api.php',{
+                        id: <?php echo $id; ?>
+                    }).then(res => {
+                        if(res.data.status == 200) 
+                            swal("สำเร็จ", "แจ้งเตือนสำเร็จ", "success",{ 
+                                button: "ตกลง"
+                            }).then((value) => {
+                                location.reload(true)
+                            });
+                        if(res.data.status == 500) 
+                            swal("ทำรายการไม่สำเร็จ", "แจ้งเตือนไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
+                                button: "ตกลง"
+                            }
+                        );
+                    });
+*/
+                },
                 deBooking() {
                     swal({
                         title: "ยืนยันการยกเลิก",
