@@ -137,6 +137,12 @@
                                                 <option v-for="t in bk.time" v-if="t.status == 0" :value="t.id" disabled>{{ t.time }} (ไม่ว่าง)</option>
                                             </select>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label for="date">หมายเหตุ</label>
+                                            <textarea id="note" class="form-control" v-model="selected.note"></textarea>
+                                        </div>
+
                                         <div class="text-center">
                                             <p>บริษัท จะมอบหมายที่ปรึกษาการขาย<br />ติดต่อเพื่อยืนยันสิทธิ์ (วัน - เวลา) อีกครั้ง</p>
                                         </div>

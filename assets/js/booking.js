@@ -19,7 +19,8 @@ var testdrive = new Vue({
             carimg: '',
             tel:'',
             condition: false,
-            email: ''
+            email: '',
+            note: ''
         },
         infoDisplay: {
             topic: 'เลือกรุ่นรถยนต์ที่ต้องการทดลองขับ',
@@ -189,7 +190,8 @@ var testdrive = new Vue({
                     lname: testdrive.selected.lname,
                     tel: testdrive.selected.tel,
                     condition: testdrive.selected.condition,
-                    email: testdrive.selected.email
+                    email: testdrive.selected.email,
+                    note: testdrive.selected.note
                 }).then(function(response) {
 
                     if(response.data.status == 'success'){

@@ -15,6 +15,7 @@
     $tel = $request->tel;
     $condition = $request->condition;
     $email = $request->email;
+    $note = $request->note;
 
     if(!empty($email)) {
         $email = $request->email;
@@ -44,7 +45,7 @@
                 'bk_time' => $time,
                 'bk_parent' => $parent,
                 'bk_where' => '1',
-                'bk_note' => '',
+                'bk_note' => $note,
                 'bk_status' => 0,
                 'bk_datetime' => date('Y-m-d H:i:s')
             );
