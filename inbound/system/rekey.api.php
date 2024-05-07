@@ -11,10 +11,11 @@
 
     $chk = $db->where('bk_id',$id)->getOne('booking');
 
+    /*
     $docs = $db->where('up_parent', $id)->where('up_status',1)->getValue('car_update','count(*)');
+    if($chk['bk_status'] == '1' && $docs > 0) { */
 
-
-    if($chk['bk_status'] == '1' && $docs > 0) {
+    if($chk['bk_status'] == '1') {
 
         $data = Array (
             'bk_status' => '2'
