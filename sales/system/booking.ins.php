@@ -36,10 +36,13 @@
                 echo json_encode($api);
                 exit();
             } else {
+                $rep1 = str_replace(' ','',$request->tel);
+                $tel_fn = str_substr('-','',$rep1);
+
                 $data = array(
                     'bk_fname' => $request->fname,
                     'bk_lname' => $request->lname,
-                    'bk_tel' => $request->tel,
+                    'bk_tel' => $tel_fn,
                     'bk_email' => '',
                     'bk_car' => $request->car,
                     'bk_date' => $request->date,

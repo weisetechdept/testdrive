@@ -218,6 +218,7 @@
                                                 <option value="1">บัตร ปชช.</option>
                                                 <option value="2">ใบขับขี่ผู้ทดลองขับ</option>
                                                 <option value="3">เอกสารยินยอมข้อตกลงทดลองขับ</option>
+                                                <option value="3">เอกสารยินยอมจาก ผจก.ทีม (กรณีนำรถไปหาลูดค้านอก)</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
