@@ -108,16 +108,19 @@
                                         <thead>
                                             <tr>
                                                 <th>ลูกค้า</th>
-                                                <th>รถยนต์</th>
+                                                
                                                 <th>วัน</th>
                                                 <th>เวลา</th>
+                                                <th>รถยนต์</th>
                                                 <th>ที่มา</th>
+                                                <th>ผู้ดูแล</th>
                                                 <th>สถานะ</th>
                                                 <th>จัดการ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -191,6 +194,7 @@
     <!-- Datatables init -->
     <script>
        $('#datatable').DataTable({
+            "order": [[ 1, "desc" ]],
             "language": {
                 "paginate": {
                     "previous": "<i class='mdi mdi-chevron-left'>",
@@ -208,7 +212,7 @@
             ajax: '/mgr/system/list.api.php?get=list',
             "columns" : [
                 {'data':'1'},
-                {'data':'2'},
+                
                 {'data':'3',
                     "render": function ( data, type, full, meta ) {
                         var d = new Date(data);
@@ -219,6 +223,7 @@
                     }
                 },
                 {'data':'4'},
+                {'data':'2'},
                 {'data':'6',
                     "render": function ( data, type, full, meta ) {
                         if(data == '1'){
@@ -232,6 +237,7 @@
                         }
                     }
                 },
+                {'data':'7'},
                 { 
                     'data': '5',
                     sortable: false,

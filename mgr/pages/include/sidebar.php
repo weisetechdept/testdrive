@@ -10,7 +10,7 @@
                     <a href="/mgr/home" class="waves-effect"><i class="mdi mdi-home"></i><span>หน้าแรก</span></a>
                 </li>
                 <li>
-                    <a href="/mgr/list" class="waves-effect"><i class="mdi mdi-format-list-numbered"></i><span>รายการจอง</span></a>
+                    <a href="/mgr/list" class="waves-effect"><i class="mdi mdi-format-list-numbered"></i><span>รายการจองในทีม</span></a>
                 </li>
                 <li>
                     <a href="/mgr/adsign" class="waves-effect"><i class="mdi mdi-format-list-numbered"></i><span>จัดสรรการจอง</span></a>
