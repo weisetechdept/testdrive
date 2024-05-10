@@ -23,7 +23,7 @@
     });
 
     $router->get( '/sales/booking', function() {
-        require_once('sales/pages/booking.php');
+        require_once('sales/pages/booking-new.php');
     });
 
     $router->get( '/sales/list', function() {
@@ -125,7 +125,7 @@
     });
 
     $router->get( '/mgr/booking', function() {
-        require_once('mgr/pages/booking.php');
+        require_once('mgr/pages/booking-new.php');
     });
 
     $router->get( '/mgr/list', function() {

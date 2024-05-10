@@ -4,7 +4,6 @@
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
 
-    //$id = '271';
     $request = json_decode(file_get_contents('php://input'));
 
     $fname = $request->fname;
@@ -35,6 +34,8 @@
 
             $parent = $man_rand[$rand_rs];
 
+            $time_ar = json_encode(array($time));
+
             $data = array(
                 'bk_fname' => $fname,
                 'bk_lname' => $lname,
@@ -42,7 +43,7 @@
                 'bk_email' => $email,
                 'bk_car' => $car,
                 'bk_date' => $date,
-                'bk_time' => $time,
+                'bk_time' => $time_ar,
                 'bk_parent' => $parent,
                 'bk_where' => '1',
                 'bk_note' => $note,
@@ -80,6 +81,7 @@
                 curl_setopt($ch, CURLOPT_FAILONERROR, true);
 
                 $result = curl_exec($ch);
+
             } else {
                 $api['status'] = 'failed';
                 $api['message'] = 'ไม่สามารถจองได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง';

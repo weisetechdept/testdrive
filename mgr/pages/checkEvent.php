@@ -85,6 +85,12 @@
         .jump-btn a {
             margin: 0 auto;
         }
+        .tb-green {
+            background-color: #e5ffeb;
+        }
+        .tb-red {
+            background-color: #ffe5e5;
+        }
     </style>
 </head>
 
@@ -125,7 +131,8 @@
                                                     <tr v-for="bk in bked">
                                                         <td>{{ bk.date }}</td>
                                                         <td>{{ bk.time }}</td>
-                                                        <td>{{ bk.status }}</td>
+                                                        <td v-if="bk.status == 'ว่าง'" class="tb-green">{{ bk.status }}</td>
+                                                        <td v-else class="tb-red">{{ bk.status }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -192,7 +199,7 @@
             },
             mounted: function() {
                 axios.get('/mgr/system/checkEvent.api.php?date=<?php echo $_GET['date'];?>&car=<?php echo $_GET['car'];?>').then(function(response){
-                    console.log(response.data);
+                    
                     testdrive.bked = response.data.bk,
                     testdrive.car = response.data.car.model
                 });

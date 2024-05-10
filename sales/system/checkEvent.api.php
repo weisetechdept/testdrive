@@ -26,7 +26,7 @@
         }elseif($time == '9'){
             return '16:00 - 16:45';
         }
-    }
+    } 
 
     $chk = $db->where('bk_car',$car)->where('bk_date', $date)->get('booking');
 
@@ -35,12 +35,23 @@
     $api['car'] = array(
         'model' => $car_d['car_model'].' - ('.strtoupper($car_d['car_branch']).')'
     );
-
+/*
     $bked = array();
     foreach ($chk as $value) {
         $bked[] = $value['bk_time'];
     }
+*/
+    $bked = array();
 
+    foreach ($chk as $chked) {
+        
+        $bked_rs = json_decode($chked['bk_time']);
+        foreach ($bked_rs as $value) {
+            $bked[] = $value;
+        }
+
+    } 
+    
     for($i=1;$i<=9;$i++){
 
         if(in_array($i,$bked)){

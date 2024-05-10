@@ -1,11 +1,11 @@
 <?php
     session_start();
     date_default_timezone_set("Asia/Bangkok");
-
+/*
     if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'user'){
         header('Location: /404');
     }
- 
+ */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,6 +67,103 @@
             border: 1px solid #ccc;
             border-radius: 3px;
             
+        }
+
+        .time-note {
+            background-color: #efefef;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .time-note p {
+            margin-bottom: 0;
+        }
+        .select-time {
+            padding: 15px;
+        }
+        .strong {
+            font-weight: bold;
+        }
+
+        .bg {
+        padding: 15px 0 0 15px;
+        }
+
+        .span_pseudo, .chiller_cb span:before, .chiller_cb span:after {
+        content: "";
+        display: inline-block;
+        background: #fff;
+        width: 0;
+        height: 0.2rem;
+        position: absolute;
+        transform-origin: 0% 0%;
+        }
+
+        .chiller_cb {
+        position: relative;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        }
+        .chiller_cb input {
+        display: none;
+        }
+        .chiller_cb input:checked ~ span {
+        background: #7266bb;
+        border-color: #7266bb;
+        }
+        .chiller_cb input:checked ~ span:before {
+        width: 1rem;
+        height: 0.15rem;
+        transition: width 0.1s;
+        transition-delay: 0.3s;
+        }
+        .chiller_cb input:checked ~ span:after {
+        width: 0.4rem;
+        height: 0.15rem;
+        transition: width 0.1s;
+        transition-delay: 0.2s;
+        }
+        .chiller_cb input:disabled ~ span {
+        background: #ececec;
+        border-color: #dcdcdc;
+        }
+        .chiller_cb input:disabled ~ label {
+        color: #dcdcdc;
+        }
+        .chiller_cb input:disabled ~ label:hover {
+        cursor: default;
+        }
+        .chiller_cb label {
+        padding-left: 2rem;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+        margin-bottom:0;
+        }
+        .chiller_cb span {
+        display: inline-block;
+        width: 1.2rem;
+        height: 1.2rem;
+        border: 2px solid #ccc;
+        position: absolute;
+        left: 0;
+        transition: all 0.2s;
+        z-index: 1;
+        box-sizing: content-box;
+        }
+        .chiller_cb span:before {
+        transform: rotate(-55deg);
+        top: 1rem;
+        left: 0.37rem;
+        }
+        .chiller_cb span:after {
+        transform: rotate(35deg);
+        bottom: 0.35rem;
+        left: 0.2rem;
+        }
+        #checktime {
+            display: none;
         }
     </style>
 </head>
@@ -163,22 +260,45 @@
                                         </div>
                                     </div>
                                  
-                                    <div class="mb-3">
+                                  
                                         <div class="form-group">
                                             <label for="date">วันที่จอง</label>
                                             <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+7 days')); ?>" @change="getTime" disabled>
                                         </div>
 
+                                        <div class="mb-3" id="checktime">
+                                        
+
                                         <div class="form-group">
+                                           
+                                           
                                             <label for="time">เวลาจอง</label>
-                                            <select id="time" name="time" v-model="selected.time" class="form-control" disabled>
-                                                <option value="0">= เลือกเวลา =</option>
-                                                <option v-for="t in bk.time" v-if="t.status == 1" :value="t.id">{{ t.time }}</option>
-                                                <option v-for="t in bk.time" v-if="t.status == 0" :value="t.id" disabled>{{ t.time }} (ไม่ว่าง)</option>
-                                            </select>
+                                            <div class="mt-1">
+                                                <div class="form-group">
+                                                    <div class="time-note">
+                                                        <p class="strong">หมายเหตุ</p>
+                                                        <p>1. กรุณาเลือกเวลาที่ต้องการจอง</p>
+                                                        <p>2. สามารถจองได้มากกว่า 1 ช่วงเวลาตามความต้องการ</p>
+                                                        <p>3. เวลาในการจองต้องเป็นช่วงเวลาที่ติดต่อกันเท่านั้น</p>
+                                                    </div>
+                                                    <div class="bg">
+                                                        <div class="chiller_cb" v-for="t in bk.time" :key="t.id">
+                                                            <input type="checkbox" :id="'myCheckbox'+t.id"  @change="handleChange" :value="t.id" :disabled="t.status == 0">
+                                                            <label class="ml-2" :for="'myCheckbox'+t.id">ช่วงเวลา {{ t.time }} น.</label>
+                                                            <span></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            
                                         </div>
-                                        <button class="btn btn-primary waves-effect waves-light" @click="sendData">จองรถ</button>
+                                        
                                     </div>
+
+
+                                        <button class="btn btn-primary waves-effect waves-light" @click="sendData">จองรถ</button>
+                                   
                                        
                                 </div>
                             </div>
@@ -261,7 +381,8 @@
                     time: '0',
                     carimg: '',
                     tel:''
-                }
+                },
+                selectedRows: []
             },
             mounted: function() {
                 axios.get('/sales/system/booking.api.php?get=sales').then(function(response) {
@@ -279,6 +400,18 @@
             
             },
             methods: {
+                handleChange(e) {
+                    const { value, checked } = e.target
+                    if (checked) {
+                        this.selectedRows.push(value)
+                    } else {
+                        const index = this.selectedRows.findIndex(id => id === value)
+                        if (index > -1) {
+                            this.selectedRows.splice(index, 1)
+                        }
+                    }
+                    console.log(this.selectedRows)
+                },
                 getCar(e) {
                     axios.post('/sales/system/booking.api.php?get=car', {
                         branch: e.target.value
@@ -293,7 +426,8 @@
                         testdrive.selected.time = '0';
 
                         document.getElementById('date').disabled = true;
-                        document.getElementById('time').disabled = true;
+                        //document.getElementById('time').disabled = true;
+                        document.getElementById('checktime').style.display = 'none';
                         
                         document.getElementById('carimg').style.display = 'none';
                         
@@ -309,10 +443,13 @@
 
                     testdrive.selected.date = '';
                     testdrive.selected.time = '0';
+
+                    document.getElementById('checktime').style.display = 'none';
                 },
                 getTime(e) {
-                    document.getElementById('time').disabled = false;
-                    axios.post('/sales/system/booking.api.php?get=time', {
+                    //document.getElementById('time').disabled = false;
+                    document.getElementById('checktime').style.display = 'block';
+                    axios.post('/sales/system/booking.api.php?get=time-new', {
                         date: e.target.value,
                         car: testdrive.selected.car
                     }).then(function(response) {
@@ -331,16 +468,17 @@
                         return;
                     } else {
                         
-                        axios.post('/sales/system/booking.ins.php',{
+                        axios.post('/sales/system/booking-new.ins.php',{
                             id: testdrive.sales.id,
                             car: testdrive.selected.car,
                             date: testdrive.selected.date,
-                            time: testdrive.selected.time,
+                            time: testdrive.selectedRows,
                             fname: testdrive.selected.fname,
                             lname: testdrive.selected.lname,
                             tel: testdrive.selected.tel
                         }).then(function(response) {
                             //console.log(response.data);
+
                             if(response.data.status == 'success'){
                                 swal("สำเร็จ", "เพิ่มสมาชิกเรียบร้อย", "success",{ 
                                     button: "ตกลง"

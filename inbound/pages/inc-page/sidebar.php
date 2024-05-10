@@ -16,18 +16,22 @@
                         <li><a href="/admin/booking/tm">ตลาดไท</a></li>
                     </ul>
                 </li>
+                <!--
                 <li>
                     <a href="/admin/fastlane" class="waves-effect"><i class="mdi mdi-car"></i><span>จองด่วน</span></a>
                 </li>
                 <li>
                     <a href="/admin/event" class="waves-effect"><i class="mdi mdi-car"></i><span>นำไปทำกิจกรรม</span></a>
                 </li>
+                -->
                 <li>
                     <a href="/admin/car" class="waves-effect"><i class="mdi mdi-car"></i><span>รถทดลองขับ</span></a>
                 </li>
+                <!--
                 <li>
                     <a href="/admin/fuel" class="waves-effect"><i class="mdi mdi-car"></i><span>เช็คน้ำมัน, เลขไมล์</span></a>
                 </li>
+                -->
                 <li>
                     <a href="/admin/quota" class="waves-effect"><i class="mdi mdi-account"></i><span>โควต้า</span></a>
                 </li>

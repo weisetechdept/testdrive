@@ -108,7 +108,7 @@ var testdrive = new Vue({
         },
         getTime(e) {
             document.getElementById('time').disabled = false;
-            axios.post('/sales/system/booking.api.php?get=time', {
+            axios.post('/sales/system/booking.api.php?get=time-new', {
                 date: e.target.value,
                 car: testdrive.selected.car
             }).then(function(response) {

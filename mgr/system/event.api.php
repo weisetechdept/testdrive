@@ -11,10 +11,20 @@
     if($car !== 0){
 
         for ($i = 0; $i < 9; $i++) {
+
             $date = date('Y-m-d', strtotime($dateToday . ' + ' . $i . ' days'));
 
-            $chk = $db->where('bk_car',$car)->where('bk_date', $date)->getValue('booking', 'COUNT(*)');
-            $empty = 9-$chk;
+            $chk = $db->where('bk_car',$car)->where('bk_date', $date)->get('booking');
+            if($chk){
+
+                foreach ($chk as $c) {
+                    $booked = json_decode($c['bk_time']);
+                    $counted += count($booked);
+                }
+
+            }
+
+            $empty = 9-$counted;
     
             if($empty == 0){
                 $api['events'][] = array(
@@ -32,8 +42,8 @@
                     'url' => '/mgr/check?car='.$car.'&date='.$date
                 );
             }
-    
 
+            $counted = 0;
     
         }
 

@@ -212,7 +212,6 @@
             ajax: '/mgr/system/list.api.php?get=list',
             "columns" : [
                 {'data':'1'},
-                
                 {'data':'3',
                     "render": function ( data, type, full, meta ) {
                         var d = new Date(data);

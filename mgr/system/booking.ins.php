@@ -11,7 +11,6 @@
     $id = $_SESSION['sales_user'];
 
     $request = json_decode(file_get_contents('php://input'));
-       
 
     $quota = $db->where("bk_parent",$id)->where('bk_where',2)->where("bk_status",array(0,1),'BETWEEN')->getValue("booking","count(*)");
 /*
@@ -21,7 +20,7 @@
         $oneDayLater = date('Y-m-d', strtotime('+1 day'));
         $sevenDaysLater = date('Y-m-d', strtotime('+8 days'));
 
-        if ($date >= $oneDayLater && $date <= $sevenDaysLater) {
+        if ($date >= $oneDayLater && $date <= $sevenDaysLater) { 
 */
         if($quota < 3){ 
             $chk_uniq = $db->where('bk_date',$request->date)->where('bk_time',$request->time)->where('bk_car',$request->car)->where('bk_status',array('0','1','2'),'IN')->getValue('booking','count(*)');
@@ -37,10 +36,14 @@
                 echo json_encode($api);
                 exit();
             } else {
+
+                $rep1 = str_replace(' ','',$request->tel);
+                $tel_fn = str_replace('-','',$rep1);
+            
                 $data = array(
                     'bk_fname' => $request->fname,
                     'bk_lname' => $request->lname,
-                    'bk_tel' => $request->tel,
+                    'bk_tel' => $tel_fn,
                     'bk_email' => '',
                     'bk_car' => $request->car,
                     'bk_date' => $request->date,

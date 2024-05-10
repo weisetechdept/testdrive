@@ -1,5 +1,5 @@
 <?php
-
+ 
     session_start();
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
@@ -78,13 +78,14 @@
     }
 
     if($_GET['get'] == "time"){
+        
         $i = 1;
         $request = json_decode(file_get_contents('php://input'));
         $date = $request->date;
         $car = $request->car;
 
         $t[0] = array('id' => 1,'time' => '08:00 - 08:45');
-        $t[1] = array('id' => 2,'time' => '09:00 - 09:45');
+        $t[1] = array('id' => 2,'time' => '09:00 - 09:45'); 
         $t[2] = array('id' => 3,'time' => '10:00 - 10:45');
         $t[3] = array('id' => 4,'time' => '11:00 - 11:45');
         $t[4] = array('id' => 5,'time' => '12:00 - 12:45');

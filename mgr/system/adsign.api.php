@@ -37,6 +37,57 @@
             }
         }
 
+        function customTime2($time){
+
+            $alltime = json_decode($time);
+
+            $first = reset($alltime);
+            $last = end($alltime);
+            
+            if($first == '1'){
+                $first = '08:00';
+            } elseif($first == '2'){
+                $first = '09:00';
+            } elseif($first == '3'){
+                $first = '10:00';
+            } elseif($first == '4'){
+                $first = '11:00';
+            } elseif($first == '5'){
+                $first = '12:00';
+            } elseif($first == '6'){
+                $first = '13:00';
+            } elseif($first == '7'){
+                $first = '14:00';
+            } elseif($first == '8'){
+                $first = '15:00';
+            } elseif($first == '9'){
+                $first = '16:00';
+            }
+
+            if($last == '1'){
+                $last = '08:45';
+            } elseif($last == '2'){
+                $last = '09:45';
+            } elseif($last == '3'){
+                $last = '10:45';
+            } elseif($last == '4'){
+                $last = '11:45';
+            } elseif($last == '5'){
+                $last = '12:45';
+            } elseif($last == '6'){
+                $last = '13:45';
+            } elseif($last == '7'){
+                $last = '14:45';
+            } elseif($last == '8'){
+                $last = '15:45';
+            } elseif($last == '9'){
+                $last = '16:45';
+            }
+
+            return $first.' - '.$last;
+
+        }
+
         foreach ($bk as $value) {
 
             $api['data'][] = array(
@@ -44,7 +95,7 @@
                 $value['bk_fname'],
                 $value['car_model'],
                 $value['bk_date'],
-                customTime($value['bk_time']),
+                customTime2($value['bk_time']),
                 $value['bk_status'],
                 $value['bk_where'],
             );

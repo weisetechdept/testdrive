@@ -3,11 +3,11 @@
     session_start();
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
-/*
-    if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'user'){
-        header('Location: /404');
+
+    if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'leader'){
+        header('Location: /404'); 
     }
-*/
+
     $id = $_SESSION['sales_user'];
     function areConsecutive($arr, $n) 
     { 
@@ -57,19 +57,16 @@
     $n = count($time);
 
     if($n < 1){
-
         $api = array('status' => 'failed','message' => 'กรุณาเลือกเวลาที่ต้องการจอง');
-        exit();
-
     } else {
-        
+
         if(areConsecutive($time, $n) == true) {
 
             $quota = $db->where("bk_parent",$id)->where('bk_where',2)->where("bk_status",array(0,1),'BETWEEN')->getValue("booking","count(*)");
             if($quota < 3){
 
-                $chk_uniq = $db->where('bk_car',$request->car)->where('bk_date',$request->date)->where('bk_status',array('0','1','2'),'IN')->getValue('booking','count(*)');
-                
+                $chk_uniq = $db->where('bk_car',$request->car)->where('bk_date',$request->date)->where('bk_status',array('0','1','2'),'IN')->get('booking');
+
                 $chk = json_decode($chk_uniq['bk_time']);
                 foreach ($chk as $value) {
                     array_search($value, $time) !== false ? $api['chk_time'] = 'failed' : '';
@@ -81,16 +78,18 @@
                     exit();
                 } else {
 
-                    if(empty($request->car) || empty($request->date) || empty($request->time) || empty($request->fname) || empty($request->lname) || empty($request->tel)) {
-                       
+                    if (empty($request->car) || empty($request->date) || empty($request->fname) || empty($request->time) || empty($request->lname) || empty($request->tel)) {
+                    
                         $api['status'] = 'failed';
                         $api['message'] = 'โปรดกรอกข้อมูลให้ครบถ้วน';
-                        
-                    } else {
     
+                    } else {
+
                         $rep1 = str_replace(' ','',$request->tel);
                         $tel_fn = str_replace('-','',$rep1);
-    
+
+                        sort($time);
+                        
                         $data = array(
                             'bk_fname' => $request->fname,
                             'bk_lname' => $request->lname,
@@ -98,7 +97,7 @@
                             'bk_email' => '',
                             'bk_car' => $request->car,
                             'bk_date' => $request->date,
-                            'bk_time' => $request->time,
+                            'bk_time' => json_encode($time),
                             'bk_parent' => $id,
                             'bk_where' => '2',
                             'bk_note' => '',
@@ -117,20 +116,23 @@
                     }
 
                 }
+                
 
             } else {
+
                 $api['status'] = 'failed';
                 $api['message'] = 'สิทธิ์การจองคงเหลือไม่เพียงพอ';
+
             }
 
         } else {
 
             $api = array('status' => 'failed','message' => 'เวลาที่เลือกไม่ต่อเนื่องกัน กรุณาเลือกเวลาใหม่อีกครั้ง');
-        
-        }
-    }
 
+        }
+
+    }
 
     echo json_encode($api);
 
-    
+
