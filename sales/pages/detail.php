@@ -199,8 +199,10 @@
                                     <div class="check-list">
                                         <p v-if="docs.docs2 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> ใบขับขี่ผู้ทดลองขับ</p>
                                         <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> ใบขับขี่ผู้ทดลองขับ</p>
-                                        <p v-if="docs.docs3 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> เอกสารยินยอมข้อตกลงทดลองขับ</p>
-                                        <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> เอกสารยินยอมข้อตกลงทดลองขับ</p>
+                                        <div v-if="detail.where == 2">
+                                            <p v-if="docs.docs3 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> เอกสารยินยอมข้อตกลงทดลองขับ</p>
+                                            <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> ใบยินยอมข้อตกลงทดลองขับ</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +219,6 @@
                                         <div class="form-group">
                                             <select class="form-control" v-model="file_upload.type">
                                                 <option value="0">เลือกประเภทเอกสาร</option>
-                                                <option value="1">บัตร ปชช.</option>
                                                 <option value="2">ใบขับขี่ผู้ทดลองขับ</option>
                                                 <option value="3">เอกสารยินยอมข้อตกลงทดลองขับ</option>
                                                 <option value="3">เอกสารยินยอมจาก ผจก.ทีม (กรณีนำรถไปหาลูดค้านอก)</option>
