@@ -99,8 +99,8 @@
                             'bk_date' => $request->date,
                             'bk_time' => json_encode($time),
                             'bk_parent' => $id,
-                            'bk_where' => '2',
-                            'bk_note' => '',
+                            'bk_where' => $request->where,
+                            'bk_note' => $request->note,
                             'bk_status' => 0,
                             'bk_datetime' => date('Y-m-d H:i:s')
                         );

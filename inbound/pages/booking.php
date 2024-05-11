@@ -202,6 +202,10 @@
                             return '<span class="badge badge-info">TBR</span>';
                         } else if(data == '4') {
                             return '<span class="badge badge-secondary">Walk-in</span>';
+                        }  else if(data == '5') {
+                            return '<span class="badge badge-secondary">ทำคอนเท้นต์</span>';
+                        } else if(data == '6') {
+                            return '<span class="badge badge-secondary">ออกบูธ</span>';
                         }
                     }
                 },

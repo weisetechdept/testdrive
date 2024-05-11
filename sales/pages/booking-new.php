@@ -165,6 +165,67 @@
         #checktime {
             display: none;
         }
+
+
+        .rdo-grp {
+            margin: 15px 0 15px;
+}
+.rdo-grp label {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  padding: 6px 8px;
+  border-radius: 20px;
+  float: left;
+  transition: all 0.2s ease;
+}
+.rdo-grp label:hover {
+  background: rgba(125,100,247,0.06);
+}
+.rdo-grp label:not(:last-child) {
+  margin-right: 16px;
+}
+.rdo-grp label span {
+  vertical-align: middle;
+}
+.rdo-grp label span:first-child {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: #e8eaed;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+}
+.rdo-grp label span:first-child:after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+.rdo-grp label:hover span:first-child {
+  background: #7d64f7;
+}
+.rdo-grp input {
+  display: none;
+}
+.rdo-grp input:checked + label span:first-child {
+  background: #7d64f7;
+}
+.rdo-grp input:checked + label span:first-child:after {
+  transform: scale(0.5);
+}
+.to-event {
+    display: none;
+}
+.bk_detail {
+    display: none;
+}
     </style>
 </head>
 
@@ -209,6 +270,30 @@
                     </div>
 
                     <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <div class="form-group">
+                                            <label>จุดประสงค์การจอง</label>
+                                            <div class="form-group">
+                                                <div class="rdo-grp">
+                                                    <input id="rdo1" type="radio" @click="changeObj01" name="radio"/>
+                                                    <label for="rdo1"><span></span><span>ทดลองขับ</span></label>
+                                                    <input id="rdo2" type="radio" @click="changeObj02" name="radio"/>
+                                                    <label for="rdo2"><span></span><span>ทำคอนเท้นต์</span></label>
+                                                    <input id="rdo3" type="radio" @click="changeObj03" name="radio"/>
+                                                    <label for="rdo3"><span></span><span>ออกบูธ</span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row bk_detail">
 
                         <div class="col-12">
                             <div class="card">
@@ -216,22 +301,29 @@
 
                                     <div class="mb-3">
                                         <div class="form-group">
-                                            <label for="car">ชื่อลูกค้า (ไม่ใส่คำนำหน้า)</label>
+                                            <label for="car">{{ display.input01 }}</label>
                                             <input type="text" id="fname" v-model="selected.fname" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <div class="form-group">
-                                            <label for="car">นามสกุล (ลูกค้า)</label>
+                                            <label for="car">{{ display.input02 }}</label>
                                             <input type="text" id="lname" v-model="selected.lname" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <div class="form-group">
-                                            <label for="car">เบอร์โทรศัพท์ (ลูกค้า)</label>
+                                            <label for="car">{{ display.input03 }}</label>
                                             <input type="text" id="tel" v-model="selected.tel" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 to-event">
+                                        <div class="form-group">
+                                            <label>ชื่องาน และสถานที่นำรถไปออกบูธ</label>
+                                            <textarea id="tel" class="form-control"></textarea>
                                         </div>
                                     </div>
 
@@ -364,6 +456,11 @@
        var testdrive = new Vue({
             el: '#testdrive',
             data: {
+                display: {
+                    input01: '',
+                    input02: '',
+                    input03: '',
+                },
                 sales:{
                     id: '',
                     quota: 0
@@ -380,7 +477,9 @@
                     date: '',
                     time: '0',
                     carimg: '',
-                    tel:''
+                    tel:'',
+                    note:'',
+                    where:''
                 },
                 selectedRows: []
             },
@@ -400,6 +499,32 @@
             
             },
             methods: {
+                changeObj01: function() {
+                    this.display.input01 = 'ชื่อลูกค้า (ไม่ใส่คำนำหน้า)';
+                    this.display.input02 = 'นามสกุล (ลูกค้า)';
+                    this.display.input03 = 'เบอร์โทรศัพท์ (ลูกค้า)';
+                    document.querySelector('.to-event').style.display = 'none';
+                    document.querySelector('.bk_detail').style.display = 'block';
+                    this.selected.note = '';
+                    this.selected.where = '2';
+                },
+                changeObj02: function() {
+                    this.display.input01 = 'ชื่อ (ผู้รับผิดชอบ)';
+                    this.display.input02 = 'นามสกุล (ผู้รับผิดชอบ)';
+                    this.display.input03 = 'เบอร์โทรศัพท์ (ผู้รับผิดชอบ)';
+                    document.querySelector('.to-event').style.display = 'none';
+                    document.querySelector('.bk_detail').style.display = 'block';
+                    this.selected.note = '';
+                    this.selected.where = '5';
+                },
+                changeObj03: function() {
+                    this.display.input01 = 'ชื่อ (ผู้รับผิดชอบ)';
+                    this.display.input02 = 'นามสกุล (ผู้รับผิดชอบ)';
+                    this.display.input03 = 'เบอร์โทรศัพท์ (ผู้รับผิดชอบ)';
+                    document.querySelector('.to-event').style.display = 'block';
+                    document.querySelector('.bk_detail').style.display = 'block';
+                    this.selected.where = '6';
+                },
                 handleChange(e) {
                     const { value, checked } = e.target
                     if (checked) {
@@ -475,7 +600,9 @@
                             time: testdrive.selectedRows,
                             fname: testdrive.selected.fname,
                             lname: testdrive.selected.lname,
-                            tel: testdrive.selected.tel
+                            tel: testdrive.selected.tel,
+                            where: testdrive.selected.where,
+                            note: testdrive.selected.note
                         }).then(function(response) {
                             //console.log(response.data);
 

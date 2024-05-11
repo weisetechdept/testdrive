@@ -147,6 +147,9 @@
                                                 <td v-else-if="detail.where == '2'"><span class="badge badge-soft-primary">เซลล์</span></td>
                                                 <td v-else-if="detail.where == '3'"><span class="badge badge-soft-info">TBR</span></td>
                                                 <td v-else-if="detail.where == '4'"><span class="badge badge-soft-secondary">Walk-in</span></td>
+                                                <td v-else-if="detail.where == '5'"><span class="badge badge-soft-secondary">ทำคอนเท้นต์</span></td>
+                                                <td v-else-if="detail.where == '6'"><span class="badge badge-soft-secondary">ออกบูธ</span></td>
+
                                             </tr>
                                         </tbody>
                                     </table>
