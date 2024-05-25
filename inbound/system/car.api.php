@@ -6,6 +6,26 @@
     }
     date_default_timezone_set("Asia/Bangkok");
 
+    if($_GET['b'] == 'ho'){
+        
+        $db->where('car_branch','ho');
+
+    } else if($_GET['b'] == 'tm'){
+
+        $db->where('car_branch','tm');
+
+    }
+
+    if($_GET['s'] == '1'){
+
+        $db->where('car_status',1);
+
+    } else if($_GET['s'] == '10') {
+
+        $db->where('car_status',10);
+
+    }
+
     $quota = $db->get('car');
 
     foreach($quota as $q) {

@@ -79,6 +79,24 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-12 col-md-8 col-lg-9">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="/admin/car?b=ho&s=1" type="button" class="btn btn-outline-primary mr-2">
+                                            สำนัดงานใหญ่
+                                        </a>
+                           
+                                        <a href="/admin/car?b=tm&s=1" type="button" class="btn btn-outline-info mr-2">
+                                            สาขาตลาดไท
+                                        </a>
+                            
+                                        <a href="/admin/car?s=10" type="button" class="btn btn-outline-danger">
+                                            รถที่ไม่ได้ใช้งาน
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -191,7 +209,7 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/inbound/system/car.api.php',
+            ajax: '/inbound/system/car.api.php?b=<?php echo $_GET['b'];?>&s=<?php echo $_GET['s']; ?>',
             "columns" : [
                 {'data':'0'},
                 {'data':'1'},
