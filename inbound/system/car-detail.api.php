@@ -19,6 +19,7 @@
 		return "$strDay $strMonthThai $strYear";
 	}
 
+
     $id = $_GET['id'];
 
     $car = $db->where('car_id',$id)->getOne('car');
@@ -33,13 +34,17 @@
         'vin' => $car['car_vin'],
     );
 
-    $history = $db->where('up_parent',$id)->get('car_update');
+    $db->join('booking b','b.bk_id = c.up_parent','LEFT');
+    $mileage = $db->where('bk_car',$car['car_id'])->orderBy('up_id','DESC')->get('car_update c');
 
-    foreach($history as $h){
-        $api['history'][] = array(
-            'date' => DateThai(date('Y-m-d', strtotime($h['up_datetime']))),
-            'mileage' => $h['up_mileage']
+    foreach ($mileage as $value) {
+        $api['mileage'][] = array(
+            'mileage' => number_format($value['up_mileage']).' กม.',
+            'datetime' => DateThai(date('Y-m-d', strtotime($value['up_datetime']))),
+            'customer' => $value['bk_fname'],
+            'id' => $value['bk_id'],
         );
     }
-    
+
+
     echo json_encode($api);

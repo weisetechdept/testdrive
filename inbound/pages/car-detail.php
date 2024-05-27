@@ -188,12 +188,17 @@
                                                 <tr>
                                                     <th>วันที่</th>
                                                     <th>เลขไมล์</th>
+                                                    <th>ลูกค้า</th>
+                                                    <th>รายละเอียด</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="h in detail.history">
-                                                    <td>{{ h.date }}</td>
-                                                    <td>{{ h.mileage }}</td>
+                                                <tr v-for="mh in mileage">
+                                                    <td>{{ mh.datetime }}</td>
+                                                    <td>{{ mh.mileage }}</td>
+                                                    <td>{{ mh.customer }}</td>
+                                                    <td><a :href="'/admin/de/'+ mh.id" class="btn btn-primary btn-sm">ดูรายละเอียด</button></td>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -263,12 +268,14 @@
                 file_upload: {
                     file: null,
                 },
-                id: '<?php echo $id; ?>'
+                id: '<?php echo $id; ?>',
+                mileage: [],
 
             }, 
             mounted () {
                 axios.get('/inbound/system/car-detail.api.php?id=<?php echo $id; ?>').then(function(response) {
                     dedrive.detail = response.data.detail;
+                    dedrive.mileage = response.data.mileage;
                 });
             },
             methods: {

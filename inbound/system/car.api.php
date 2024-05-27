@@ -4,6 +4,7 @@
     if($_SESSION['testdrive_admin'] !== true){
         header('Location: /404');
     }
+
     date_default_timezone_set("Asia/Bangkok");
 
     if($_GET['b'] == 'ho'){
@@ -30,7 +31,10 @@
 
     foreach($quota as $q) {
 
-        $mileage = $db->where('up_parent',$q['car_id'])->orderBy('up_id','DESC')->getOne('car_update');
+        //$db->join('car_update u','c.car_id = u.up_id','LEFT');
+        $db->join('booking b','b.bk_id = c.up_parent','LEFT');
+        $mileage = $db->where('bk_car',$q['car_id'])->orderBy('up_id','DESC')->getOne('car_update c');
+        
 
         if($q['car_branch'] == 'ho'){
             $branch = 'สำนักงานใหญ่';
@@ -45,9 +49,11 @@
             $q['car_branch'],
             $q['car_status'],
             date('Y-m-d', strtotime($q['car_datetime'])),
-            $mileage['up_mileage'],
+            number_format($mileage['up_mileage']),
             $q['car_vin']
         );
     }
 
-    echo json_encode($api);
+
+
+   echo json_encode($api);
