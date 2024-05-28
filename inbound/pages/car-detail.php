@@ -211,7 +211,7 @@
                                     </div>
 
                                     <div class="mt-1">
-                                        <a href="/admin/mileage/<?php echo $id;?>" class="btn btn-primary ml-2">ดูทั้งหมด</a>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#exampleModal">ดูทั้งหมด</button>
                                     </div>
                                     
                                 </div>
@@ -254,8 +254,8 @@
                                     <div class="mb-3">
                                         <h4 class="card-title mb-0">ปริมาณน้ำมัน</h4>
                                     </div>
-
                                     <img :src="fuel" class="img-fluid">
+                                    <a :href="fuel" target="_blank" class="btn btn-primary mt-2">ดูรูปเต็ม</a>
                                 </div>
                             </div>
                         </div>
@@ -288,6 +288,61 @@
     
   
     <div class="menu-overlay"></div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Default Modal</h4>
+                    <p class="card-subtitle mb-4">Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page.</p>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+
+                    <!-- Modal -->
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">ประวัติการใช้งานรถยนต์</h5>
+                                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <table class="table table-borderless mb-0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>วันที่</th>
+                                            <th>เลขไมล์</th>
+                                            <th>ลูกค้า</th>
+                                            <th>รายละเอียด</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Value 1</td>
+                                            <td>Value 2</td>
+                                            <td>Value 3</td>
+                                            <td>Value 4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">ปิด</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card-body-->
+            </div>
+            <!-- end card -->
+        </div>
+    </div>
 
     <!-- jQuery  -->
     <script src="/assets/js/jquery.min.js"></script>
