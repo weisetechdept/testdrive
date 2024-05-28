@@ -71,6 +71,8 @@
         .swal-text {
             text-align: center;
         }
+        
+
     </style>
 </head>
 
@@ -95,6 +97,7 @@
                     </div>
 
                     <div class="row mt-2">
+
                         <div class="col-lg-4 col-md-12">
                             <div class="card m-b-30">
                                 <div class="card-body">
@@ -131,24 +134,95 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row mt-2">
-                        <div class="col-lg-4 col-md-12">
-                            <div class="card m-b-30">
-                                <div class="card-body">
-                                    <h4 class="card-title">จัดการรถทดลองขับ</h4>
+                                    <h4 class="card-title mt-4">จัดการรถทดลองขับ</h4>
                                     <a href="/admin/ce/<?php echo $id;?>" class="btn btn-warning mr-1">แก้ใข</a> <buttons  v-if="detail.status == '10'" class="btn btn-success" @click="Active">เปิดใช้งาน</buttons> <buttons v-else-if="detail.status == '1'" class="btn btn-danger" @click="deActive">ปิดใช้งาน</buttons>
                                     
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row mt-2">
+                       
+                    
+
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card m-b-30">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h4 class="card-title mb-0">ประวัติการใช้งานรถยนต์</h4>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="card bg-success border-success">
+                                                <div class="card-body">
+                                                    <div class="mb-2">
+                                                        <h5 class="card-title mb-0 text-white">ทดลองขับ</h5>
+                                                    </div>
+                                                    <div class="row d-flex align-items-center">
+                                                        <div class="col-8">
+                                                            <h2 class="d-flex align-items-center text-white mb-0">
+                                                                {{ count.round }} ครั้ง
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="card bg-info border-info">
+                                                <div class="card-body">
+                                                    <div class="mb-2">
+                                                        <h5 class="card-title mb-0 text-white">ระยะทางเฉลี่ย (กม.)</h5>
+                                                    </div>
+                                                    <div class="row d-flex align-items-center">
+                                                        <div class="col-12">
+                                                            <h2 class="d-flex align-items-center text-white mb-0">
+                                                                {{ count.avg_mileage }} / ครั้ง
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless mb-0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>วันที่</th>
+                                                    <th>เลขไมล์</th>
+                                                    <th>ลูกค้า</th>
+                                                    <th>รายละเอียด</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="mh in mileage">
+                                                    <td>{{ mh.datetime }}</td>
+                                                    <td>{{ mh.mileage }}</td>
+                                                    <td>{{ mh.customer }}</td>
+                                                    <td><a :href="'/admin/de/'+ mh.id" class="btn btn-outline-primary btn-sm">ดูรายละเอียด</button></td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="mt-1">
+                                        <a href="/admin/mileage/<?php echo $id;?>" class="btn btn-primary ml-2">ดูทั้งหมด</a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
+                        <div class="row mt-2">
+
+                        
+
                         <div class="col-lg-4 col-md-12">
                             <div class="card m-b-30">
                                 <div class="card-body">
@@ -172,47 +246,28 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row mt-2">
                         <div class="col-lg-4 col-md-12">
+
                             <div class="card m-b-30">
                                 <div class="card-body">
                                     <div class="mb-3">
-                                        <h4 class="card-title mb-0">ประวัติการใช้งานรถยนต์</h4>
+                                        <h4 class="card-title mb-0">ปริมาณน้ำมัน</h4>
                                     </div>
 
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless mb-0">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th>วันที่</th>
-                                                    <th>เลขไมล์</th>
-                                                    <th>ลูกค้า</th>
-                                                    <th>รายละเอียด</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="mh in mileage">
-                                                    <td>{{ mh.datetime }}</td>
-                                                    <td>{{ mh.mileage }}</td>
-                                                    <td>{{ mh.customer }}</td>
-                                                    <td><a :href="'/admin/de/'+ mh.id" class="btn btn-primary btn-sm">ดูรายละเอียด</button></td>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    
+                                    <img :src="fuel" class="img-fluid">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
                 </div>
+
+                
             </div>
         </div>
+
+        
 
         <footer class="footer">
             <div class="container-fluid">
@@ -230,6 +285,7 @@
         </footer>
 
     </div>
+    
   
     <div class="menu-overlay"></div>
 
@@ -258,6 +314,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    
+    
     <!-- third party js ends -->
 
     <script>
@@ -270,12 +329,19 @@
                 },
                 id: '<?php echo $id; ?>',
                 mileage: [],
+                count: {
+                    'round': '0',
+                    'avg_mileage': '0'
+                },
+                fuel: ''
 
             }, 
             mounted () {
                 axios.get('/inbound/system/car-detail.api.php?id=<?php echo $id; ?>').then(function(response) {
                     dedrive.detail = response.data.detail;
                     dedrive.mileage = response.data.mileage;
+                    dedrive.count = response.data.count;
+                    dedrive.fuel = response.data.fuel;
                 });
             },
             methods: {

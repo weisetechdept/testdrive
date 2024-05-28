@@ -26,6 +26,4 @@
         $api = array('status' => '500');
     }
         
-  
-
     echo json_encode($api);
