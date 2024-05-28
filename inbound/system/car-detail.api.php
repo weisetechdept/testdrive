@@ -49,16 +49,15 @@
     $api['fuel'] = $mileage[0]['up_img_path'];
 
 
-    $db->join('booking b','b.bk_id = c.up_parent','LEFT');
+    $db->join('booking b','b.bk_id = c.up_parent','RIGHT');
     $c_mileage = $db->where('bk_car',$car['car_id'])->orderBy('up_id','DESC')->get('car_update c');
 
     $keep = 0;
-    for($i=0;$i<count($c_mileage);$i++){
+    for($i=0;$i<count($c_mileage)-1;$i++){
         $cal = $c_mileage[$i]['up_mileage'] - $c_mileage[$i+1]['up_mileage'];
         $keep += $cal;
-        $avg_mile = ($keep * (count($c_mileage)-1))/100;
-        
     }
+    $avg_mile = number_format(($keep / (count($c_mileage)-1)),2);
 
 
     $api['count'] = array(
