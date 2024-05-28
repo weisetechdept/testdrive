@@ -18,12 +18,6 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
-    <!-- Plugins css -->
-    <link href="/assets/plugins/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/plugins/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/plugins/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/plugins/datatables/select.bootstrap4.css" rel="stylesheet" type="text/css" />
-
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@100;200;300;400;500;600;700;800&family=Kanit:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- App css -->
@@ -211,14 +205,59 @@
                                     </div>
 
                                     <div class="mt-1">
-                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#exampleModal">ดูทั้งหมด</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" @click="getHistory" data-toggle="modal" data-target="#exampleModal">ดูทั้งหมด</button>
                                     </div>
                                     
                                 </div>
                             </div>
                         </div>
 
+
+
                         </div>
+
+
+                       
+                    
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">ประวัติการใช้งานรถยนต์</h5>
+                                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <table class="table table-borderless mb-0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>วันที่</th>
+                                            <th>เลขไมล์</th>
+                                            <th>ลูกค้า</th>
+                                            <th>รายละเอียด</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="h in history">
+                                            <td>{{ h.datetime }}</td>
+                                            <td>{{ h.mileage }}</td>
+                                            <td>{{ h.customer }}</td>
+                                            <td><a :href="'/admin/de/'+ h.id" class="btn btn-outline-primary btn-sm">ดูรายละเอียด</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">ปิด</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+
+
                         <div class="row mt-2">
 
                         
@@ -289,60 +328,7 @@
   
     <div class="menu-overlay"></div>
 
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Default Modal</h4>
-                    <p class="card-subtitle mb-4">Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page.</p>
-
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#exampleModal">
-                        Launch demo modal
-                    </button>
-
-                    <!-- Modal -->
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">ประวัติการใช้งานรถยนต์</h5>
-                                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <table class="table table-borderless mb-0">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>วันที่</th>
-                                            <th>เลขไมล์</th>
-                                            <th>ลูกค้า</th>
-                                            <th>รายละเอียด</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Value 1</td>
-                                            <td>Value 2</td>
-                                            <td>Value 3</td>
-                                            <td>Value 4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">ปิด</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end card-body-->
-            </div>
-            <!-- end card -->
-        </div>
-    </div>
+    
 
     <!-- jQuery  -->
     <script src="/assets/js/jquery.min.js"></script>
@@ -351,26 +337,10 @@
     <script src="/assets/js/waves.js"></script>
     <script src="/assets/js/simplebar.min.js"></script>
 
-    <!-- third party js -->
-    <script src="/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.bootstrap4.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.responsive.min.js"></script>
-    <script src="/assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.buttons.min.js"></script>
-    <script src="/assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
-    <script src="/assets/plugins/datatables/buttons.html5.min.js"></script>
-    <script src="/assets/plugins/datatables/buttons.flash.min.js"></script>
-    <script src="/assets/plugins/datatables/buttons.print.min.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.keyTable.min.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.select.min.js"></script>
-    <script src="/assets/plugins/datatables/pdfmake.min.js"></script>
-    <script src="/assets/plugins/datatables/vfs_fonts.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
-    
     
     <!-- third party js ends -->
 
@@ -388,8 +358,8 @@
                     'round': '0',
                     'avg_mileage': '0'
                 },
-                fuel: ''
-
+                fuel: '',
+                history: []
             }, 
             mounted () {
                 axios.get('/inbound/system/car-detail.api.php?id=<?php echo $id; ?>').then(function(response) {
@@ -400,6 +370,12 @@
                 });
             },
             methods: {
+                getHistory() {
+                    axios.get('/inbound/system/history-detail.api.php?id=<?php echo $id; ?>').then(function(response) {
+                        dedrive.history = response.data.history;
+                        console.log(response.data);
+                    });
+                },
                 Active() {
                     swal({
                         title: "เปิดใช้งาน",
