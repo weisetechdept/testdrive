@@ -130,14 +130,12 @@
                                     </table>
 
                                     <h4 class="card-title mt-4">จัดการรถทดลองขับ</h4>
-                                    <a href="/admin/ce/<?php echo $id;?>" class="btn btn-warning mr-1">แก้ใข</a> <buttons  v-if="detail.status == '10'" class="btn btn-success" @click="Active">เปิดใช้งาน</buttons> <buttons v-else-if="detail.status == '1'" class="btn btn-danger" @click="deActive">ปิดใช้งาน</buttons>
+                                    <a href="/admin/ce/<?php echo $id;?>" class="btn btn-warning mr-1">แก้ใข</a> <buttons  v-if="detail.status == '10'" class="btn btn-success" @click="Active">เปิดใช้งาน</buttons> <buttons v-else-if="detail.status == '1'" class="btn btn-danger mr-1" @click="deActive">ปิดใช้งาน</buttons>
+                                    <buttons class="btn btn-outline-info" @click="moveCar">ย้ายสาขา</buttons>
                                     
                                 </div>
                             </div>
                         </div>
-
-                       
-                    
 
                         <div class="col-lg-4 col-md-12">
                             <div class="card m-b-30">
@@ -370,11 +368,44 @@
                 });
             },
             methods: {
-                getHistory() {
-                    axios.get('/inbound/system/history-detail.api.php?id=<?php echo $id; ?>').then(function(response) {
-                        dedrive.history = response.data.history;
-                        console.log(response.data);
+                moveCar() {
+                    swal({
+                        title: "ย้ายสาขา",
+                        text: "คุณต้องการย้ายสาขารถทดลองขับหรือไม่?",
+                        icon: "warning", 
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            
+                            axios.post('/inbound/system/move-car.api.php',{
+                                id: this.id,
+                                branch: this.detail.branch
+                            }).then(function(response) {
+                                if(response.data.status == 'success') {
+                                    swal("สำเร็จ", "ย้ายสาขาเรียบร้อย", "success",{ 
+                                        button: "ตกลง"
+                                    }).then((value) => {
+                                        location.reload(true)
+                                    });
+                                } else {
+                                    swal("เกิดข้อผิดพลาด", "ไม่สามารถย้ายสาขาได้", "error",{ 
+                                        button: "ตกลง"
+                                    });
+                                }
+                            });
+
+                        }
                     });
+                    
+                },
+                getHistory() {
+                    if(dedrive.history.length <= 0){
+                        axios.get('/inbound/system/history-detail.api.php?id=<?php echo $id; ?>').then(function(response) {
+                            dedrive.history = response.data.history;
+                            console.log(response.data);
+                        });
+                    }
                 },
                 Active() {
                     swal({

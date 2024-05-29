@@ -39,12 +39,17 @@
 
         $api['img'][] = array('link' => $value['img_cf_path'],
         'type' => docsType($value['img_type']),
-        'datetime' => DateThai($value['img_datetime']));
+        'datetime' => DateThai($value['img_datetime'])
+    );
 
     }
 
     $update = $db->where('up_parent',$_GET['u'])->where('up_status',1)->getOne('car_update'); 
-    $api['up_img'] = array('link' => $update['up_img_path'], 'datetime' => DateThai($update['up_datetime']));
+    $api['up_img'] = array('link' => $update['up_img_path'],
+        'datetime' => DateThai($update['up_datetime']),
+        'mileage' => $update['up_mileage'],
+        'up_id' => $update['up_id']
+    );
 
     
 

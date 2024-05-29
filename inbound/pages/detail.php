@@ -165,12 +165,12 @@
                                     <h4 class="mb-2 font-size-18">จัดการ การจองนี้</h4>
                                     
                                     <div>
-                                        <button v-if="detail.status == '0'" type="button" class="btn btn-info waves-effect waves-light mb-2" @click="giveKey">จ่ายกุญแจแล้ว</button>
-                                        <button v-if="detail.status == '1'" type="button" class="btn btn-success waves-effect waves-light mb-2" @click="reKey">คืนกุญแจแล้ว</button>
-                                        <button v-if="detail.status == '0'" type="button" class="btn btn-danger waves-effect waves-light mb-2" @click="deBooking">ยกเลิกการจอง</button>
-                                        <a href="/admin/detail/mv/<?php echo $id; ?>" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light  mb-2">ย้ายการจอง</a>
+                                        <button v-if="detail.status == '0'" type="button" class="btn btn-info waves-effect waves-light mb-2 mr-1" @click="giveKey">จ่ายกุญแจแล้ว</button>
+                                        <button v-if="detail.status == '1'" type="button" class="btn btn-success waves-effect waves-light mb-2 mr-1" @click="reKey">คืนกุญแจแล้ว</button>
+                                        <button v-if="detail.status == '0'" type="button" class="btn btn-danger waves-effect waves-light mb-2 mr-1" @click="deBooking">ยกเลิกการจอง</button>
+                                        <a href="/admin/detail/mv/<?php echo $id; ?>" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light mb-2 mr-1">ย้ายการจอง</a>
 
-                                        <button v-if="detail.status == '1' || detail.status == '0'" type="button" @click="sendNotify" class="btn btn-outline-info waves-effect waves-light mb-2">แจ้งเอกสารไม่ครบ</button>
+                                        <button v-if="detail.status == '1'" type="button" @click="sendNotify" class="btn btn-outline-info waves-effect waves-light mb-2 mr-1">แจ้งเอกสารไม่ครบ</button>
                                     </div>
                                     
                                 </div>
@@ -178,11 +178,16 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" v-if="detail.status == '1'">
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="mb-2 font-size-18">อัพเดทเลขไมล์ คืนกุญแจ</h4>
+                                    <p class="red">หมายเหตุ : โปรดตรวจเลขไมล์ให้ตรงกับรูปก่อนกดรับคืนกุญแจ หากเลขไมล์ไม่ตรงสามารถแก้ใขตัวเลขในช่องได้ทันที</p> 
+                                    <div class="form-group">
+                                        <label>เลขไมล์ :</label>
+                                        <input type="text" v-model="send.mileage" class="form-control">
+                                    </div>
                                     
                                     <div class="check-list mb-3">
                                         <div v-if="up_img.link !== null">
@@ -326,6 +331,10 @@
                 car_update: {
                     type: 10,
                     file: null
+                },
+                send: {
+                    mileage: '',
+                    id: ''
                 }
             },
             mounted () {
@@ -337,8 +346,9 @@
                 axios.get('/sales/system/docs.api.php?u=<?php echo $id; ?>')
                 .then(response => (
                     dedrive.docs_img = response.data.img,
-                    dedrive.up_img = response.data.up_img
-
+                    dedrive.up_img = response.data.up_img,
+                    dedrive.send.mileage = response.data.up_img.mileage,
+                    dedrive.send.id = response.data.up_img.up_id
                 ))
             },
             
@@ -532,7 +542,9 @@
                     }).then((willDelete) => {
                         if (willDelete) {
                             axios.post('/inbound/system/rekey.api.php',{
-                                id: <?php echo $id; ?>
+                                id: <?php echo $id; ?>,
+                                mileage: this.send.mileage,
+                                up_id: this.send.id
                             }).then(res => {
                                 if(res.data.status == 200) 
                                     swal("สำเร็จ", "คืนกุญแจสำเร็จ", "success",{ 

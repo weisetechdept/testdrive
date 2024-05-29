@@ -113,6 +113,7 @@
                                                     <th>สาขา</th>
                                                     <th>เลขถัง</th>
                                                     <th>เลขไมล์</th>
+                                                    <th>รอบใช้งาน</th>
                                                     <th>สถานะ</th>
                                                     <th>วันที่เพิ่ม</th>
                                                     <th>จัดการ</th>
@@ -120,6 +121,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -193,7 +195,7 @@
     <!-- Datatables init -->
     <script>
        $('#datatable').DataTable({
-            "order": [[ 5, "desc" ]],
+            "order": [[ 2, "desc" ]],
             "pageLength": 35,
             "language": {
                 "paginate": {
@@ -224,6 +226,7 @@
                 },
                 {'data':'7'},
                 {'data':'6'},
+                {'data':'8'},
                 {'data':'4',
                     "render": function ( data, type, full, meta ) {
                         if(data == '1') {

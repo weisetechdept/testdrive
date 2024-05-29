@@ -31,10 +31,8 @@
 
     foreach($quota as $q) {
 
-        //$db->join('car_update u','c.car_id = u.up_id','LEFT');
-        $db->join('booking b','b.bk_id = c.up_parent','LEFT');
+        $db->join('booking b','b.bk_id = c.up_parent','INNER');
         $mileage = $db->where('bk_car',$q['car_id'])->orderBy('up_id','DESC')->getOne('car_update c');
-        
 
         if($q['car_branch'] == 'ho'){
             $branch = 'สำนักงานใหญ่';
@@ -42,6 +40,9 @@
             $branch = 'ตลาดไท';
         }
         
+        $db->join('booking b','b.bk_id = c.up_parent','INNER');
+        $c_mileage = $db->where('bk_car',$q['car_id'])->where('bk_status',2)->orderBy('up_id','DESC')->getValue('car_update c','count(*)');
+
         $api['data'][] = array(
             $q['car_id'],
             $q['car_model'],
@@ -50,7 +51,8 @@
             $q['car_status'],
             date('Y-m-d', strtotime($q['car_datetime'])),
             number_format($mileage['up_mileage']),
-            $q['car_vin']
+            $q['car_vin'],
+            $c_mileage
         );
     }
 

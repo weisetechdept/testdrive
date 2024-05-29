@@ -34,8 +34,8 @@
         'vin' => $car['car_vin'],
     );
 
-    $db->join('booking b','b.bk_id = c.up_parent','LEFT');
-    $mileage = $db->where('bk_car',$car['car_id'])->orderBy('up_id','DESC')->get('car_update c',3);
+    $db->join('booking b','b.bk_id = c.up_parent','INNER');
+    $mileage = $db->where('bk_car',$car['car_id'])->where('bk_status',2)->orderBy('up_id','DESC')->get('car_update c',3);
 
     foreach ($mileage as $value) {
         $api['mileage'][] = array(
@@ -49,8 +49,8 @@
     $api['fuel'] = $mileage[0]['up_img_path'];
 
 
-    $db->join('booking b','b.bk_id = c.up_parent','RIGHT');
-    $c_mileage = $db->where('bk_car',$car['car_id'])->orderBy('up_id','DESC')->get('car_update c');
+    $db->join('booking b','b.bk_id = c.up_parent','INNER');
+    $c_mileage = $db->where('bk_car',$car['car_id'])->where('bk_status',2)->orderBy('up_id','DESC')->get('car_update c');
 
     $keep = 0;
     for($i=0;$i<count($c_mileage)-1;$i++){

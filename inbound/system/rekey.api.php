@@ -8,6 +8,8 @@
 
     $request = json_decode(file_get_contents("php://input"));
     $id = $request->id;
+    $mileage = $request->mileage;
+    $up_id = $request->up_id;
 
     $chk = $db->where('bk_id',$id)->getOne('booking');
 
@@ -22,7 +24,19 @@
         );
         $db->where ('bk_id', $id);
         if ($db->update ('booking', $data)){
-            $api = array('status' => '200');
+    
+
+            $upMile = Array (
+                'up_mileage' => $mileage
+            );
+            $db->where ('up_id', $up_id);
+            if ($db->update ('car_update', $upMile)){
+                $api = array('status' => '200');
+            } else {
+                $api = array('status' => '500');
+            }
+
+            
         } else {
             $api = array('status' => '500');
         }
