@@ -437,13 +437,7 @@
                         swal("โปรดตรวจสอบ", "คุณอาจยังไม่ได้กรอกเลขไมล์ หรือเลือกไฟล์เอกสาร", "warning",{ 
                             button: "ตกลง"
                         }) 
-                    } else if(this.detail.mile_chk > this.mileage){
-                        swal("โปรดตรวจสอบ", "เลขไมล์ที่กรอกต้องมากกว่าเลขไมล์ล่าสุดที่อัพเดท", "warning",{ 
-                            button: "ตกลง"
-                        })
-
-                    }
-                    else {
+                    } else {
                         var formData = new FormData();
                         formData.append('file_upload', this.car_update.file);
                         

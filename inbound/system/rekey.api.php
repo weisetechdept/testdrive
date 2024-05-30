@@ -17,7 +17,7 @@
     $chk = $db->where('bk_id',$id)->getOne('booking');
 
     if($chk['bk_status'] == '1') {
-
+/*
         $db->join('booking b','b.bk_id = u.up_parent','INNER');
         $mile_chk = $db->where('bk_car',$car_id)->orderBy('up_id','desc')->getOne('car_update u');
 
@@ -26,7 +26,7 @@
             $api = array('status' => '501');
 
         } else {
-
+*/
             $data = Array (
                 'bk_status' => '2'
             );
@@ -46,9 +46,9 @@
             } else {
                 $api = array('status' => '500');
             }
-            
+/*
         }
-        
+*/  
     } else {
         $api = array('status' => '500');
     }
