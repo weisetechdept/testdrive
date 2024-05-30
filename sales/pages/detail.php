@@ -325,6 +325,7 @@
                 axios.get('/sales/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
                     dedrive.detail = response.data.detail;
                     dedrive.docs = response.data.docs;
+                    console.log(response.data);
                 });
 
                 axios.get('/sales/system/docs.api.php?u=<?php echo $id; ?>')
@@ -436,7 +437,13 @@
                         swal("โปรดตรวจสอบ", "คุณอาจยังไม่ได้กรอกเลขไมล์ หรือเลือกไฟล์เอกสาร", "warning",{ 
                             button: "ตกลง"
                         }) 
-                    } else {
+                    } else if(this.detail.mile_chk > this.mileage){
+                        swal("โปรดตรวจสอบ", "เลขไมล์ที่กรอกต้องมากกว่าเลขไมล์ล่าสุดที่อัพเดท", "warning",{ 
+                            button: "ตกลง"
+                        })
+
+                    }
+                    else {
                         var formData = new FormData();
                         formData.append('file_upload', this.car_update.file);
                         

@@ -18,7 +18,7 @@
      $car = $_GET['id'];
 
      $db->join('booking b','b.bk_id = c.up_parent','LEFT');
-     $mileage = $db->where('bk_car',$car)->orderBy('up_id','DESC')->get('car_update c');
+     $mileage = $db->where('bk_car',$car)->orderBy('bk_date','DESC')->get('car_update c');
  
      foreach ($mileage as $value) {
 

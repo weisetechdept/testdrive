@@ -178,7 +178,7 @@
                         </div>
                     </div>
 
-                    <div class="row" v-if="detail.status == '1'">
+                    <div class="row" v-if="detail.status == '1' || detail.status == '2'">
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
                                 <div class="card-body">
@@ -334,13 +334,15 @@
                 },
                 send: {
                     mileage: '',
-                    id: ''
+                    id: '',
+                    car: ''
                 }
             },
             mounted () {
                 axios.get('/inbound/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
                     dedrive.detail = response.data.detail;
                     dedrive.docs = response.data.docs;
+                    dedrive.send.car = response.data.detail.car_id;
                 });
 
                 axios.get('/sales/system/docs.api.php?u=<?php echo $id; ?>')
@@ -544,7 +546,8 @@
                             axios.post('/inbound/system/rekey.api.php',{
                                 id: <?php echo $id; ?>,
                                 mileage: this.send.mileage,
-                                up_id: this.send.id
+                                up_id: this.send.id,
+                                car_id: this.send.car
                             }).then(res => {
                                 if(res.data.status == 200) 
                                     swal("สำเร็จ", "คืนกุญแจสำเร็จ", "success",{ 
@@ -554,6 +557,12 @@
                                     });
                                 if(res.data.status == 500) 
                                     swal("ทำรายการไม่สำเร็จ", "โปรดตรวจสอบความถูกต้องอีกครั้ง", "warning",{ 
+                                        button: "ตกลง"
+                                    }
+                                );
+
+                                if(res.data.status == 501) 
+                                    swal("ทำรายการไม่สำเร็จ", "เลขไมล์ที่บันทึกน้อยกว่าปัจจุบัน ไม่สามารถบันทึกได้", "warning",{ 
                                         button: "ตกลง"
                                     }
                                 );

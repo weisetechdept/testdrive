@@ -10,7 +10,7 @@
     $id = $_GET['id'];
 
     $db->join('car c','c.car_id = b.bk_car','LEFT');
-    $bk = $db->where('bk_id',$id)->get('booking b');
+    $bk = $db->where('bk_id',$id)->getOne('booking b');
         
     function customTime($time){
         if($time == '1'){
@@ -95,22 +95,26 @@
         'docs3' => $chk3
     );
 
+    $db->join('booking b','b.bk_id = u.up_parent','INNER');
+    $mile_chk = $db->where('bk_car',$bk['bk_car'])->orderBy('up_id','desc')->getOne('car_update u');
 
-    foreach ($bk as $value) {
+
+    
 
         $api['detail'] = array(
-            'id' => $value['bk_id'],
-            'name' => $value['bk_fname'].' '.$value['bk_lname'],
-            'tel' => $value['bk_tel'],
-            'car' => $value['car_model'],
-            'bk_date' => $value['bk_date'],
-            'bk_time' => customTime2($value['bk_time']),
+            'id' => $bk['bk_id'],
+            'name' => $bk['bk_fname'].' '.$bk['bk_lname'],
+            'tel' => $bk['bk_tel'],
+            'car' => $bk['car_model'],
+            'bk_date' => $bk['bk_date'],
+            'bk_time' => customTime2($bk['bk_time']),
             'docs_status' => $status,
-            'where' => $value['bk_where'],
-            'status' => $value['bk_status'],
-            'create' => $value['bk_datetime'],
-            'bk_note' => $value['bk_note']
+            'where' => $bk['bk_where'],
+            'status' => $bk['bk_status'],
+            'create' => $bk['bk_datetime'],
+            'bk_note' => $bk['bk_note'],
+            'mile_chk' => $mile_chk['up_mileage']
         );
-    }
+    
 
     echo json_encode($api);
