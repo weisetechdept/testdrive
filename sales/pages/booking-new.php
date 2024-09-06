@@ -375,7 +375,7 @@
                                                     </div>
                                                     <div class="bg">
                                                         <div class="chiller_cb" v-for="t in bk.time" :key="t.id">
-                                                            <input type="checkbox" :id="'myCheckbox'+t.id"  @change="handleChange" :value="t.id" :disabled="t.status == 0">
+                                                            <input type="checkbox" class="time" :id="'myCheckbox'+t.id"  @change="handleChange" :value="t.id" :disabled="t.status == 0">
                                                             <label class="ml-2" :for="'myCheckbox'+t.id">ช่วงเวลา {{ t.time }} น.</label>
                                                             <span></span>
                                                         </div>
@@ -553,9 +553,7 @@
                         document.getElementById('date').disabled = true;
                         //document.getElementById('time').disabled = true;
                         document.getElementById('checktime').style.display = 'none';
-                        
                         document.getElementById('carimg').style.display = 'none';
-                        
                     });
 
                 },
@@ -572,16 +570,19 @@
                     document.getElementById('checktime').style.display = 'none';
                 },
                 getTime(e) {
+                    this.selected.time = '';
+                    this.selectedRows = [];
+                    document.querySelectorAll('.time').forEach(function(element) {
+                        element.checked = false;
+                    });
+
                     //document.getElementById('time').disabled = false;
                     document.getElementById('checktime').style.display = 'block';
                     axios.post('/sales/system/booking.api.php?get=time-new', {
                         date: e.target.value,
                         car: testdrive.selected.car
                     }).then(function(response) {
-                        
                         testdrive.bk.time = response.data.time;
-
-                        testdrive.selected.time = '0';
                     });
                 },
                 sendData() {
