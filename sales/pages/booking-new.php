@@ -570,7 +570,6 @@
                     document.getElementById('checktime').style.display = 'none';
                 },
                 getTime(e) {
-                    this.selected.time = '';
                     this.selectedRows = [];
                     document.querySelectorAll('.time').forEach(function(element) {
                         element.checked = false;
