@@ -25,11 +25,16 @@
     <link href="/assets/plugins/datatables/select.bootstrap4.css" rel="stylesheet" type="text/css" />
 
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@100;200;300;400;500;600;700;800&family=Kanit:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Dropify css -->
+    <link href="/assets/plugins/dropify/dropify.min.css" rel="stylesheet" type="text/css" />
 
     <!-- App css -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/theme.min.css" rel="stylesheet" type="text/css" />
+
+    
     <style>
         body {
             font-family: 'Chakra Petch', sans-serif;
@@ -165,10 +170,12 @@
                                     <h4 class="mb-2 font-size-18">อัพเดทเลขไมล์ คืนกุญแจ</h4>
                                     
                                     <div class="check-list mb-3">
+
                                         <div v-if="up_img.link !== null">
                                             <p class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์</p>
                                             <img :src="up_img.link" class="mt-4" width="100%">
                                         </div>
+                                        
                                         <div v-else>
                                             <p>กรุณาอัพโหลดรูป และอัพเดทเลขไมล์รถยนต์ ก่อนคืนกุญแจ</p>
                                             <p class="red mb-4">
@@ -184,8 +191,8 @@
                                                 </div>
                                             </form>
                                         </div>
+
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -225,7 +232,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="file" name="file_upload" id="file_upload" @change="onFileChange">
+                                            <!-- <input type="file" name="file_upload" id="file_upload" @change="onFileChange"> -->
+                                            <input type="file" class="dropify" data-height="300" name="file_upload" id="file_upload" @change="onFileChange" />
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">อัพโหลด</button>
@@ -240,11 +248,13 @@
                     <div class="row" v-for="docs in docs_img">
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
+
                                 <div class="card-body">
                                     <img :src="docs.link" width="100%">
                                     <a :href="docs.link" type="button" class="btn btn-sm btn-primary waves-effect waves-light mt-2" style="width: 100%; margin-top: 10px;">รูปขนาดเต็ม</a>
                                     <p class="mt-1 mb-0">เอกสาร : {{ docs.type }}<br />อัพโหลดเมื่อ : {{ docs.datetime }}</p>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -283,27 +293,18 @@
     <script src="/assets/js/waves.js"></script>
     <script src="/assets/js/simplebar.min.js"></script>
 
-    <!-- third party js -->
-    <script src="/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.bootstrap4.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.responsive.min.js"></script>
-    <script src="/assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.buttons.min.js"></script>
-    <script src="/assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
-    <script src="/assets/plugins/datatables/buttons.html5.min.js"></script>
-    <script src="/assets/plugins/datatables/buttons.flash.min.js"></script>
-    <script src="/assets/plugins/datatables/buttons.print.min.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.keyTable.min.js"></script>
-    <script src="/assets/plugins/datatables/dataTables.select.min.js"></script>
-    <script src="/assets/plugins/datatables/pdfmake.min.js"></script>
-    <script src="/assets/plugins/datatables/vfs_fonts.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <!-- third party js ends -->
 
+    <script src="/assets/plugins/dropify/dropify.min.js"></script>
+
+    <!-- App js -->
+    <script src="/assets/js/theme.js"></script>
     <script>
+       
          var dedrive = new Vue({
             el: '#dedrive',
             data: {
@@ -322,21 +323,43 @@
                 }
             },
             mounted () {
+
+                $('.dropify').dropify({
+                    messages: {
+                        'default': 'แตะเพื่ออัพโหลดรูป',
+                        'replace': 'แตะเพื่ออัพโหลดรูปแก้ใข',
+                        'remove': 'ลบรูปภาพ',
+                        'error': 'เกิดข้อมผิดพลาด โปรดลองใหม่อีกครั้ง'
+                    },
+                    error: {
+                        'fileSize': 'ขนาดของรูปเกินปริมาณที่กำหนด (1M max).'
+                    }
+                });
+
                 axios.get('/sales/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
                     dedrive.detail = response.data.detail;
                     dedrive.docs = response.data.docs;
-                    console.log(response.data);
                 });
 
                 axios.get('/sales/system/docs.api.php?u=<?php echo $id; ?>')
-                .then(response => (
-                    dedrive.docs_img = response.data.img,
-                    dedrive.up_img = response.data.up_img
-
-                ))
+                .then(response => {
+                    dedrive.docs_img = response.data.img;
+                    dedrive.up_img = response.data.up_img;
+                })
             },
-            
+            watch: {
+                docs() {
+                    this.$nextTick(() => {
+                        this.initializeDropify();
+                    });
+                },
+            },
             methods: {
+                initializeDropify() {
+                    this.$nextTick(() => {
+                        $('.dropify').dropify(); // เรียก Dropify
+                    });
+                },
                 deBooking() {
                     swal({
                         title: "ยืนยันการยกเลิก",
@@ -436,7 +459,7 @@
                     if(this.car_update.file == null || this.mileage == '') {
                         swal("โปรดตรวจสอบ", "คุณอาจยังไม่ได้กรอกเลขไมล์ หรือเลือกไฟล์เอกสาร", "warning",{ 
                             button: "ตกลง"
-                        }) 
+                        })
                     } else {
                         var formData = new FormData();
                         formData.append('file_upload', this.car_update.file);
@@ -449,7 +472,6 @@
                             closeOnClickOutside: false,
                             closeOnEsc: false
                         });
-
                     
                         axios.post('/sales/system/cfimg.api.php',formData
                         ,{
@@ -469,7 +491,7 @@
                                     aimg_mileage: this.mileage
                                 }).then(res => {
                                     if(res.data.status == 200) 
-                                        swal("สำเร็จ", "อัพโหลดเอกสารสำเร็จ", "success",{ 
+                                        swal("สำเร็จ", "อัพโหลดเอกสารสำเร็จ", "success",{
                                             button: "ตกลง"
                                         }).then((value) => {
                                             location.reload(true)
@@ -497,8 +519,6 @@
 
         
     </script>
-
-    <script src="/assets/js/theme.js"></script>
 
 </body>
 
