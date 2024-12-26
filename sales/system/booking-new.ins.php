@@ -100,7 +100,7 @@
                             'bk_time' => json_encode($time),
                             'bk_parent' => $id,
                             'bk_where' => $request->where,
-                            'bk_note' => $request->note,
+                            'bk_note' => $request->note.' '.$request->event,
                             'bk_status' => 0,
                             'bk_datetime' => date('Y-m-d H:i:s')
                         );

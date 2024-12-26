@@ -83,80 +83,80 @@
             font-weight: bold;
         }
         .bg {
-        padding: 15px 0 0 15px;
+            padding: 15px 0 0 15px;
         }
         .span_pseudo, .chiller_cb span:before, .chiller_cb span:after {
-        content: "";
-        display: inline-block;
-        background: #fff;
-        width: 0;
-        height: 0.2rem;
-        position: absolute;
-        transform-origin: 0% 0%;
+            content: "";
+            display: inline-block;
+            background: #fff;
+            width: 0;
+            height: 0.2rem;
+            position: absolute;
+            transform-origin: 0% 0%;
         }
         .chiller_cb {
-        position: relative;
-        height: 2rem;
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px;
+            position: relative;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
         }
         .chiller_cb input {
-        display: none;
+            display: none;
         }
         .chiller_cb input:checked ~ span {
-        background: #7266bb;
-        border-color: #7266bb;
+            background: #7266bb;
+            border-color: #7266bb;
         }
         .chiller_cb input:checked ~ span:before {
-        width: 1rem;
-        height: 0.15rem;
-        transition: width 0.1s;
-        transition-delay: 0.3s;
+            width: 1rem;
+            height: 0.15rem;
+            transition: width 0.1s;
+            transition-delay: 0.3s;
         }
         .chiller_cb input:checked ~ span:after {
-        width: 0.4rem;
-        height: 0.15rem;
-        transition: width 0.1s;
-        transition-delay: 0.2s;
+            width: 0.4rem;
+            height: 0.15rem;
+            transition: width 0.1s;
+            transition-delay: 0.2s;
         }
         .chiller_cb input:disabled ~ span {
-        background: #ececec;
-        border-color: #dcdcdc;
+            background: #ececec;
+            border-color: #dcdcdc;
         }
         .chiller_cb input:disabled ~ label {
-        color: #dcdcdc;
+            color: #dcdcdc;
         }
         .chiller_cb input:disabled ~ label:hover {
-        cursor: default;
+            cursor: default;
         }
         .chiller_cb label {
-        padding-left: 2rem;
-        position: relative;
-        z-index: 2;
-        cursor: pointer;
-        margin-bottom:0;
+            padding-left: 2rem;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            margin-bottom:0;
         }
         .chiller_cb span {
-        display: inline-block;
-        width: 1.2rem;
-        height: 1.2rem;
-        border: 2px solid #ccc;
-        position: absolute;
-        left: 0;
-        transition: all 0.2s;
-        z-index: 1;
-        box-sizing: content-box;
+            display: inline-block;
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 2px solid #ccc;
+            position: absolute;
+            left: 0;
+            transition: all 0.2s;
+            z-index: 1;
+            box-sizing: content-box;
         }
         .chiller_cb span:before {
-        transform: rotate(-55deg);
-        top: 1rem;
-        left: 0.37rem;
+            transform: rotate(-55deg);
+            top: 1rem;
+            left: 0.37rem;
         }
         .chiller_cb span:after {
-        transform: rotate(35deg);
-        bottom: 0.35rem;
-        left: 0.2rem;
+            transform: rotate(35deg);
+            bottom: 0.35rem;
+            left: 0.2rem;
         }
         #checktime {
             display: none;
@@ -536,7 +536,8 @@
                             lname: testdrive.selected.lname,
                             tel: testdrive.selected.tel,
                             where: testdrive.selected.where,
-                            note: testdrive.selected.note
+                            note: testdrive.selected.note,
+                            event: testdrive.selected.event
                         }).then(function(response) {
 
                             if(response.data.status == 'success'){
