@@ -167,8 +167,9 @@
                                         <button v-if="detail.status == '1'" type="button" class="btn btn-success waves-effect waves-light mb-2 mr-1" @click="reKey">คืนกุญแจแล้ว</button>
                                         <button v-if="detail.status == '0'" type="button" class="btn btn-danger waves-effect waves-light mb-2 mr-1" @click="deBooking">ยกเลิกการจอง</button>
                                         <a href="/admin/detail/mv/<?php echo $id; ?>" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light mb-2 mr-1">ย้ายการจอง</a>
+                                        <button v-if="detail.status == '10'" type="button" class="btn btn-warning waves-effect waves-light mb-2 mr-1" @click="resetStatus">รีเซทสถานะ</button>
 
-                                        <button v-if="detail.status == '1'" type="button" @click="sendNotify" class="btn btn-outline-info waves-effect waves-light mb-2 mr-1">แจ้งเอกสารไม่ครบ</button>
+                                        <button v-if="detail.status == '1'" type="button" @click="resetStatus" class="btn btn-outline-info waves-effect waves-light mb-2 mr-1">แจ้งเอกสารไม่ครบ</button>
                                     </div>
                                     
                                 </div>
@@ -352,6 +353,33 @@
                 ))
             },
             methods: {
+                resetStatus(){
+                    swal({
+                        title: "ยืนยันการรีเซทสถานะ",
+                        text: "คุณต้องการรีเซทสถานะจองนี้ใช่หรือไม่",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            axios.post('/inbound/system/resetstatus.api.php',{
+                                id: <?php echo $id; ?>
+                            }).then(res => {
+                                if(res.data.status == 200) 
+                                    swal("สำเร็จ", "รีเซทสถานะสำเร็จ", "success",{ 
+                                        button: "ตกลง"
+                                    }).then((value) => {
+                                        location.reload(true)
+                                    });
+                                if(res.data.status == 500) 
+                                    swal("ทำรายการไม่สำเร็จ", res.data.message, "warning",{ 
+                                        button: "ตกลง"
+                                    }
+                                );
+                            });
+                        }
+                    });
+                },
                 sendNotify(){
                     swal("ใส่ข้อความที่ต้องการแจ้ง (หรือไม่ใส่ก็ได้) :", {
                         content: "input",
