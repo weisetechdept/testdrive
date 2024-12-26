@@ -68,7 +68,6 @@
             border-radius: 3px;
             
         }
-
         .time-note {
             background-color: #efefef;
             padding: 10px;
@@ -83,145 +82,83 @@
         .strong {
             font-weight: bold;
         }
-
         .bg {
-            padding: 15px 0 0 15px;
+        padding: 15px 0 0 15px;
         }
-
         .span_pseudo, .chiller_cb span:before, .chiller_cb span:after {
-            content: "";
-            display: inline-block;
-            background: #fff;
-            width: 0;
-            height: 0.2rem;
-            position: absolute;
-            transform-origin: 0% 0%;
+        content: "";
+        display: inline-block;
+        background: #fff;
+        width: 0;
+        height: 0.2rem;
+        position: absolute;
+        transform-origin: 0% 0%;
         }
         .chiller_cb {
-            position: relative;
-            height: 2rem;
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
+        position: relative;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
         }
         .chiller_cb input {
-            
+        display: none;
         }
         .chiller_cb input:checked ~ span {
-            background: #7266bb;
-            border-color: #7266bb;
+        background: #7266bb;
+        border-color: #7266bb;
         }
         .chiller_cb input:checked ~ span:before {
-            width: 1rem;
-            height: 0.15rem;
-            transition: width 0.1s;
-            transition-delay: 0.3s;
+        width: 1rem;
+        height: 0.15rem;
+        transition: width 0.1s;
+        transition-delay: 0.3s;
         }
         .chiller_cb input:checked ~ span:after {
-            width: 0.4rem;
-            height: 0.15rem;
-            transition: width 0.1s;
-            transition-delay: 0.2s;
+        width: 0.4rem;
+        height: 0.15rem;
+        transition: width 0.1s;
+        transition-delay: 0.2s;
         }
         .chiller_cb input:disabled ~ span {
-            background: #ececec;
-            border-color: #dcdcdc;
+        background: #ececec;
+        border-color: #dcdcdc;
         }
         .chiller_cb input:disabled ~ label {
-            color: #dcdcdc;
+        color: #dcdcdc;
         }
         .chiller_cb input:disabled ~ label:hover {
-            cursor: default;
+        cursor: default;
         }
         .chiller_cb label {
-            padding-left: 2rem;
-            position: relative;
-            z-index: 2;
-            cursor: pointer;
-            margin-bottom:0;
+        padding-left: 2rem;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+        margin-bottom:0;
         }
         .chiller_cb span {
-            display: inline-block;
-            width: 1.2rem;
-            height: 1.2rem;
-            border: 2px solid #ccc;
-            position: absolute;
-            left: 0;
-            transition: all 0.2s;
-            z-index: 1;
-            box-sizing: content-box;
+        display: inline-block;
+        width: 1.2rem;
+        height: 1.2rem;
+        border: 2px solid #ccc;
+        position: absolute;
+        left: 0;
+        transition: all 0.2s;
+        z-index: 1;
+        box-sizing: content-box;
         }
         .chiller_cb span:before {
-            transform: rotate(-55deg);
-            top: 1rem;
-            left: 0.37rem;
+        transform: rotate(-55deg);
+        top: 1rem;
+        left: 0.37rem;
         }
         .chiller_cb span:after {
-            transform: rotate(35deg);
-            bottom: 0.35rem;
-            left: 0.2rem;
+        transform: rotate(35deg);
+        bottom: 0.35rem;
+        left: 0.2rem;
         }
         #checktime {
-            display: none;
-        }
-
-        .rdo-grp {
-            margin: 15px 0 15px;
-        }
-        .rdo-grp label {
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            padding: 6px 8px;
-            border-radius: 20px;
-            float: left;
-            transition: all 0.2s ease;
-        }
-        .rdo-grp label:hover {
-            background: rgba(125,100,247,0.06);
-        }
-        .rdo-grp label:not(:last-child) {
-            margin-right: 16px;
-        }
-        .rdo-grp label span {
-            vertical-align: middle;
-        }
-        .rdo-grp label span:first-child {
-            position: relative;
-            display: inline-block;
-            vertical-align: middle;
-            width: 20px;
-            height: 20px;
-            background: #e8eaed;
-            border-radius: 50%;
-            transition: all 0.2s ease;
-            margin-right: 8px;
-        }
-        .rdo-grp label span:first-child:after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            margin: 2px;
-            background: #fff;
-            border-radius: 50%;
-            transition: all 0.2s ease;
-        }
-        .rdo-grp label:hover span:first-child {
-            background: #7d64f7;
-        }
-        .rdo-grp input {
-            display: none;
-        }
-        .rdo-grp input:checked + label span:first-child {
-            background: #7d64f7;
-        }
-        .rdo-grp input:checked + label span:first-child:after {
-            transform: scale(0.5);
-        }
-        .to-event {
-            display: none;
-        }
-        .bk_detail {
             display: none;
         }
     </style>
