@@ -11,13 +11,11 @@
     });
 
     /* Login */
-
     $router->get( '/sales/auth', function() {
         require_once('sales/pages/auth.php');
     });
 
     /* sales */
-
     $router->get( '/sales/home', function() {
         require_once('sales/pages/home.php');
     });
@@ -39,7 +37,6 @@
     });
 
     /* frontend */
-
     $router->get( '/booking', function() {
         require_once('frontend/pages/booking.php');
     });

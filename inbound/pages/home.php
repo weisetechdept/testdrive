@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Alpha X Admin</title>
+    <title>Test Drive Admin Panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="A77" name="description" />
     <meta content="A77" name="author" />
@@ -70,6 +70,7 @@
 </head>
 
 <body>
+
     <div id="layout-wrapper">
         <?php 
             include_once('inc-page/nav.php');
@@ -79,6 +80,7 @@
 
             <div class="page-content" id="dedrive">
                 <div class="container-fluid">
+
                     <div class="row">
 
                         <div class="col-6 col-xl-3 pr1">
@@ -154,68 +156,33 @@
                             </div>
                         </div>
 
-                        <div class="col-6 col-xl-3 pr1">
-                            <div class="card bg-danger border-danger">
-                                <div class="card-body">
-                                    <div class="mb-1">
-                                        <h5 class="card-title mb-0 text-white">ยกเลิก</h5>
-                                    </div>
-                                    <div class="row d-flex align-items-center mb-0">
-                                        <div class="col-8">
-                                            <h2 class="d-flex align-items-center mb-0 text-white">
-                                                {{ summary.cancel }}
-                                            </h2>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-<!--
-                    <div class="row">
-                        <div class="col-12 col-lg-6">
-                            <div class="card m-b-30">
-                                <div class="card-body">
-                                    <div class="row ml-1">
-                                        <h5>ทางลัด</h5>
-                                    </div>
-                                    <button class="btn btn-outline-success mt-2 mr-1" @click="window.location.href='/admin/event'">นำไปทำกิจกรรม</button>
-                                    <button class="btn btn-outline-primary mt-2" @click="window.location.href='/admin/fastlane'">จองด่วน</button>
 
+                <div class="row mt-2">
+                    <div class="col-12 offset-md-1 col-md-10 offset-lg-3 col-lg-6">
+                        <div class="card m-b-30">
+                            <div class="card-body">
+                                <div class="row ml-1">
+                                    <h5>ปฏิทินการจอง</h5>
                                 </div>
+                                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <select v-model="select.car" @change="getEvent" class="form-control mb-2">
+                                            <option value="0">= เลือกรุ่นรถยนต์ =</option>
+                                            <option v-for="c in car" :value="c.id">{{ c.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div id='calendar' class="col-lg-12 mt-1 mt-lg-0"></div>
+                                </div>
+
                             </div>
                         </div>
-                    </div> 
--->
-                    <div class="row">
-                        <div class="col-12 col-lg-6">
-                            <div class="card m-b-30">
-                                <div class="card-body">
-                                    <div class="row ml-1">
-                                        <h5>ปฏิทินการจอง</h5>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <select v-model="select.car" @change="getEvent" class="form-control mb-2">
-                                                <option value="0">= เลือกรุ่นรถยนต์ =</option>
-                                                <option v-for="c in car" :value="c.id">{{ c.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div id='calendar' class="col-lg-12 mt-1 mt-lg-0"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-
-                </div>
+                    </div>
+                </div> 
                     
             </div>
 

@@ -84,14 +84,13 @@
         return $first.' - '.$last;
 
     } 
-    
 
     foreach ($bk as $value) {
 
         $api['data'][] = array(
             $value['bk_id'],
             $value['bk_fname'],
-            $value['car_model'],
+            substr($value['car_model'],0,10),
             $value['bk_date'],
             customTime2($value['bk_time']),
             $value['bk_status'],

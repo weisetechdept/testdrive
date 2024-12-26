@@ -53,24 +53,39 @@
         .card {
             margin-bottom: 10px;
         }
+        input[type="date"] {
+            display:block;
+            -webkit-appearance: textfield;
+            -moz-appearance: textfield;
+            min-height: 1.2em; 
+            min-width: 96%;
+            padding: 0px 2px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            
+        }
+        #checktime{
+            display:none;
+        }
+        .time-note {
+            background-color: #efefef;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .time-note p {
+            margin-bottom: 0;
+        }
+        .select-time {
+            padding: 15px;
+        }
+        .strong {
+            font-weight: bold;
+        }
 
-        .home-content {
-            margin-top: 60px;
+        .bg {
+            padding: 15px 0 0 55px;
         }
-        .check-list p {
-            margin-bottom: 5px;
-            padding-left: 10px;
-            font-size: 14px;
-        }
-        .red {
-            color: red;
-        }
-        .green{
-            color: green;
-        }
-        .swal-text {
-            text-align: center;
-        }
+        
     </style>
 </head>
 
@@ -129,7 +144,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td>เวลาขอย้ายการจอง</td>
                                                 <td>
                                                     <div class="form-group">
@@ -140,11 +155,39 @@
                                                         </select>
                                                     </div>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
 
                                            
                                         </tbody>
                                     </table>
+
+                                    <div class="mb-3" id="checktime">
+                                        
+                                            <div class="form-group">
+                                            
+                                                <label for="time">เวลาขอย้ายการจอง</label>
+                                                <div class="mt-1">
+                                                    <div class="form-group">
+                                                        <div class="time-note">
+                                                            <p class="strong">หมายเหตุ</p>
+                                                            <p>1. กรุณาเลือกเวลาที่ต้องการจอง</p>
+                                                            <p>2. สามารถจองได้มากกว่า 1 ช่วงเวลาตามความต้องการ</p>
+                                                            <p>3. เวลาในการจองต้องเป็นช่วงเวลาที่ติดต่อกันเท่านั้น</p>
+                                                        </div>
+                                                        <div class="bg">
+                                                            <div class="chiller_cb" v-for="t in bk.time" :key="t.id">
+                                                                <input type="checkbox" class="time" :id="'myCheckbox'+t.id"  @change="handleChange" :value="t.id" :disabled="t.status == 0">
+                                                                <label class="ml-2" :for="'myCheckbox'+t.id">ช่วงเวลา {{ t.time }} น.</label>
+                                                                <span></span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                    
+                                            </div>
+                                        
+                                        </div>
 
                                     <buttons class="btn btn-success mt-3 ml-2" @click="edtData">ย้ายการจอง</buttons>
                                 </div>
@@ -219,7 +262,8 @@
                 },
                 bk: {
                     time: []
-                }
+                },
+                selectedRows: []
             },
             mounted () {
                 axios.get('/inbound/system/move-bk.api.php?id=<?php echo $id; ?>&get=data').then(function(response) {
@@ -228,31 +272,56 @@
                     dedrive.detail.branch = response.data.branch;
                     dedrive.detail.model = response.data.model;
                     dedrive.detail.car = response.data.model_id;
-                });
+                }); 
             },
             methods: {
+                handleChange(e) {
+                    const { value, checked } = e.target
+                    if (checked) {
+                        this.selectedRows.push(value)
+                    } else {
+                        const index = this.selectedRows.findIndex(id => id === value)
+                        if (index > -1) {
+                            this.selectedRows.splice(index, 1)
+                        }
+                    }
+                    console.log(this.selectedRows)
+                },
                 getTime(e) {
-                    document.getElementById('time').disabled = false;
+                    //document.getElementById('time').disabled = false;
                     axios.post('/inbound/system/move-bk.api.php?get=time', {
                         date: dedrive.selected.date,
                         car: dedrive.detail.car
                     }).then(function(response) {
+
                         console.log(response.data);
                         dedrive.bk.time = response.data.time;
                         dedrive.selected.time = '0';
+                        document.getElementById('checktime').style.display = 'block';
+                        this.selectedRows = [];
+                        document.querySelectorAll('.time').forEach(checkbox => checkbox.checked = false);
                     });
+                    
                 },
                 edtData() {
-                    if(dedrive.selected.time == '0'){
-                        swal("เกิดข้อผิดพลาด","กรุณาเลือกวันที่ และเวลาที่ต้องการย้าย", {
+
+                    this.selectedRows.sort((a, b) => a - b);
+                    if (!this.selectedRows.every((val, i, arr) => !i || val - arr[i - 1] === 1)) {
+                        swal("เกิดข้อผิดพลาด", "กรุณาเลือกเวลาที่ต่อเนื่องกัน", {
+                            icon: "warning",
+                        });
+                        return;
+                    } else if (this.selectedRows.length === 0) {
+                        swal("เกิดข้อผิดพลาด", "กรุณาเลือกเวลา", {
                             icon: "warning",
                         });
                         return;
                     } else {
+                        console.log(dedrive.selectedRows);
                         axios.post('/inbound/system/move-bk.api.php?get=edit', {
                             id: dedrive.detail.id,
                             date: dedrive.selected.date,
-                            time: dedrive.selected.time
+                            time: JSON.stringify(dedrive.selectedRows)
                         }).then(function(response) {
                             if(response.data.status == 'success'){
                                 swal("สำเร็จ", "ย้ายการจองสำเร็จ", {

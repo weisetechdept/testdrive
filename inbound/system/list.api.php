@@ -3,13 +3,18 @@
     require_once '../../db-conn.php';
     if($_SESSION['testdrive_admin'] !== true){
         header('Location: /404');
-    }
+    } 
+
     date_default_timezone_set("Asia/Bangkok");
+
+    $api = [];
 
     if($_GET['b'] == 'ho'){
         $branch = 'ho';
     } elseif($_GET['b'] == 'tm') {
         $branch = 'tm';
+    } else {
+        $branch = '';
     }
 
     function getTeam($uid){
@@ -20,14 +25,13 @@
             //$team_data = json_decode($t['detail']);
             if(in_array($uid,$tm)){
                 return $t['name'];
-            } 
+            }
+
         }
     }
 
     $db->join('car c','c.car_id = b.bk_car','LEFT');
     $bk = $db->where('car_branch',$branch)->get('booking b');
-
-    
         
     function customTime($time){
         if($time == '1'){

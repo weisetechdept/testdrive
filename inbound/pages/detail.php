@@ -110,7 +110,6 @@
                                                 <td>โทรศัพท์</td>
                                                 <td>{{ detail.tel }} <a :href="'tel:'+detail.tel" type="button" style="float: right;" class="btn btn-info btn-sm waves-effect waves-light">โทร</button>
                                                 </td>
-                                                
                                             </tr>
                                             <tr>
                                                 <td>รถยนต์</td>
@@ -149,7 +148,6 @@
                                                 <td v-else-if="detail.where == '4'"><span class="badge badge-soft-secondary">Walk-in</span></td>
                                                 <td v-else-if="detail.where == '5'"><span class="badge badge-soft-secondary">ทำคอนเท้นต์</span></td>
                                                 <td v-else-if="detail.where == '6'"><span class="badge badge-soft-secondary">ออกบูธ</span></td>
-
                                             </tr>
                                         </tbody>
                                     </table>
@@ -319,7 +317,7 @@
          var dedrive = new Vue({
             el: '#dedrive',
             data: {
-                detail: '',
+                detail: [],
                 file_upload: {
                     type: 0,
                     file: null
@@ -345,7 +343,7 @@
                     dedrive.send.car = response.data.detail.car_id;
                 });
 
-                axios.get('/sales/system/docs.api.php?u=<?php echo $id; ?>')
+                axios.get('/inbound/system/docs.api.php?u=<?php echo $id; ?>')
                 .then(response => (
                     dedrive.docs_img = response.data.img,
                     dedrive.up_img = response.data.up_img,
@@ -353,7 +351,6 @@
                     dedrive.send.id = response.data.up_img.up_id
                 ))
             },
-            
             methods: {
                 sendNotify(){
                     swal("ใส่ข้อความที่ต้องการแจ้ง (หรือไม่ใส่ก็ได้) :", {
@@ -392,7 +389,7 @@
                             axios.post('/sales/system/debooking.api.php',{
                                 id: <?php echo $id; ?>
                             }).then(res => {
-                                console.log(res);
+                                //console.log(res);
                                 
                                 if(res.data.status == 200) 
                                     swal("สำเร็จ", "ยกเลิกการจองสำเร็จ", "success",{ 

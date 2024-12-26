@@ -340,7 +340,6 @@
                             lname: testdrive.selected.lname,
                             tel: testdrive.selected.tel
                         }).then(function(response) {
-                            //console.log(response.data);
                             if(response.data.status == 'success'){
                                 swal("สำเร็จ", "เพิ่มสมาชิกเรียบร้อย", "success",{ 
                                     button: "ตกลง"
@@ -353,7 +352,6 @@
                                     icon: "error",
                                 });
                             }
-
                         });
 
                     }

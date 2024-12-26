@@ -163,7 +163,7 @@
                         </div>
                     </div>
 
-                    <div v-if="detail.status == '1' || detail.status == '2'" class="row">
+                    <div class="row" v-if="detail.status == '1' || detail.status == '2'">
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
                                 <div class="card-body">
@@ -171,7 +171,7 @@
                                     
                                     <div class="check-list mb-3">
 
-                                        <div v-if="up_img.link !== null">
+                                        <div v-if="up_img.link != null">
                                             <p class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์</p>
                                             <img :src="up_img.link" class="mt-4" width="100%">
                                         </div>
@@ -216,12 +216,12 @@
                         </div>
                     </div>
 
-                    <div class="row" v-if="detail.status == '0'">
+                    <div class="row" v-if="detail.status == '0' || detail.status == '1' || detail.status == '2'">
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
                                 <div class="card-body">
 
-                                    <h4 class="mb-2 font-size-18">อัพโหลดเอกสาร</h4>
+                                    <h4 class="mb-2 font-size-18">อัพโหลดเอกสารทั่วไป</h4>
                                     <form @submit.prevent="sendData">
                                         <div class="form-group">
                                             <select class="form-control" v-model="file_upload.type">
@@ -477,7 +477,7 @@
                         ,{
                             headers: { 
                                 'Content-Type': 'multipart/form-data'
-                            },
+                            }, 
                         }).then(res => {
                             var cfimg_up_id =  res.data.result.id;
                             var cfimg_up_link =  res.data.result.variants[1];
