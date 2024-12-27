@@ -53,6 +53,12 @@
         .card {
             margin-bottom: 10px;
         }
+        @media (min-width: 768px) {
+            div.dataTables_wrapper div.dataTables_filter {
+                float: right;
+            }
+        } 
+        
     </style>
 </head>
 
@@ -167,70 +173,93 @@
 
     <!-- Datatables init -->
     <script>
-       $('#datatable').DataTable({
-            "order": [[ 0, "desc" ]],
-            "language": {
-                "paginate": {
-                    "previous": "<i class='mdi mdi-chevron-left'>",
-                    "next": "<i class='mdi mdi-chevron-right'>"
-                },
-                "lengthMenu": "แสดง _MENU_ รายชื่อ",
-                "zeroRecords": "ขออภัย ไม่มีข้อมูล",
-                "info": "หน้า _PAGE_ ของ _PAGES_",
-                "infoEmpty": "ไม่มีข้อมูล",
-                "search": "ค้นหา:",
-            },
-            "drawCallback": function () {
-                $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-            },
+        $('#datatable').DataTable({
             ajax: '/inbound/system/list.api.php?b=<?php echo $branch; ?>',
-            "columns" : [
-                {'data':'0'},
-                {'data':'1'},
-                {'data':'2'},
-                {'data':'3'},
-                {'data':'4'},
-                {'data':'5'},
-                {'data':'6'},
-                {'data':'9',
-                    "render": function ( data, type, full, meta ) {
-                        if(data == '1'){
-                            return '<span class="badge badge-success">ออนไลน์</span>';
-                        }else if(data == '2'){
-                            return '<span class="badge badge-primary">เซลล์</span>';
-                        } else if(data == '3') {
-                            return '<span class="badge badge-info">TBR</span>';
-                        } else if(data == '4') {
-                            return '<span class="badge badge-secondary">Walk-in</span>';
-                        }  else if(data == '5') {
-                            return '<span class="badge badge-secondary">ทำคอนเท้นต์</span>';
-                        } else if(data == '6') {
-                            return '<span class="badge badge-secondary">ออกบูธ</span>';
-                        }
-                    }
-                },
-                {'data':'7',
-                    "render": function ( data, type, full, meta ) {
-                        if(data == '0'){
-                            return '<span class="badge badge-warning">ยังไม่ทดลองขับ</span>';
-                        }else if(data == '1'){
-                            return '<span class="badge badge-primary">รับกุญแจ</span>';
-                        }else if(data == '2'){
-                            return '<span class="badge badge-success">สำเร็จ</span>';
-                        }else if(data == '10'){
-                            return '<span class="badge badge-danger">ยกเลิก</span>';
-                        }
-                    }
-                },
-                { 
-                    'data': '0',
-                    sortable: false,
-                    "render": function ( data, type, full, meta ) {
-                        return '<a href="/admin/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
-                    }
-                }
-            ]
+            pageLength: 15,
+            lengthMenu: [[15, 25, 50, 100], [15, 25, 50, 100]],
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            bInfo: false,
+            order: [[0, "desc"]],
+            language: {
+                "processing": "กำลังดาวน์โหลดข้อมูล...",
+                "search": "ค้นหา:",
+                "lengthMenu": "แสดง _MENU_ รายการ",
+            },
+            dom: 'lBfrtip',
+            buttons: [
+                'copy', 'print'
+            ],
+            search: {
+                "regex": true,
+                "smart": false,
+            },
         });
+    //    $('#datatable').DataTable({
+    //         "order": [[ 0, "desc" ]],
+    //         "language": {
+    //             "paginate": {
+    //                 "previous": "<i class='mdi mdi-chevron-left'>",
+    //                 "next": "<i class='mdi mdi-chevron-right'>"
+    //             },
+    //             "lengthMenu": "แสดง _MENU_ รายชื่อ",
+    //             "zeroRecords": "ขออภัย ไม่มีข้อมูล",
+    //             "info": "หน้า _PAGE_ ของ _PAGES_",
+    //             "infoEmpty": "ไม่มีข้อมูล",
+    //             "search": "ค้นหา:",
+    //         },
+    //         "drawCallback": function () {
+    //             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+    //         },
+    //         ajax: '/inbound/system/list.api.php?b=<?php echo $branch; ?>',
+    //         "columns" : [
+    //             {'data':'0'},
+    //             {'data':'1'},
+    //             {'data':'2'},
+    //             {'data':'3'},
+    //             {'data':'4'},
+    //             {'data':'5'},
+    //             {'data':'6'},
+    //             {'data':'9',
+    //                 "render": function ( data, type, full, meta ) {
+    //                     if(data == '1'){
+    //                         return '<span class="badge badge-success">ออนไลน์</span>';
+    //                     }else if(data == '2'){
+    //                         return '<span class="badge badge-primary">เซลล์</span>';
+    //                     } else if(data == '3') {
+    //                         return '<span class="badge badge-info">TBR</span>';
+    //                     } else if(data == '4') {
+    //                         return '<span class="badge badge-secondary">Walk-in</span>';
+    //                     }  else if(data == '5') {
+    //                         return '<span class="badge badge-secondary">ทำคอนเท้นต์</span>';
+    //                     } else if(data == '6') {
+    //                         return '<span class="badge badge-secondary">ออกบูธ</span>';
+    //                     }
+    //                 }
+    //             },
+    //             {'data':'7',
+    //                 "render": function ( data, type, full, meta ) {
+    //                     if(data == '0'){
+    //                         return '<span class="badge badge-warning">ยังไม่ทดลองขับ</span>';
+    //                     }else if(data == '1'){
+    //                         return '<span class="badge badge-primary">รับกุญแจ</span>';
+    //                     }else if(data == '2'){
+    //                         return '<span class="badge badge-success">สำเร็จ</span>';
+    //                     }else if(data == '10'){
+    //                         return '<span class="badge badge-danger">ยกเลิก</span>';
+    //                     }
+    //                 }
+    //             },
+    //             { 
+    //                 'data': '0',
+    //                 sortable: false,
+    //                 "render": function ( data, type, full, meta ) {
+    //                     return '<a href="/admin/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
+    //                 }
+    //             }
+    //         ]
+    //     });
     </script>
     <script src="/assets/js/theme.js"></script>
 

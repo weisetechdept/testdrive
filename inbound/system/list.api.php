@@ -1,82 +1,11 @@
 <?php 
     session_start();
     require_once '../../db-conn.php';
-    if($_SESSION['testdrive_admin'] !== true){
-        header('Location: /404');
-    } 
-
     date_default_timezone_set("Asia/Bangkok");
 
-    $api = [];
-
-    if($_GET['b'] == 'ho'){
-        $branch = 'ho';
-    } elseif($_GET['b'] == 'tm') {
-        $branch = 'tm';
-    } else {
-        $branch = '';
-    }
-
-    function getTeam($uid){
-        global $db_nms;
-        $team = $db_nms->get('db_user_group');
-        foreach($team as $t){
-            $tm = array_merge(json_decode($t['detail']),json_decode($t['leader']));
-            //$team_data = json_decode($t['detail']);
-            if(in_array($uid,$tm)){
-                return $t['name'];
-            }
-
-        }
-    }
-
-    $db->join('car c','c.car_id = b.bk_car','LEFT');
-    $bk = $db->where('car_branch',$branch)->get('booking b');
-        
-    function customTime($time){
-        if($time == '1'){
-            return '08:00 - 08:30';
-        }elseif($time == '2'){
-            return '08:31 - 09:00';
-        }elseif($time == '3'){
-            return '09:01 - 09:30';
-        }elseif($time == '4'){
-            return '09:31 - 10:00';
-        }elseif($time == '5'){
-            return '10:01 - 10:30';
-        }elseif($time == '6'){
-            return '10:31 - 11:00';
-        }elseif($time == '7'){
-            return '11:01 - 11:30';
-        }elseif($time == '8'){
-            return '11:31 - 12:00';
-        }elseif($time == '9'){
-            return '12:01 - 12:30';
-        }elseif($time == '10'){
-            return '12:31 - 13:00';
-        }elseif($time == '11'){
-            return '13:01 - 13:30';
-        }elseif($time == '12'){
-            return '13:31 - 14:00';
-        }elseif($time == '13'){
-            return '14:01 - 14:30';
-        }elseif($time == '14'){
-            return '14:31 - 15:00';
-        }elseif($time == '15'){
-            return '15:01 - 15:30';
-        }elseif($time == '16'){
-            return '15:31 - 16:00';
-        }elseif($time == '17'){
-            return '16:01 - 16:30';
-        }elseif($time == '18'){
-            return '16:31 - 17:00';
-        }elseif($time == '19'){
-            return '17:01 - 17:30';
-        }elseif($time == '20'){
-            return '17:31 - 18:00';
-        }
-
-    }
+        if($_SESSION['testdrive_admin'] !== true){
+            header('Location: /404');
+        } 
 
     function customTime2($time){
 
@@ -172,38 +101,146 @@
         return $first.' - '.$last;
 
     }
+
     
 
-    foreach ($bk as $value) {
+    $api = [];
+    $branch = '';
 
-        if($value['bk_parent'] == 'TBR'){
+    if(isset($_GET['b']) && $_GET['b'] == 'ho'){
+        $branch = 'ho';
+    } elseif(isset($_GET['b']) && $_GET['b'] == 'tm') {
+        $branch = 'tm';
+    } else {
+        $branch = '';
+    }
+
+    function DateThai($strDate)
+    {
+        $strYear = date("y",strtotime($strDate));
+        $strMonth= date("n",strtotime($strDate));
+        $strDay= date("j",strtotime($strDate));
+    
+        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
+    } 
+
+    function getTeam($uid){
+        global $db_nms;
+        $team = $db_nms->get('db_user_group');
+        foreach($team as $t){
+            $tm = array_merge(json_decode($t['detail']),json_decode($t['leader']));
+            //$team_data = json_decode($t['detail']);
+            if(in_array($uid,$tm)){
+                return $t['name'];
+            }
+
+        }
+    }
+
+    function getOwner($id){
+        global $db_nms;
+        if($id == 'TBR'){
             $owner = 'TBR Fastlane';
         } else {
-            $parent = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
+            $parent = $db_nms->where('id',$id)->getOne('db_member');
             
             if($parent['nickname'] !== ''){
                 $nickn = ' ('.$parent['nickname'].')';
             } else {
                 $nickn = '';
             }
-            
             $owner = $parent['first_name'].''.$nickn.' - '.getTeam($parent['id']);
         }
 
-
-
-        $api['data'][] = array(
-            $value['bk_id'],
-            $value['bk_fname'].' '.$value['bk_lname'],
-            $value['bk_tel'],
-            $value['car_model'],
-            $value['bk_date'],
-            customTime2($value['bk_time']),
-            $owner,
-            $value['bk_status'],
-            $value['bk_datetime'],
-            $value['bk_where']
-        );
+        return $owner;
     }
 
-    echo json_encode($api);
+    $sql_details_1 = ['user'=> $usern,'pass'=> $passn,'db'=> $dbn,'host'=> $hostn,'charset'=>'utf8'];
+    
+    require 'ssp.class.php';
+
+    $table = 'booking';
+
+    $primaryKey = 'bk_id';
+    $columns = [
+        ['db' => 'bk_id', 'dt' => 0, 'field' => 'bk_id'],
+        ['db' => 'bk_fname', 'dt' => 1, 'field' => 'bk_fname'],
+        ['db' => 'bk_tel', 'dt' => 2, 'field' => 'bk_tel',
+            'formatter' => function($d, $row){
+                return '******'.substr($d,6,4);
+            }
+        ],
+        ['db' => 'car_model', 'dt' => 3, 'field' => 'car_model'],
+        ['db' => 'bk_date', 'dt' => 4, 'field' => 'bk_date',
+            'formatter' => function($d, $row){
+                return DateThai($d);
+            }
+        ],
+        ['db' => 'bk_time', 'dt' => 5, 'field' => 'bk_time',
+            'formatter' => function($d, $row){
+                return customTime2($d);
+            }
+        ],
+        ['db' => 'bk_parent', 'dt' => 6, 'field' => 'bk_parent',
+            'formatter' => function($d, $row){
+                return getOwner($d);
+            }
+        ],
+        ['db' => 'bk_where', 'dt' => 7, 'field' => 'bk_where',
+            'formatter' => function($d, $row){
+                if($d == '1'){
+                    return '<span class="badge badge-success">ออนไลน์</span>';
+                } elseif($d == '2'){
+                    return '<span class="badge badge-primary">เซลล์</span>';
+                } elseif($d == '3'){
+                    return '<span class="badge badge-info">TBR</span>';
+                } elseif($d == '4'){
+                    return '<span class="badge badge-secondary">Walk-in</span>';
+                } elseif($d == '5'){
+                    return '<span class="badge badge-secondary">ทำคอนเท้นต์</span>';
+                } elseif($d == '6'){
+                    return '<span class="badge badge-secondary">ออกบูธ</span>';
+                }
+            }
+        ],
+        ['db' => 'bk_status', 'dt' => 8, 'field' => 'bk_status',
+            'formatter' => function($d, $row){
+                if($d == '0'){
+                    return '<span class="badge badge-warning">ยังไม่ทดลองขับ</span>';
+                }elseif($d == '1'){
+                    return '<span class="badge badge-primary">รับกุญแจ</span>';
+                }elseif($d == '2'){
+                    return '<span class="badge badge-success">สำเร็จ</span>';
+                }elseif($d == '10'){
+                    return '<span class="badge badge-danger">ยกเลิก</span>';
+                }
+            }
+        ],
+        ['db' => 'bk_id', 'dt' => 9, 'field' => 'bk_id',
+            'formatter' => function($d, $row){
+                return "<a class=\"btn btn-outline-info btn-sm\" href=\"/admin/de/$d\">ดูข้อมูล</a>";
+            }
+        ],
+    ]; 
+
+    $joinQuery = "FROM car c LEFT JOIN booking b ON c.car_id = b.bk_car";
+    
+    $where = " c.car_branch IN ('".$branch."')";
+
+    if(isset($_GET['search']['value'])){
+        $searchValue = $_GET['search']['value'];
+        $joinQuery .= " AND (c.car_model LIKE '%$searchValue%' OR b.bk_id LIKE '%$searchValue%' OR b.bk_fname LIKE '%$searchValue%')";
+    }
+    
+    if (!isset($_GET['columns'])) {
+        $_GET['columns'] = [];
+    }
+    if (!isset($_GET['draw'])) {
+        $_GET['draw'] = 1;
+    }
+
+    echo json_encode(
+        SSP::simple($_GET, $sql_details_1, $table, $primaryKey, $columns, $joinQuery, $where)
+    );
