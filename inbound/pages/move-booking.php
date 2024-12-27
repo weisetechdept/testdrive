@@ -64,9 +64,6 @@
             border-radius: 3px;
             
         }
-        #checktime{
-            display:none;
-        }
         .time-note {
             background-color: #efefef;
             padding: 10px;
@@ -81,11 +78,85 @@
         .strong {
             font-weight: bold;
         }
-
         .bg {
-            padding: 15px 0 0 55px;
+            padding: 15px 0 0 45px;
         }
-        
+        .span_pseudo, .chiller_cb span:before, .chiller_cb span:after {
+            content: "";
+            display: inline-block;
+            background: #fff;
+            width: 0;
+            height: 0.2rem;
+            position: absolute;
+            transform-origin: 0% 0%;
+        }
+        .chiller_cb {
+            position: relative;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .chiller_cb input {
+            display: none;
+        }
+        .chiller_cb input:checked ~ span {
+            background: #7266bb;
+            border-color: #7266bb;
+        }
+        .chiller_cb input:checked ~ span:before {
+            width: 1rem;
+            height: 0.15rem;
+            transition: width 0.1s;
+            transition-delay: 0.3s;
+        }
+        .chiller_cb input:checked ~ span:after {
+            width: 0.4rem;
+            height: 0.15rem;
+            transition: width 0.1s;
+            transition-delay: 0.2s;
+        }
+        .chiller_cb input:disabled ~ span {
+            background: #ececec;
+            border-color: #dcdcdc;
+        }
+        .chiller_cb input:disabled ~ label {
+            color: #dcdcdc;
+        }
+        .chiller_cb input:disabled ~ label:hover {
+            cursor: default;
+        }
+        .chiller_cb label {
+            padding-left: 2rem;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            margin-bottom:0;
+        }
+        .chiller_cb span {
+            display: inline-block;
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 2px solid #ccc;
+            position: absolute;
+            left: 0;
+            transition: all 0.2s;
+            z-index: 1;
+            box-sizing: content-box;
+        }
+        .chiller_cb span:before {
+            transform: rotate(-55deg);
+            top: 1rem;
+            left: 0.37rem;
+        }
+        .chiller_cb span:after {
+            transform: rotate(35deg);
+            bottom: 0.35rem;
+            left: 0.2rem;
+        }
+        #checktime {
+            display: none;
+        }
     </style>
 </head>
 
@@ -109,7 +180,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2">
+                    <div class="row mt-5">
                         <div class="col-lg-6 col-md-12">
                             <div class="card m-b-30">
                                 <div class="card-body">
@@ -140,7 +211,7 @@
                                                 <td>วันที่ขอย้ายการจอง</td>
                                                 <td>
                                                     <div class="form-group">
-                                                        <input type="date" id="date" class="form-control" v-model="selected.date" min="<?php echo date('Y-m-d'); ?>" @change="getTime">
+                                                        <input type="date" id="date" class="form-control" v-model="selected.date" @change="getTime">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -294,7 +365,7 @@
                         car: dedrive.detail.car
                     }).then(function(response) {
 
-                        console.log(response.data);
+                        //console.log(response.data);
                         dedrive.bk.time = response.data.time;
                         dedrive.selected.time = '0';
                         document.getElementById('checktime').style.display = 'block';
@@ -317,7 +388,7 @@
                         });
                         return;
                     } else {
-                        console.log(dedrive.selectedRows);
+                        //console.log(dedrive.selectedRows);
                         axios.post('/inbound/system/move-bk.api.php?get=edit', {
                             id: dedrive.detail.id,
                             date: dedrive.selected.date,

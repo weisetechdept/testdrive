@@ -157,25 +157,11 @@
                     }
                 }
 
-                if(timeSort($time['id']) == '1' && $date == date('Y-m-d')){
-                    $isBooked = true;
-                }
-
                 if($isBooked == false){
-                    if(date('d-m-Y', strtotime($date)) == $today){
-                        if($nowTime > $key / 2){
-                            $status = 0;
-                        } else {
-                            $status = 1;
-                        }
-                    } else {
-                        $status = 1;
-                    }
+                    $status = 1;
                 } else {
                     $status = 0;
                 }
-
-                
                 
                 $api['time'][] = array(
                     'id' => $time['id'],

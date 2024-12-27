@@ -27,6 +27,7 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/plugins/dropify/dropify.min.css" rel="stylesheet" type="text/css" />
     <style>
         body {
             font-family: 'Chakra Petch', sans-serif;
@@ -176,8 +177,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row" v-if="detail.status == '1' || detail.status == '2'">
+<div v-if="detail.status == '1' || detail.status == '2'">
+                    <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
                                 <div class="card-body">
@@ -205,6 +206,23 @@
                         </div>
                     </div>
 
+                    <!-- <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>อัพโหลดรูปเลขไมล์</h4>
+                                    <form @submit.prevent="sendDataUp">
+                                        <div class="form-group">
+                                            <input type="file" class="dropify" data-height="150" name="file_upload" id="file_upload" @change="onFileChange" />
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+</div>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
@@ -313,6 +331,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <script src="/assets/plugins/dropify/dropify.min.js"></script>
  
     <script>
          var dedrive = new Vue({
@@ -338,6 +358,7 @@
                 }
             },
             mounted () {
+                
                 axios.get('/inbound/system/detail.api.php?id=<?php echo $id; ?>').then(function(response) {
                     dedrive.detail = response.data.detail;
                     dedrive.docs = response.data.docs;
@@ -351,8 +372,94 @@
                     dedrive.send.mileage = response.data.up_img.mileage,
                     dedrive.send.id = response.data.up_img.up_id
                 ))
+
+                $('.dropify').dropify({
+                    messages: {
+                        'default': 'แตะเพื่ออัพโหลดรูป',
+                        'replace': 'แตะเพื่ออัพโหลดรูปแก้ใข',
+                        'remove': 'ลบรูปภาพ',
+                        'error': 'เกิดข้อมผิดพลาด โปรดลองใหม่อีกครั้ง'
+                    },
+                    error: {
+                        'fileSize': 'ขนาดของรูปเกินปริมาณที่กำหนด (1M max).'
+                    }
+                });
+            },
+
+            watch: {
+                docs() {
+                    this.$nextTick(() => {
+                        this.initializeDropify();
+                    });
+                },
             },
             methods: {
+                initializeDropify() {
+                    this.$nextTick(() => {
+                        $('.dropify').dropify(); // เรียก Dropify
+                    });
+                },
+                onFileChangeUp(e) {
+                    this.car_update.file = e.target.files[0];
+                },
+                sendDataUp() {
+                    if(this.car_update.file == null || this.mileage == '') {
+                        swal("โปรดตรวจสอบ", "คุณอาจยังไม่ได้กรอกเลขไมล์ หรือเลือกไฟล์เอกสาร", "warning",{ 
+                            button: "ตกลง"
+                        })
+                    } else {
+                        var formData = new FormData();
+                        formData.append('file_upload', this.car_update.file);
+                        
+                        swal({
+                            title: "กำลังอัพโหลด...",
+                            text: "โปรดรอสักครู่ ระบบกำลังอัพโหลดเอกสารของคุณ",
+                            icon: "info",
+                            buttons: false,
+                            closeOnClickOutside: false,
+                            closeOnEsc: false
+                        });
+                    
+                        axios.post('/sales/system/cfimg.api.php',formData
+                        ,{
+                            headers: { 
+                                'Content-Type': 'multipart/form-data'
+                            }, 
+                        }).then(res => {
+                            var cfimg_up_id =  res.data.result.id;
+                            var cfimg_up_link =  res.data.result.variants[1];
+
+                            if(res.data.success == true) 
+
+                                axios.post('/sales/system/cfimg_update.api.php',{
+                                    aimg_img_id: cfimg_up_id,
+                                    aimg_link:  cfimg_up_link,
+                                    aimg_parent: <?php echo $id; ?>,
+                                    aimg_mileage: this.mileage
+                                }).then(res => {
+                                    if(res.data.status == 200) 
+                                        swal("สำเร็จ", "อัพโหลดเอกสารสำเร็จ", "success",{
+                                            button: "ตกลง"
+                                        }).then((value) => {
+                                            location.reload(true)
+                                        });
+                                    if(res.data.status == 400) 
+                                        swal("ทำรายการไม่สำเร็จ", "อัพโหลดเอกสารไม่สำเร็จ อาจมีบางอย่างผิดปกติ (error : 400)", "warning",{ 
+                                            button: "ตกลง"
+                                        }
+                                    );
+                                });
+
+                            if(res.data.success == false) 
+                                swal("ทำรายการไม่สำเร็จ", "อัพโหลดเอกสารไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
+                                    button: "ตกลง"
+                                }
+                            );
+
+                        });
+                    }
+
+                },
                 resetStatus(){
                     swal({
                         title: "ยืนยันการรีเซทสถานะ",
