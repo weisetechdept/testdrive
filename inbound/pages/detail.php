@@ -190,7 +190,7 @@
                                     </div>
                                     
                                     <div class="check-list mb-3">
-                                        <div v-if="up_img.link !== null">
+                                        <div v-if="up_img !== ''">
                                             <p class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์</p>
                                             <img :src="up_img.link" class="mt-4" width="100%">
                                         </div>
