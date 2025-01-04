@@ -80,11 +80,28 @@
     }
 
     if($_GET['get'] == "sales"){
+
+        function getTeam($uid){
+            global $db_nms;
+            $team = $db_nms->get('db_user_group');
+            foreach($team as $t){
+                $team_data = json_decode($t['detail']);
+                if(in_array($uid,$team_data)){
+                    if($t['name'] == 'S'){
+                        return 'E2';
+                    } else {
+                        return $t['name'];
+                    }
+                } 
+            }
+    
+        }
+
         $sales = $db_nms->where('verify',1)->where('status','user')->orderBy('id','ASC')->get('db_member');
         foreach($sales as $s){
             $api[] = array(
                 'id' => $s['id'],
-                'text' => $s['first_name'].' '.$s['last_name'].' ('.$s['nickname'].')'
+                'text' => $s['first_name'].' '.$s['last_name'].($s['nickname'] ? ' ('.$s['nickname'].')' : ' - ทีม ' .getTeam($s['id']))
             );
         }
     }

@@ -14,6 +14,7 @@
                     <ul class="sub-menu mm-collapse mm-show" aria-expanded="false" style="">
                         <li><a href="/admin/booking/ho">สำนักงานใหญ่</a></li>
                         <li><a href="/admin/booking/tm">ตลาดไท</a></li>
+                        <li><a href="/admin/fastlane/">เพิ่มการจองด่วน</a></li>
                     </ul>
                 </li>
                 <li>
