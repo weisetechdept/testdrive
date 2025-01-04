@@ -171,11 +171,10 @@
                                     
                                     <div class="check-list mb-3">
 
-                                        <div v-if="up_img.link != null">
+                                        <div v-if="up_img != ''">
                                             <p class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์</p>
                                             <img :src="up_img.link" class="mt-4" width="100%">
                                         </div>
-                                        
                                         <div v-else>
                                             <p>กรุณาอัพโหลดรูป และอัพเดทเลขไมล์รถยนต์ ก่อนคืนกุญแจ</p>
                                             <p class="red mb-4">
@@ -315,7 +314,7 @@
                 },
                 docs: [],
                 docs_img: [],
-                up_img: [],
+                up_img: '',
                 mileage: '',
                 car_update: {
                     type: 10,
@@ -323,6 +322,9 @@
                 }
             },
             mounted () {
+
+                console.log(this.up_img);
+
 
                 $('.dropify').dropify({
                     messages: {
@@ -344,7 +346,7 @@
                 axios.get('/sales/system/docs.api.php?u=<?php echo $id; ?>')
                 .then(response => {
                     dedrive.docs_img = response.data.img;
-                    dedrive.up_img = response.data.up_img;
+                    this.up_img = response.data.up_img;
                 })
             },
             watch: {

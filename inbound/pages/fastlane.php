@@ -498,7 +498,7 @@
                             id: testdrive.sales.id,
                             car: testdrive.selected.car,
                             date: testdrive.selected.date,
-                            time: testdrive.selected.selectedRows,
+                            time: JSON.stringify(testdrive.selected.selectedRows),
                             fname: testdrive.selected.fname,
                             lname: testdrive.selected.lname,
                             tel: testdrive.selected.tel,
@@ -508,7 +508,17 @@
                             type: document.querySelector('input[name="typeAdd"]:checked').value
 
                         }).then(function(response) {
-                            console.log(response.data);
+                            if(response.data.status == 'success'){
+                                swal("สำเร็จ", response.data.message, {
+                                    icon: "success",
+                                }).then((value) => {
+                                    window.location.href = '/admin/de/' + response.data.id;
+                                });
+                            } else {
+                                swal("ไม่สำเร็จ", response.data.message, {
+                                    icon: "error",
+                                });
+                            }
                             
                         });
 

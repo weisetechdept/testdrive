@@ -44,7 +44,7 @@
 
     }
 
-    $update = $db->where('up_parent',$_GET['u'])->where('up_status',1)->getOne('car_update'); 
+    $update = $db->where('up_parent',$_GET['u'])->where('up_status',1)->getOne('car_update');
     if ($update) {
         $api['up_img'] = array('link' => $update['up_img_path'],
             'datetime' => DateThai($update['up_datetime']),
@@ -57,4 +57,4 @@
 
     
 
-    print_r(json_encode($api));
+    echo json_encode($api);
