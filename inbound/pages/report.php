@@ -130,7 +130,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="mb-4 font-size-18">รายการจองทั้งหมดของ <?php echo strtoupper($branch); ?></h4>
+                                        <h4 class="mb-4 font-size-18">รายการจองทั้งหมดของ</h4>
                                         
 
                                         <table id="datatable" class="table dt-responsive nowrap">
@@ -260,7 +260,7 @@
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         },
-        ajax: '/inbound/system/report.api.php?ac=search&formdate=<?php echo date('Y');?>-01-1&todate=<?php echo date('Y');?>-12-31&status=all&model=all',
+        ajax: '/inbound/system/report.api.php?ac=search&formdate=<?php echo date('Y');?>-01-1&todate=<?php echo date('Y');?>-12-31&status=all&model=all&where=all',
         "columns" : [
             {'data':'0'},
             {'data':'1'},

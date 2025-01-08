@@ -23,9 +23,15 @@
                 <li>
                     <a href="/admin/quota" class="waves-effect"><i class="mdi mdi-account"></i><span>โควต้า</span></a>
                 </li>
-                <li>
-                    <a href="/admin/report" class="waves-effect"><i class="mdi mdi-chart-bar"></i><span>รายงาน</span></a>
+
+                <li class="mm-active">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true"><i class="mdi mdi-chart-bar"></i><span>รายงาน</span></a>
+                    <ul class="sub-menu mm-collapse mm-show" aria-expanded="false" style="">
+                        <li><a href="/admin/report">รายงานทั่วไป</a></li>
+                        <li><a href="/admin/report-mgr">สำหรับบริหารงาน</a></li>
+                    </ul>
                 </li>
+
             </ul>
 
         </div>

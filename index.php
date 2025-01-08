@@ -99,6 +99,10 @@
         require_once('inbound/pages/report.php');
     });
 
+    $router->get( '/admin/report-mgr/', function() {
+        require_once('inbound/pages/report-mgr.php');
+    });
+
     $router->get( '/admin/event', function() {
         require_once('inbound/pages/event.php');
     });
