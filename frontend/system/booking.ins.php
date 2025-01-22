@@ -39,6 +39,7 @@
             $data = array(
                 'bk_fname' => $fname,
                 'bk_lname' => $lname,
+                'bk_nlsID' => '',
                 'bk_tel' => $tel,
                 'bk_email' => $email,
                 'bk_car' => $car,
