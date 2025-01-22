@@ -93,7 +93,7 @@
                         $data = array(
                             'bk_fname' => $request->fname,
                             'bk_lname' => $request->lname,
-                            'bk_nlsID' => '',
+                            'bk_nlsID' => null,
                             'bk_tel' => $tel_fn,
                             'bk_email' => '',
                             'bk_car' => $request->car,

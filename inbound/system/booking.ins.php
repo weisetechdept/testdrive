@@ -35,7 +35,7 @@
             $data = array(
                 'bk_fname' => $request->fname,
                 'bk_lname' => $request->lname,
-                'bk_nlsID' => '',
+                'bk_nlsID' => null,
                 'bk_tel' => $request->tel,
                 'bk_email' => '',
                 'bk_car' => $request->car,
