@@ -8,12 +8,16 @@
     
     $request = json_decode(file_get_contents('php://input'));
     $id = $request->id;
+    $nlsID = $request->people_id;
 
     $obj = $db->where('bk_id', $id)->getOne('booking');
 
     $chk = $db->where('img_parent', $id)->get('document');
+    $docs2 = 0;
+    $docs3 = 0;
+
     foreach($chk as $chk){
-    if($chk['img_type'] == '2'){
+        if($chk['img_type'] == '2'){
             $docs2 += 1;
         } elseif($chk['img_type'] == '3'){
             $docs3 += 1;
@@ -26,13 +30,14 @@
             $api = array('status' => '400');
         } else {
             $data = Array (
-                'bk_status' => '1'
+                'bk_status' => '1',
+                'bk_nlsID' => $nlsID
             );
             $db->where ('bk_id', $id);
             if ($db->update ('booking', $data)){
                 $api = array('status' => '200');
             } else {
-                $api = array('status' => '500');
+                $api = array('status' => '500', 'message' => $db->getLastError());
             }
         }
        
@@ -42,13 +47,14 @@
             $api = array('status' => '400');
         } else {
             $data = Array (
-                'bk_status' => '1'
+                'bk_status' => '1',
+                'bk_nlsID' => $nlsID
             );
             $db->where ('bk_id', $id);
             if ($db->update ('booking', $data)){
                 $api = array('status' => '200');
             } else {
-                $api = array('status' => '500');
+                $api = array('status' => '500', 'message' => $db->getLastError());
             }
         }
         

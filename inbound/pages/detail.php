@@ -69,6 +69,33 @@
         .swal-text {
             text-align: center;
         }
+
+        #overlay{
+            border:1px solid black;
+            width:450px;
+            height:350px;
+            display:inline-block;
+            background-repeat:no-repeat;
+        }
+        
+        .zoom-overlay {
+            position: absolute;
+            border-radius: 5px;
+            width: 450px;
+            height: 350px;
+            background-repeat: no-repeat;
+            display: none;
+            margin-left: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .zoom-image {
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .zoom-container {
+            position: relative;
+            display: block;
+        }
     </style>
 </head>
 
@@ -106,6 +133,10 @@
                                             <tr>
                                                 <td>ชื่อ - นามสกุล</td>
                                                 <td>{{ detail.name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>เลขบัตร ปชช.</td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td>โทรศัพท์</td>
@@ -161,6 +192,31 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
                                 <div class="card-body">
+
+                                    <div  v-if="detail.status == '0'">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+
+                                                        <img class="zoom-image mb-3" :id="'imgZoom_' + verifyDLS.img_id" width="100%" height="350px" :onmousemove="'zoomIn(event, ' + verifyDLS.img_id + ')'" :onmouseout="'zoomOut(' + verifyDLS.img_id +')'" :src="verifyDLS.img">
+                                                        
+
+                                                        <div class="zoom-overlay" :id="'overlay_' + verifyDLS.img_id" v-bind:style="{ backgroundImage: 'url(' + verifyDLS.img + ')' }"></div>
+
+                                                        
+                                                        <p class="mt-0 mb-0">อัพโหลดเมื่อ : {{ verifyDLS.datetime }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <h4 class="mb-2 font-size-14">*โปรดกรอกเลขบัตร ปชช. ลูกค้าให้ถูกต้อง ก่อนจ่ายกุญแจ</h4>
+                                            <input class="form-control" v-model="nlsID" type="number">
+                                        </div>
+                                    </div>
+
                                     <h4 class="mb-2 font-size-18">จัดการ การจองนี้</h4>
                                     
                                     <div>
@@ -170,7 +226,7 @@
                                         <a href="/admin/detail/mv/<?php echo $id; ?>" v-if="detail.status == '0'" type="button" class="btn btn-outline-warning waves-effect waves-light mb-2 mr-1">ย้ายการจอง</a>
                                         <button v-if="detail.status == '10'" type="button" class="btn btn-warning waves-effect waves-light mb-2 mr-1" @click="resetStatus">รีเซทสถานะ</button>
 
-                                        <button v-if="detail.status == '1'" type="button" @click="resetStatus" class="btn btn-outline-info waves-effect waves-light mb-2 mr-1">แจ้งเอกสารไม่ครบ</button>
+                                        <button v-if="detail.status == '1'" type="button" @click="sendNotify" class="btn btn-outline-info waves-effect waves-light mb-2 mr-1">แจ้งเอกสารไม่ครบ</button>
                                     </div>
                                     
                                 </div>
@@ -188,8 +244,11 @@
                                         <label>เลขไมล์ :</label>
                                         <input type="text" v-model="send.mileage" class="form-control">
                                     </div>
-                                    
+
                                     <div class="check-list mb-3">
+                                        <!-- <p v-if="docs.docs3 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายคู่กับลูกค้าและรถทดลองขับ (เห็นเลขทะเบียนรถฯ)</p> -->
+                                        <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i>  รูปถ่ายคู่กับลูกค้าและรถทดลองขับ (เห็นเลขทะเบียนรถฯ)</p>
+
                                         <div v-if="up_img !== ''">
                                             <p class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์</p>
                                             <img :src="up_img.link" class="mt-4" width="100%">
@@ -233,6 +292,7 @@
                                         <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> ใบขับขี่ผู้ทดลองขับ</p>
                                         <p v-if="docs.docs3 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> เอกสารยินยอมข้อตกลงทดลองขับ</p>
                                         <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i> เอกสารยินยอมข้อตกลงทดลองขับ</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -252,6 +312,7 @@
                                                 <option value="1">บัตร ปชช.</option>
                                                 <option value="2">ใบขับขี่ผู้ทดลองขับ</option>
                                                 <option value="3">เอกสารยินยอมข้อตกลงทดลองขับ</option>
+                                                <option value="4">รูปถ่ายคู่กับลูกค้าและรถทดลองขับ (เห็นเลขทะเบียนรถฯ)</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -345,6 +406,8 @@
                 },
                 docs: '',
                 docs_img: '',
+                verifyDLS: [],
+                nlsID: '',
                 up_img: '',
                 mileage: '',
                 car_update: {
@@ -364,13 +427,17 @@
                     dedrive.docs = response.data.docs;
                     dedrive.send.car = response.data.detail.car_id;
                 });
-
+ 
                 axios.get('/inbound/system/docs.api.php?u=<?php echo $id; ?>')
                 .then(response => (
                     dedrive.docs_img = response.data.img,
                     dedrive.up_img = response.data.up_img,
                     dedrive.send.mileage = response.data.up_img.mileage,
-                    dedrive.send.id = response.data.up_img.up_id
+                    dedrive.send.id = response.data.up_img.up_id,
+
+                    dedrive.verifyDLS = response.data.verifyDLS,
+                    console.log(response)
+                    
                 ))
 
                 $('.dropify').dropify({
@@ -437,7 +504,8 @@
                                     aimg_parent: <?php echo $id; ?>,
                                     aimg_mileage: this.mileage
                                 }).then(res => {
-                                    if(res.data.status == 200) 
+
+                                    if(res.data.status == 200)
                                         swal("สำเร็จ", "อัพโหลดเอกสารสำเร็จ", "success",{
                                             button: "ตกลง"
                                         }).then((value) => {
@@ -448,6 +516,7 @@
                                             button: "ตกลง"
                                         }
                                     );
+
                                 });
 
                             if(res.data.success == false) 
@@ -607,37 +676,45 @@
                 },
                  
                 giveKey() {
-                    swal({
-                        title: "ยืนยันการเบิกกุญแจ",
-                        text: "คุณได้ตรวจสอบเอกสารถูกต้องครบถ้วนแล้ว ใช่หรือไม่?",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    }).then((willDelete) => {
-                        if (willDelete) {
-                            axios.post('/inbound/system/givekey.api.php',{
-                                id: <?php echo $id; ?>
-                            }).then(res => {
-                                if(res.data.status == 200) 
-                                    swal("สำเร็จ", "เบิกกุญแจสำเร็จ", "success",{ 
-                                        button: "ตกลง"
-                                    }).then((value) => {
-                                        location.reload(true)
-                                    });
-                                if(res.data.status == 500) 
-                                    swal("ทำรายการไม่สำเร็จ", "เบิกกุญแจไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
-                                        button: "ตกลง"
-                                    }
-                                );
-                                if(res.data.status == 400) 
-                                    swal("ทำรายการไม่สำเร็จ", "เอกสารไม่ครบถ้วน กรุณาตรวจสอบอีกครั้ง", "warning",{ 
-                                        button: "ตกลง"
-                                    }
-                                );
-                            });
-                        }
-                    });
-                }, 
+                    if(dedrive.nlsID === ''){
+                        swal("โปรดตรวจสอบ", "คุณอาจยังไม่ได้กรอกเลขบัตรประชาชน", "warning",{ 
+                            button: "ตกลง"
+                        })
+                    } else {
+                        swal({
+                            title: "ยืนยันการเบิกกุญแจ",
+                            text: `คุณได้ตรวจสอบเอกสารถูกต้องครบถ้วนแล้ว ใช่หรือไม่?`,
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                axios.post('/inbound/system/givekey.api.php',{
+                                    id: <?php echo $id; ?>,
+                                    people_id: dedrive.nlsID
+                                }).then(res => {
+                                    console.log(res);
+                                    if(res.data.status == 200) 
+                                        swal("สำเร็จ", "เบิกกุญแจสำเร็จ", "success",{ 
+                                            button: "ตกลง"
+                                        }).then((value) => {
+                                            location.reload(true)
+                                        });
+                                    if(res.data.status == 500) 
+                                        swal("ทำรายการไม่สำเร็จ", "เบิกกุญแจไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
+                                            button: "ตกลง"
+                                        }
+                                    );
+                                    if(res.data.status == 400) 
+                                        swal("ทำรายการไม่สำเร็จ", "เอกสารที่ต้องใช้ ไม่ครบถ้วน กรุณาตรวจสอบอีกครั้ง", "warning",{ 
+                                            button: "ตกลง"
+                                        }
+                                    );
+                                });
+                            }
+                        });
+                    }
+                },
                 deBooking() {
                     swal({
                         title: "ยืนยันการยกเลิก",
@@ -707,7 +784,19 @@
             }
         });
 
-        
+        function zoomIn(event, index) {
+            var element = document.getElementById("overlay_" + index);
+            element.style.display = "inline-block";
+            var img = document.getElementById("imgZoom_" + index);
+            var posX = event.offsetX ? (event.offsetX) : event.pageX - img.offsetLeft;
+            var posY = event.offsetY ? (event.offsetY) : event.pageY - img.offsetTop;
+            element.style.backgroundPosition=(-posX*1.35)+"px "+(-posY*1.75)+"px";
+        }
+
+        function zoomOut(index) {
+            var element = document.getElementById("overlay_" + index);
+            element.style.display = "none";
+        }
     </script>
 
     <script src="/assets/js/theme.js"></script>

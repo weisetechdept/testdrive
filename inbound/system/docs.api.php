@@ -35,14 +35,23 @@
     $img = $db->get("booking b");
 
     
-    foreach ($img as $value) {
+        foreach ($img as $value) {
 
-        $api['img'][] = array('link' => $value['img_cf_path'],
-        'type' => docsType($value['img_type']),
-        'datetime' => DateThai($value['img_datetime'])
-    );
+            $api['img'][] = array('link' => $value['img_cf_path'],
+                'type' => docsType($value['img_type']),
+                'datetime' => DateThai($value['img_datetime'])
+            );
 
-    }
+            if($value['img_type'] == '2'){
+                $api['verifyDLS'] = array('img' => $value['img_cf_path'],
+                    'datetime' => DateThai($value['img_datetime']),
+                    'id' => $value['img_id']
+                );
+            }
+
+        }
+
+
 
     $update = $db->where('up_parent',$_GET['u'])->where('up_status',1)->getOne('car_update'); 
     if ($update) {
