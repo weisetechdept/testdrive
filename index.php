@@ -149,6 +149,10 @@
         require_once('mgr/pages/done.php');
     });
 
+    $router->get( '/mgr/cancel', function() {
+        require_once('mgr/pages/cancel.php');
+    });
+
     $router->get( '/mgr/makeBk', function() {
         require_once('mgr/pages/makeBk.php');
     });

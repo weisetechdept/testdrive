@@ -6,12 +6,12 @@
 
     if(isset($_GET['get']) && $_GET['get'] == "sales"){ 
 
-        $mgr_id = '271';
+        $mgr_id = $_SESSION['sales_user'];
 
         $sale = $db_nms->get('db_user_group');
         foreach($sale as $value){
-            $chk = in_array($mgr_id, json_decode($value['leader']));
-            if($chk){
+            $leaders = json_decode($value['leader']);
+            if (is_array($leaders) && in_array($mgr_id, $leaders)) {
                 foreach(json_decode($value['detail']) as $emp){
                     $team[] = $emp;
                 }

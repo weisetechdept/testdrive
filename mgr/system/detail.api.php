@@ -96,6 +96,8 @@
     );
 
 
+    $status = ''; // Define the $status variable
+
     foreach ($bk as $value) {
 
         $api['detail'] = array(

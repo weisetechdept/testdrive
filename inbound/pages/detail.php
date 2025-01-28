@@ -485,26 +485,28 @@
                         icon: "warning",
                         buttons: true,
                         dangerMode: true,
-                    }).then((willDelete) => {
-                        axios.post('/inbound/system/booking-conf.api.php',{
-                            id: <?php echo $id; ?>
-                        }).then(res => {
-                            if(res.data.status == 200) {
-                                swal("สำเร็จ", "จองรถสำเร็จ", "success",{ 
-                                    button: "ตกลง"
-                                }).then((value) => {
-                                    location.reload(true)
-                                });
-                            } else if(res.data.status == 500) {
-                                swal("ทำรายการไม่สำเร็จ", "จองรถไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
-                                    button: "ตกลง"
-                                });
-                            } else if(res.data.status == 400) {
-                                swal("ทำรายการไม่สำเร็จ", "รายการทดลองขับนี้ทำการบันทึกจองเรียบร้อยแล้ว", "warning",{ 
-                                    button: "ตกลง"
-                                });
-                            }
-                        });
+                    }).then((willBk) => {
+                        if (willBk) {
+                            axios.post('/inbound/system/booking-conf.api.php',{
+                                id: <?php echo $id; ?>
+                            }).then(res => {
+                                if(res.data.status == 200) {
+                                    swal("สำเร็จ", "จองรถสำเร็จ", "success",{ 
+                                        button: "ตกลง"
+                                    }).then((value) => {
+                                        location.reload(true)
+                                    });
+                                } else if(res.data.status == 500) {
+                                    swal("ทำรายการไม่สำเร็จ", "จองรถไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
+                                        button: "ตกลง"
+                                    });
+                                } else if(res.data.status == 400) {
+                                    swal("ทำรายการไม่สำเร็จ", "รายการทดลองขับนี้ทำการบันทึกจองเรียบร้อยแล้ว", "warning",{ 
+                                        button: "ตกลง"
+                                    });
+                                }
+                            });
+                        }
                     });
                 },
                 initializeDropify() {

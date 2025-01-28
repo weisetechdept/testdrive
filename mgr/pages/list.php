@@ -89,8 +89,8 @@
                                             <tr>
                                                 <th>รหัส</th>
                                                 <th>ลูกค้า</th>
-                                                <th>วัน</th>
-                                                <th>เวลา</th>
+                                                <th width="100px">วัน</th>
+                                                <th width="100px">เวลา</th>
                                                 <th>รถยนต์</th>
                                                 <th>ที่มา</th>
                                                 <th>ผู้ดูแล</th>
@@ -207,6 +207,12 @@
                             return '<span class="badge badge-info">TBR</span>';
                         }  else if(data == '4') {
                             return '<span class="badge badge-secondary">Walk-in</span>';
+                        }  else if(data == '6') {
+                            return 'unknow';
+                        }  else if(data == '7') {
+                            return 'unknow';
+                        }  else if(data == '5') {
+                            return 'unknow';
                         }
                     }
                 },
@@ -236,17 +242,17 @@
             ],
         });
 
-        var count = new Vue({
-            el: '#count',
-            data: {
-                all: 0,
-            },
-            mounted: function () {
-                axios.get('/mgr/system/list.api.php?get=count').then(response => {
-                    this.all = response.data.count.all;
-                });
-            }
-        });
+        // var count = new Vue({
+        //     el: '#count',
+        //     data: {
+        //         all: 0,
+        //     },
+        //     mounted: function () {
+        //         axios.get('/mgr/system/list.api.php?get=count').then(response => {
+        //             this.all = response.data.count.all;
+        //         });
+        //     }
+        // });
 
     </script>
 

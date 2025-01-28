@@ -29,14 +29,10 @@
 
     if($_GET['get'] == 'list'){ 
 
-        if($_GET['sale'] == 'all'){
-            $sale = mgr($id);
-        } else {
-            $sale = array($_GET['sale']);
-        }
+        $sale = mgr($id);
 
         $db->join('car c','c.car_id = b.bk_car','LEFT');
-        $bk = $db->where('bk_parent', $sale, "IN")->get('booking b');
+        $bk = $db->where('bk_parent', $sale, "IN")->where('bk_status',2)->get('booking b');
 
         function customTime2($time){
 

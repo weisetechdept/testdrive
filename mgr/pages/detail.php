@@ -148,7 +148,9 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                       
+                                    <div>
+                                        <button type="button" class="btn btn-outline-info waves-effect waves-light mb-2 mr-1 mt-4" @click="confBk">ลูกค้าจองรถจากการทดลองขับครั้งนี้</button>
+                                    </div>
                                     <button @click="deBooking" v-if="detail.status == '0'" class="btn btn-danger mt-2">ยกเลิกการจอง</button>
                                     <a href="/mgr/send/<?php echo $id; ?>" class="btn btn-outline-warning mt-2">โยกลูกค้าจอง</a>
                                       
@@ -334,6 +336,37 @@
             },
             
             methods: {
+                confBk(){
+                    swal({
+                        title: "ยืนยันการจอง",
+                        text: "คุณต้องยืนยันว่าเกิดการจองขึ้นจากการทดลองขับรถยนต์ครั้งนี้ใช่หรือไม่",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willBk) => {
+                        if (willBk) {
+                            axios.post('/mgr/system/booking-conf.api.php',{
+                                id: <?php echo $id; ?>
+                            }).then(res => {
+                                if(res.data.status == 200) {
+                                    swal("สำเร็จ", "จองรถสำเร็จ", "success",{ 
+                                        button: "ตกลง"
+                                    }).then((value) => {
+                                        location.reload(true)
+                                    });
+                                } else if(res.data.status == 500) {
+                                    swal("ทำรายการไม่สำเร็จ", "จองรถไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
+                                        button: "ตกลง"
+                                    });
+                                } else if(res.data.status == 400) {
+                                    swal("ทำรายการไม่สำเร็จ", "รายการทดลองขับนี้ทำการบันทึกจองเรียบร้อยแล้ว", "warning",{ 
+                                        button: "ตกลง"
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
                 deBooking() {
                     swal({
                         title: "ยืนยันการยกเลิก",

@@ -28,7 +28,8 @@
             global $db_nms;
             $group = $db_nms->get('db_user_group');
             foreach($group as $value){
-                $chk = in_array($data, json_decode($value['leader']));
+                $leaders = json_decode($value['leader'], true);
+                $chk = is_array($leaders) && in_array($data, $leaders);
                 if($chk){
                     foreach(json_decode($value['detail']) as $emp){
                         $team[] = $emp;

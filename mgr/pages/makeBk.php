@@ -175,7 +175,6 @@
             mounted: function () {
                 axios.get('/mgr/system/makeBk.api.php?get=sales').then(response => {
 
-                    console.log(response.data);
                     this.member = response.data.teamData;
 
                 });

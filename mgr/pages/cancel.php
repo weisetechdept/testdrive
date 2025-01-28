@@ -189,7 +189,7 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/mgr/system/done.api.php?get=list',
+            ajax: '/mgr/system/cancel.api.php?get=list',
             "columns" : [
                 {'data':'1'},
                 {'data':'3',

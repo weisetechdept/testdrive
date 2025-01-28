@@ -97,7 +97,7 @@
                 <div class="row home-content">
 
                     <div class="col-6 col-xl-3 pr1">
-                        <a href="/mgr/list">
+                        <a href="/mgr/list/all">
                             <div class="card bg-primary border-primary">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -171,24 +171,26 @@
                     </div>
 
                     <div class="col-6 col-xl-3 pl1">
-                        <div class="card bg-danger border-danger">
-                            <div class="card-body">
-                                <div class="mb-1">
-                                    <h5 class="card-title mb-0 text-white">ยกเลิก</h5>
-                                </div>
-                                <div class="row d-flex align-items-center mb-0">
-                                    <div class="col-6 col-md-8">
-                                        <h2 class="d-flex align-items-center mb-0 text-white">
-                                            {{ count.cancel }}
-                                        </h2>
+                        <a href="/mgr/cancel">
+                            <div class="card bg-danger border-danger">
+                                <div class="card-body">
+                                    <div class="mb-1">
+                                        <h5 class="card-title mb-0 text-white">ยกเลิก</h5>
                                     </div>
-                                    <div class="col-6 col-md-4 text-right">
-                                            <span class="badge badge-light ml-1">ดูข้อมูล</span>
+                                    <div class="row d-flex align-items-center mb-0">
+                                        <div class="col-6 col-md-8">
+                                            <h2 class="d-flex align-items-center mb-0 text-white">
+                                                {{ count.cancel }}
+                                            </h2>
                                         </div>
-                                </div>
+                                        <div class="col-6 col-md-4 text-right">
+                                                <span class="badge badge-light ml-1">ดูข้อมูล</span>
+                                            </div>
+                                    </div>
 
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
 </div>
