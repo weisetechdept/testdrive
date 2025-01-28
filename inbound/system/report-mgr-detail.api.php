@@ -200,30 +200,30 @@
         if($dtype == 'inBK' || $dtype == 'outBK' || $dtype == 'totalBK'){
 
             if(getStatus($value['bk_id']) == 'จอง'){
-                $book[$key]['bk_datetime'] = date('d/m/Y H:i:s', strtotime($value['bk_datetime']));
-                $book[$key]['bk_status'] =  getStatus($value['bk_id']);
-                $book[$key]['bk_team'] = getTeam($value['bk_parent']);
-                $book[$key]['bk_sales'] = getSales($value['bk_parent']);
-                $book[$key]['bk_time'] = customTime2($value['bk_time']);
-                $book[$key]['bk_car'] = getCar($value['bk_car']);
-                $book[$key]['bk_fname'] = $value['bk_fname'];
-                $book[$key]['bk_lname'] = $value['bk_lname'];
-                $book[$key]['bk_id'] = $value['bk_id'];
-                $book[$key]['bk_date'] = date('d/m/Y', strtotime($value['bk_date']));
+                $book['scopeData'][$key]['bk_datetime'] = date('d/m/Y H:i:s', strtotime($value['bk_datetime']));
+                $book['scopeData'][$key]['bk_status'] =  getStatus($value['bk_id']);
+                $book['scopeData'][$key]['bk_team'] = getTeam($value['bk_parent']);
+                $book['scopeData'][$key]['bk_sales'] = getSales($value['bk_parent']);
+                $book['scopeData'][$key]['bk_time'] = customTime2($value['bk_time']);
+                $book['scopeData'][$key]['bk_car'] = getCar($value['bk_car']);
+                $book['scopeData'][$key]['bk_fname'] = $value['bk_fname'];
+                $book['scopeData'][$key]['bk_lname'] = $value['bk_lname'];
+                $book['scopeData'][$key]['bk_id'] = $value['bk_id'];
+                $book['scopeData'][$key]['bk_date'] = date('d/m/Y', strtotime($value['bk_date']));
             }
 
         } else {
 
-            $book[$key]['bk_datetime'] = date('d/m/Y H:i:s', strtotime($value['bk_datetime']));
-            $book[$key]['bk_status'] =  getStatus($value['bk_id']);
-            $book[$key]['bk_team'] = getTeam($value['bk_parent']);
-            $book[$key]['bk_sales'] = getSales($value['bk_parent']);
-            $book[$key]['bk_time'] = customTime2($value['bk_time']);
-            $book[$key]['bk_car'] = getCar($value['bk_car']);
-            $book[$key]['bk_fname'] = $value['bk_fname'];
-            $book[$key]['bk_lname'] = $value['bk_lname'];
-            $book[$key]['bk_id'] = $value['bk_id'];
-            $book[$key]['bk_date'] = date('d/m/Y', strtotime($value['bk_date']));
+            $book['scopeData'][$key]['bk_datetime'] = date('d/m/Y H:i:s', strtotime($value['bk_datetime']));
+            $book['scopeData'][$key]['bk_status'] =  getStatus($value['bk_id']);
+            $book['scopeData'][$key]['bk_team'] = getTeam($value['bk_parent']);
+            $book['scopeData'][$key]['bk_sales'] = getSales($value['bk_parent']);
+            $book['scopeData'][$key]['bk_time'] = customTime2($value['bk_time']);
+            $book['scopeData'][$key]['bk_car'] = getCar($value['bk_car']);
+            $book['scopeData'][$key]['bk_fname'] = $value['bk_fname'];
+            $book['scopeData'][$key]['bk_lname'] = $value['bk_lname'];
+            $book['scopeData'][$key]['bk_id'] = $value['bk_id'];
+            $book['scopeData'][$key]['bk_date'] = date('d/m/Y', strtotime($value['bk_date']));
 
         }
 

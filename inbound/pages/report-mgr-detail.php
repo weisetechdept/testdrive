@@ -234,7 +234,7 @@
                 data_type: this.search.data_type
             }).then(response => {
                 console.log(response.data);
-                this.searchData = response.data;
+                this.searchData = response.data.scopeData;
             })
                 
         },
