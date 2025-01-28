@@ -105,14 +105,14 @@
                                     </div>
                                     <div class="row d-flex align-items-center mb-0">
 
-                                        <div class="col-8">
+                                        <div class="col-6 col-md-8">
 
                                             <h2 class="d-flex align-items-center mb-0 text-white">
                                                 {{ count.booking }}
                                             </h2>
 
                                         </div>
-                                        <div class="col-4 text-right">
+                                        <div class="col-6 col-md-4 text-right">
                                             <span class="badge badge-light ml-1">ดูข้อมูล</span>
                                         </div>
                                     </div>
@@ -131,12 +131,12 @@
                                         <h5 class="card-title mb-0 text-white">รอส่งต่อ</h5>
                                     </div>
                                     <div class="row d-flex align-items-center mb-0">
-                                        <div class="col-8">
+                                        <div class="col-6 col-md-8">
                                             <h2 class="d-flex align-items-center mb-0 text-white">
                                                 {{ count.waiting }}
                                             </h2>
                                         </div>
-                                        <div class="col-4 text-right">
+                                        <div class="col-6 col-md-4 text-right">
                                             <span class="badge badge-light ml-1">ดูข้อมูล</span>
                                         </div>
                                     </div>
@@ -155,12 +155,12 @@
                                         <h5 class="card-title mb-0 text-white">สำเร็จ</h5>
                                     </div>
                                     <div class="row d-flex align-items-center mb-0">
-                                        <div class="col-8">
+                                        <div class="col-6 col-md-8">
                                             <h2 class="d-flex align-items-center mb-0 text-white">
                                                 {{ count.success }}
                                             </h2>
                                         </div>
-                                        <div class="col-4 text-right">
+                                        <div class="col-6 col-md-4 text-right">
                                                 <span class="badge badge-light ml-1">ดูข้อมูล</span>
                                             </div>
                                     </div>
@@ -177,12 +177,12 @@
                                     <h5 class="card-title mb-0 text-white">ยกเลิก</h5>
                                 </div>
                                 <div class="row d-flex align-items-center mb-0">
-                                    <div class="col-8">
+                                    <div class="col-6 col-md-8">
                                         <h2 class="d-flex align-items-center mb-0 text-white">
                                             {{ count.cancel }}
                                         </h2>
                                     </div>
-                                    <div class="col-4 text-right">
+                                    <div class="col-6 col-md-4 text-right">
                                             <span class="badge badge-light ml-1">ดูข้อมูล</span>
                                         </div>
                                 </div>
