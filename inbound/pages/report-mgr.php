@@ -81,6 +81,9 @@
             font-size: 14px;
             color: #333;
         }
+        .report-data {
+            display: none;
+        }
     </style>
 </head>
 
@@ -97,143 +100,241 @@
 
                     <div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 col-md-6 col-lg-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="mb-4 font-size-18">รายงานสำหรับบริหารงาน</h4>
+                                        <h4 class="mb-2 font-size-18">รายงานสำหรับบริหารงาน</h4>
 
                                         <div class="row">
-                                            <div class="col-md-3 mb-3">
-                                                <label>เดือน</label>
-                                                <div class="form-select mb-2">
-                                                    <select class="form-control">
-                                                        <option value="all">มกราคม 2568</option>
+                                            <div class="col-12">
+                                                <label>เดือน/ปี ของข้อมูล</label>
+                                                <div class="form-select mb-3">
+                                                    <select class="form-control" v-model="search.date" @change="getReport">
+                                                        <option value="0">เลือกเดือนที่ต้องการ</option>
+                                                        <option v-for="search in searchDate" :value="search.value">{{ search.name }}</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label>รุ่นรถ</label>
-                                                <div class="form-select mb-2">
-                                                    <select class="form-control">
-                                                        <option value="all">ทั้งหมด</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
                                         </div>
 
-                                        <div class="row">
-
-                                            <div class="col-md-3 mb-3">
-                                                <label>สาขา</label>
-                                                <div class="form-select mb-2">
-                                                    <select class="form-control">
-                                                        <option value="all">ทั้งหมด</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label>ทีม</label>
-                                                <div class="form-select mb-2">
-                                                    <select class="form-control">
-                                                        <option value="all">ทั้งหมด</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        
-                                        <button class="btn btn-primary" @click="searchData">ค้นหา</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row report-data">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="mb-4 font-size-18">รายงานสำหรับบริหารงาน</h4>
-                                        
-                                        <table v-if="!loading" class="table table-bordered table-responsive">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle;width: 100px;">Branch</th>
-                                                    <th scope="col" colspan="9" class="col-center">TEST DRIVE</th>
-                                                    <th scope="col" colspan="3" class="col-center">BOOTH</th>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="col" width="8%" class="col-center">IN</th>
-                                                    <th scope="col" width="8%" class="col-center">BK</th>
-                                                    <th scope="col" width="8%" class="col-center bg-extrabold">%</th>
-                                                    <th scope="col" width="8%" class="col-center">OUT</th>
-                                                    <th scope="col" width="8%" class="col-center">BK</th>
-                                                    <th scope="col" width="8%" class="col-center bg-extrabold">%</th>
-                                                    <th scope="col" width="8%" class="col-center">TOTAL</th>
-                                                    <th scope="col" width="8%" class="col-center">BK</th>
-                                                    <th scope="col" width="8%" class="col-center bg-extrabold">%</th>
-                                                    <th scope="col" width="8%" class="col-center">TOTAL</th>
-                                                    <th scope="col" width="8%" class="col-center">BK</th>
-                                                    <th scope="col" width="8%" class="col-center bg-extrabold">%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="col-center">HO</td>
-                                                    <td class="col-center">{{reportData.TestDIn.HO}}</td>
-                                                    <td class="col-center">{{reportData.TestDInBk.HO}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDInPer.HO}}</td>
-                                                    <td class="col-center">{{reportData.TestDOut.HO}}</td>
-                                                    <td class="col-center">{{reportData.TestDOutBk.HO}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDOutPer.HO}}</td>
-                                                    <td class="col-center">{{reportData.TestDAll.HO}}</td>
-                                                    <td class="col-center">{{reportData.TestDAllBk.HO}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDAllPer.HO}}</td>
-                                                    <td class="col-center">{{reportData.TestDBooth.HO}}</td>
-                                                    <td class="col-center">-</td>
-                                                    <td class="col-center bg-extrabold">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-center">TM</td>
-                                                    <td class="col-center">{{reportData.TestDIn.TM}}</td>
-                                                    <td class="col-center">{{reportData.TestDInBk.TM}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDInPer.TM}}</td>
-                                                    <td class="col-center">{{reportData.TestDOut.TM}}</td>
-                                                    <td class="col-center">{{reportData.TestDOutBk.TM}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDOutPer.TM}}</td>
-                                                    <td class="col-center">{{reportData.TestDAll.TM}}</td>
-                                                    <td class="col-center">{{reportData.TestDAllBk.TM}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDAllPer.TM}}</td>
-                                                    <td class="col-center">{{reportData.TestDBooth.TM}}</td>
-                                                    <td class="col-center">-</td>
-                                                    <td class="col-center bg-extrabold">-</td>
-                                                </tr>
-                                                <tr class="bg-bold-table">
-                                                    <td class="col-center">ALL</td>
-                                                    <td class="col-center">{{reportData.TestDIn.All}}</td>
-                                                    <td class="col-center">{{reportData.TestDInBk.All}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDInPer.All}}</td>
-                                                    <td class="col-center">{{reportData.TestDOut.All}}</td>
-                                                    <td class="col-center">{{reportData.TestDOutBk.All}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDOutPer.All}}</td>
-                                                    <td class="col-center">{{reportData.TestDAll.All}}</td>
-                                                    <td class="col-center">{{reportData.TestDAllBk.All}}</td>
-                                                    <td class="col-center bg-extrabold">{{reportData.TestDAllPer.All}}</td>
-                                                    <td class="col-center">{{reportData.TestDBooth.All}}</td>
-                                                    <td class="col-center">-</td>
-                                                    <td class="col-center bg-extrabold">-</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
 
+                                        <div v-if="!loading">
+
+                                            <h4 class="mb-2 font-size-18">รายงานทดลองขับประจำเดือน {{ search.monthName }}</h4>
+                                            
+                                            <table class="table table-bordered table-responsive mb-4">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle;width: 100px;">Branch</th>
+                                                        <th scope="col" colspan="9" class="col-center">TEST DRIVE</th>
+                                                        <th scope="col" colspan="3" class="col-center">BOOTH</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col" width="8%" class="col-center">IN</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">OUT</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">TOTAL</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">TOTAL</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="col-center">HO</td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.HO?.ALL?.inDataALL || '0' }}</a></td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.HO?.ALL?.inDataBKALL || '0' }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ reportTeam.HO?.ALL?.inDataPerALL || '0' }}</td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.HO?.ALL?.outDataALL || '0' }}</a></td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.HO?.ALL?.outDataBKALL || '0' }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ reportTeam.HO?.ALL?.outDataPerALL || '0' }}</td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.HO?.ALL?.countTotal || '0' }}</a></td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.HO?.ALL?.countTotalBK || '0' }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ reportTeam.HO?.ALL?.countTotalPer || '0' }}</td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.HO?.ALL?.countBootTotal || '0' }}</a></td>
+                                                        <td class="col-center">-</td>
+                                                        <td class="col-center bg-bold-table">-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-center">TM</td>
+                                                        <td class="col-center"><a href="/admin/rmgr/ " target="_blank">{{ reportTeam.TM?.ALL?.inDataALL || '0' }}</a></td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.TM?.ALL?.inDataBKALL || '0' }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ reportTeam.TM?.ALL?.inDataPerALL || '0' }}</td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.TM?.ALL?.outDataALL || '0' }}</a></td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.TM?.ALL?.outDataBKALL || '0' }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ reportTeam.TM?.ALL?.outDataPerALL || '0' }}</td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.TM?.ALL?.countTotal || '0' }}</a></td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.TM?.ALL?.countTotalBK || '0' }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ reportTeam.TM?.ALL?.countTotalPer || '0' }}</td>
+                                                        <td class="col-center"><a href="#" target="_blank">{{ reportTeam.TM?.ALL?.countBootTotal || '0' }}</a></td>
+                                                        <td class="col-center">-</td>
+                                                        <td class="col-center bg-bold-table">-</td>
+                                                    </tr>
+                                                    <tr class="bg-bold-table">
+                                                        <td class="col-center">ALL</td>
+                                                        <td class="col-center">{{ reportTeam.HO?.ALL?.inDataALL + reportTeam.TM?.ALL?.inDataALL }}</td>
+                                                        <td class="col-center">{{ reportTeam.HO?.ALL?.inDataBKALL + reportTeam.TM?.ALL?.inDataBKALL }}</td>
+                                                        <td class="col-center bg-extrabold">{{ reportTeam.HO?.ALL?.inDataPerALL + reportTeam.TM?.ALL?.inDataPerALL }}</td>
+                                                        <td class="col-center">{{ reportTeam.HO?.ALL?.outDataALL + reportTeam.TM?.ALL?.outDataALL }}</td>
+                                                        <td class="col-center">{{ reportTeam.HO?.ALL?.outDataBKALL + reportTeam.TM?.ALL?.outDataBKALL }}</td>
+                                                        <td class="col-center bg-extrabold">{{ reportTeam.HO?.ALL?.outDataPerALL + reportTeam.TM?.ALL?.outDataPerALL }}</td>
+                                                        <td class="col-center">{{  reportTeam.HO?.ALL?.countTotal +  reportTeam.TM?.ALL?.countTotal  }}</td>
+                                                        <td class="col-center">{{ reportTeam.HO?.ALL?.countTotalBK + reportTeam.TM?.ALL?.countTotalBK }}</td>
+                                                        <td class="col-center bg-extrabold">{{ reportTeam.HO?.ALL?.countTotalPer + reportTeam.TM?.ALL?.countTotalPer }}</td>
+                                                        <td class="col-center">{{ reportTeam.HO?.ALL?.countBootTotal + reportTeam.TM?.ALL?.countBootTotal }}</td>
+                                                        <td class="col-center">-</td>
+                                                        <td class="col-center bg-extrabold">-</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <h4 class="mb-2 font-size-18">รายงานทดลองขับแยกรายทีม สาขาสำนักงานใหญ่</h4>
+                                            <table class="table table-bordered table-responsive mb-4">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle;width: 100px;">TEAM</th>
+                                                        <th scope="col" colspan="9" class="col-center">TEST DRIVE</th>
+                                                        <th scope="col" colspan="3" class="col-center">BOOTH</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col" width="8%" class="col-center">IN</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">OUT</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">TOTAL</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">TOTAL</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(team, index) in reportTeam.HO" :key="index" v-if="index !== 'ALL'">
+                                                        <td class="col-center">{{ index }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/in/' + search.date" target="_blank">{{ team.countIn }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/inBK/' + search.date" target="_blank">{{ team.countInBK }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ team.countInPer }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/out/'+ search.date" target="_blank">{{ team.countOut }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/outBK/'+ search.date" target="_blank">{{ team.countOutBK }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ team.countOutPer }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/total/'+ search.date" target="_blank">{{ team.total }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/totalBK/'+ search.date" target="_blank">{{ team.totalBK }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ team.totalPer }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/boot/'+ search.date" target="_blank">{{ team.countBootTotal }}</a></td>
+                                                        <td class="col-center">{{ team.countBootBK }}</td>
+                                                        <td class="col-center bg-bold-table">{{ team.countBootPer }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <h4 class="mb-2 font-size-18">รายงานทดลองขับแยกรายทีม สาขาตลาดไท</h4>
+                                            <table class="table table-bordered table-responsive mb-4">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle;width: 100px;">TEAM</th>
+                                                        <th scope="col" colspan="9" class="col-center">TEST DRIVE</th>
+                                                        <th scope="col" colspan="3" class="col-center">BOOTH</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col" width="8%" class="col-center">IN</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">OUT</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">TOTAL</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="8%" class="col-center">TOTAL</th>
+                                                        <th scope="col" width="8%" class="col-center">BK</th>
+                                                        <th scope="col" width="8%" class="col-center bg-bold-table">%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(team, index) in reportTeam.TM" :key="index" v-if="index !== 'ALL'">
+                                                        <td class="col-center">{{ index }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/in/' + search.date" target="_blank">{{ team.countIn }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/inBK/' + search.date" target="_blank">{{ team.countInBK }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ team.countInPer }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/out/' + search.date" target="_blank">{{ team.countOut }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/outBK/' + search.date" target="_blank">{{ team.countOutBK }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ team.countOutPer }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/total/' + search.date" target="_blank">{{ team.total }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/totalBK/' + search.date" target="_blank">{{ team.totalBK }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ team.totalPer }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/team/'+ index +'/boot/' + search.date" target="_blank">{{ team.countBootTotal }}</a></td>
+                                                        <td class="col-center">{{ team.countBootBK }}</td>
+                                                        <td class="col-center bg-bold-table">{{ team.countBootPer }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <h4 class="mb-2 font-size-18">รายงานทดลองขับแยกตามรุ่นรถยนต์</h4>
+                                            <table class="table table-bordered table-responsive mb-4">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" colspan="2" class="col-center">รายละเอียดรถยนต์</th>
+                                                        <th scope="col" colspan="7" class="col-center">TEST DRIVE</th>
+                                                        <th scope="col" colspan="3" class="col-center">BOOTH</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col" class="col-center">Series / Model</th>
+                                                        <th scope="col" class="col-center" width="175px">Vin No.</th>
+                                                        <th scope="col" width="7%" class="col-center bg-bold-table">Total</th>
+                                                        <th scope="col" width="7%" class="col-center">IN</th>
+                                                        <th scope="col" width="7%" class="col-center">BK</th>
+                                                        <th scope="col" width="7%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="7%" class="col-center">OUT</th>
+                                                        <th scope="col" width="7%" class="col-center">BK</th>
+                                                        <th scope="col" width="7%" class="col-center bg-bold-table">%</th>
+                                                        <th scope="col" width="7%" class="col-center">TOTAL</th>
+                                                        <th scope="col" width="7%" class="col-center">BK</th>
+                                                        <th scope="col" width="7%" class="col-center bg-bold-table">%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="car in reportCars">
+                                                        <td>{{ car.model }}</td>
+                                                        <td class="col-center">{{ car.vin }}</td>
+                                                        <td class="col-center bg-bold-table"><a :href="'/admin/rmgr/car/'+ car.id +'/in/' + search.date" target="_blank">{{ car.total }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/car/'+ car.id +'/in/' + search.date" target="_blank">{{ car.countIn }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/car/'+ car.id +'/inBK/' + search.date" target="_blank">{{ car.countInBK }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ car.countInPer }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/car/'+ car.id +'/out/' + search.date" target="_blank">{{ car.countOut }}</a></td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/car/'+ car.id +'/outBK/' + search.date" target="_blank">{{ car.countOutBK }}</a></td>
+                                                        <td class="col-center bg-bold-table">{{ car.countOutPer }}</td>
+                                                        <td class="col-center"><a :href="'/admin/rmgr/car/'+ car.id +'/boot/' + search.date" target="_blank">{{ car.countBootTotal }}</a></td>
+                                                        <td class="col-center">{{ car.countBootBK }}</td>
+                                                        <td class="col-center bg-bold-table">{{ car.countBootPer }}</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
                                         <!-- Preloader -->
                                         <div v-else class="loading-spinner">
                                             <div class="spinner-border text-primary" role="status">
                                                 <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
-                                        
 
                                     </div>
                                 </div>
@@ -302,51 +403,41 @@
         el: '#dedrive', 
         data: {
             search: {
-                formdate: '<?php echo date('Y-m-01');?>',
-                todate: '<?php echo date('Y-m-d');?>',
-                model: 'all',
-                status: 'all',
-                where: 'all'
+                date: '0',
+                monthName: ''
             },
+            reportCars: [],
             searchData: [],
-            reportData: {
-                TestDIn: {},
-                TestDInBk: {},
-                TestDInPer: {},
-                TestDOut: {},
-                TestDOutBk: {},
-                TestDOutPer: {},
-                TestDAll: {},
-                TestDAllBk: {},
-                TestDAllPer: {},
-                TestDBooth: {}
-            },
+            reportTeam: [],
+            searchDate: [],
             loading: false // เพิ่มตัวแปร loading
+
         },
         mounted () {
-            this.getReport();
+            //this.getReport();
+            axios.get('/inbound/system/report-mgr-test.api.php?date=get').then((response) => {
+                console.log(response.data);
+                this.searchDate = response.data.searchDate;
+            })
         },
         methods: {
+            getSeach () {
+                this.getReport();
+            },
             getReport() {
+                document.querySelector('.report-data').style.display = 'block';
+                this.search.monthName = this.searchDate.find(date => date.value === this.search.date)?.name || '';
+
                 this.loading = true; // เริ่มโหลด
-                axios.post('/inbound/system/report-mgr.api.php', {
-                    formdate: this.search.formdate,
-                    todate: this.search.todate,
-                    model: this.search.model,
-                    status: this.search.status,
-                    where: this.search.where
+                axios.post('/inbound/system/report-mgr-test.api.php?report=get&date='+ this.search.date, {
+                    formdate: this.search.date,
                 }).then((response) => {
+
                     console.log(response.data);
-                    this.reportData.TestDIn = response.data.TestDIn;
-                    this.reportData.TestDInBk = response.data.TestDInBk;
-                    this.reportData.TestDInPer = response.data.TestDInPer;
-                    this.reportData.TestDOut = response.data.TestDOut;
-                    this.reportData.TestDOutBk = response.data.TestDOutBk;
-                    this.reportData.TestDOutPer = response.data.TestDOutPer;
-                    this.reportData.TestDAll = response.data.TestDAll;
-                    this.reportData.TestDAllBk = response.data.TestDAllBk;
-                    this.reportData.TestDAllPer = response.data.TestDAllPer;
-                    this.reportData.TestDBooth = response.data.TestDBooth;
+
+                    this.reportCars = response.data.car_report;
+                    this.reportTeam = response.data.byTeam;
+
                 }).catch((error) => {
                     console.error('Error fetching data:', error);
                 }).finally(() => {

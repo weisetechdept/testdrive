@@ -103,6 +103,10 @@
         require_once('inbound/pages/report-mgr.php');
     });
 
+    $router->get( '/admin/rmgr/(.*)/(.*)/(.*)/(.*)', function($rtype,$group,$dtype,$date) {
+        require_once('inbound/pages/report-mgr-detail.php');
+    });
+
     $router->get( '/admin/event', function() {
         require_once('inbound/pages/event.php');
     });
