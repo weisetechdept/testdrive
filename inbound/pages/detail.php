@@ -136,7 +136,7 @@
                                             </tr>
                                             <tr>
                                                 <td>เลขบัตร ปชช.</td>
-                                                <td></td>
+                                                <td>{{ detail.nlsID }}</td>
                                             </tr>
                                             <tr>
                                                 <td>โทรศัพท์</td>
@@ -233,55 +233,72 @@
                             </div>
                         </div>
                     </div>
-<div v-if="detail.status == '1' || detail.status == '2'">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="mb-2 font-size-18">อัพเดทเลขไมล์ คืนกุญแจ</h4>
-                                    <p class="red">หมายเหตุ : โปรดตรวจเลขไมล์ให้ตรงกับรูปก่อนกดรับคืนกุญแจ หากเลขไมล์ไม่ตรงสามารถแก้ใขตัวเลขในช่องได้ทันที</p> 
-                                    <div class="form-group">
-                                        <label>เลขไมล์ :</label>
-                                        <input type="text" v-model="send.mileage" class="form-control">
-                                    </div>
 
-                                    <div class="check-list mb-3">
-                                        <!-- <p v-if="docs.docs3 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายคู่กับลูกค้าและรถทดลองขับ (เห็นเลขทะเบียนรถฯ)</p> -->
-                                        <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i>  รูปถ่ายคู่กับลูกค้าและรถทดลองขับ (เห็นเลขทะเบียนรถฯ)</p>
-
-                                        <div v-if="up_img !== ''">
-                                            <p class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์</p>
-                                            <img :src="up_img.link" class="mt-4" width="100%">
-                                        </div>
-                                        <div v-else>
-                                            <p class="red mb-0">
-                                                <i class="mdi mdi-close-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์
-                                            </p>
+                    <div v-if="detail.status == '2'">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mb-2 font-size-18">จัดการการทดลองขับนี้</h4>
+                                        <div>
+                                            <button type="button" class="btn btn-outline-info waves-effect waves-light mb-2 mr-1" @click="confBk">ลูกค้าจองรถจากการทดลองขับครั้งนี้</button>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- <div class="row">
-                        <div class="col-lg-6 col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4>อัพโหลดรูปเลขไมล์</h4>
-                                    <form @submit.prevent="sendDataUp">
+                    <div v-if="detail.status == '1' || detail.status == '2'">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mb-2 font-size-18">อัพเดทเลขไมล์ คืนกุญแจ</h4>
+                                        <p class="red">หมายเหตุ : โปรดตรวจเลขไมล์ให้ตรงกับรูปก่อนกดรับคืนกุญแจ หากเลขไมล์ไม่ตรงสามารถแก้ใขตัวเลขในช่องได้ทันที</p> 
                                         <div class="form-group">
-                                            <input type="file" class="dropify" data-height="150" name="file_upload" id="file_upload" @change="onFileChange" />
+                                            <label>เลขไมล์ :</label>
+                                            <input type="text" v-model="send.mileage" class="form-control">
                                         </div>
-                                    </form>
 
+                                        <div class="check-list mb-3">
+                                            <!-- <p v-if="docs.docs3 >= 1" class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายคู่กับลูกค้าและรถทดลองขับ (เห็นเลขทะเบียนรถฯ)</p> -->
+                                            <p v-else class="red"><i class="mdi mdi-close-circle-outline"></i>  รูปถ่ายคู่กับลูกค้าและรถทดลองขับ (เห็นเลขทะเบียนรถฯ)</p>
+
+                                            <div v-if="up_img !== ''">
+                                                <p class="green"><i class="mdi mdi-check-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์</p>
+                                                <img :src="up_img.link" class="mt-4" width="100%">
+                                            </div>
+                                            <div v-else>
+                                                <p class="red mb-0">
+                                                    <i class="mdi mdi-close-circle-outline"></i> รูปถ่ายเลขไมล์รถยนต์
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
 
-</div>
+                        <!-- <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4>อัพโหลดรูปเลขไมล์</h4>
+                                        <form @submit.prevent="sendDataUp">
+                                            <div class="form-group">
+                                                <input type="file" class="dropify" data-height="150" name="file_upload" id="file_upload" @change="onFileChange" />
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
@@ -426,6 +443,7 @@
                     dedrive.detail = response.data.detail;
                     dedrive.docs = response.data.docs;
                     dedrive.send.car = response.data.detail.car_id;
+                    console.log(response);
                 });
  
                 axios.get('/inbound/system/docs.api.php?u=<?php echo $id; ?>')
@@ -434,9 +452,8 @@
                     dedrive.up_img = response.data.up_img,
                     dedrive.send.mileage = response.data.up_img.mileage,
                     dedrive.send.id = response.data.up_img.up_id,
-
-                    dedrive.verifyDLS = response.data.verifyDLS,
-                    console.log(response)
+                    dedrive.verifyDLS = response.data.verifyDLS
+                    
                     
                 ))
 
@@ -461,6 +478,35 @@
                 },
             },
             methods: {
+                confBk(){
+                    swal({
+                        title: "ยืนยันการจอง",
+                        text: "คุณต้องยืินยันว่าเกิดการจองขึ้นจากการทดลองขับรถยนต์ครั้งนี้ใช่หรือไม่",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        axios.post('/inbound/system/booking-conf.api.php',{
+                            id: <?php echo $id; ?>
+                        }).then(res => {
+                            if(res.data.status == 200) {
+                                swal("สำเร็จ", "จองรถสำเร็จ", "success",{ 
+                                    button: "ตกลง"
+                                }).then((value) => {
+                                    location.reload(true)
+                                });
+                            } else if(res.data.status == 500) {
+                                swal("ทำรายการไม่สำเร็จ", "จองรถไม่สำเร็จ อาจมีบางอย่างผิดปกติ", "warning",{ 
+                                    button: "ตกลง"
+                                });
+                            } else if(res.data.status == 400) {
+                                swal("ทำรายการไม่สำเร็จ", "รายการทดลองขับนี้ทำการบันทึกจองเรียบร้อยแล้ว", "warning",{ 
+                                    button: "ตกลง"
+                                });
+                            }
+                        });
+                    });
+                },
                 initializeDropify() {
                     this.$nextTick(() => {
                         $('.dropify').dropify(); // เรียก Dropify

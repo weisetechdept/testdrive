@@ -40,53 +40,113 @@
         function customTime2($time){
 
             $alltime = json_decode($time);
-
+    
             $first = reset($alltime);
             $last = end($alltime);
             
             if($first == '1'){
                 $first = '08:00';
             } elseif($first == '2'){
-                $first = '09:00';
+                $first = '08:31';
             } elseif($first == '3'){
-                $first = '10:00';
+                $first = '09:01';
             } elseif($first == '4'){
-                $first = '11:00';
+                $first = '09:31';
             } elseif($first == '5'){
-                $first = '12:00';
+                $first = '10:01';
             } elseif($first == '6'){
-                $first = '13:00';
+                $first = '10:31';
             } elseif($first == '7'){
-                $first = '14:00';
+                $first = '11:01';
             } elseif($first == '8'){
-                $first = '15:00';
+                $first = '11:31';
             } elseif($first == '9'){
-                $first = '16:00';
+                $first = '12:01';
+            } elseif($first == '10'){
+                $first = '12:31';
+            } elseif($first == '11'){
+                $first = '13:01';
+            } elseif($first == '12'){
+                $first = '13:31';
+            } elseif($first == '13'){
+                $first = '14:01';
+            } elseif($first == '14'){
+                $first = '14:31';
+            } elseif($first == '15'){
+                $first = '15:01';
+            } elseif($first == '16'){
+                $first = '15:31';
+            } elseif($first == '17'){
+                $first = '14:01';
+            } elseif($first == '18'){
+                $first = '14:31';
+            } elseif($first == '19'){
+                $first = '15:01';
+            } elseif($first == '20'){
+                $first = '15:31';
+            } elseif($first == '21'){
+                $first = '16:01';
+            } elseif($first == '22'){
+                $first = '16:31';
+            } elseif($first == '23'){
+                $first = '17:01';
+            } elseif($first == '24'){
+                $first = '17:31';
             }
-
+    
             if($last == '1'){
-                $last = '08:45';
+                $last = '08:30';
             } elseif($last == '2'){
-                $last = '09:45';
+                $last = '09:00';
             } elseif($last == '3'){
-                $last = '10:45';
+                $last = '09:30';
             } elseif($last == '4'){
-                $last = '11:45';
+                $last = '10:00';
             } elseif($last == '5'){
-                $last = '12:45';
+                $last = '10:30';
             } elseif($last == '6'){
-                $last = '13:45';
+                $last = '11:00';
             } elseif($last == '7'){
-                $last = '14:45';
+                $last = '11:30';
             } elseif($last == '8'){
-                $last = '15:45';
+                $last = '12:00';
             } elseif($last == '9'){
-                $last = '16:45';
-            }
-
+                $last = '12:30';
+            }  elseif($last == '10'){
+                $last = '13:00';
+            } elseif($last == '11'){
+                $last = '13:30';
+            } elseif($last == '12'){
+                $last = '14:00';
+            } elseif($last == '13'){
+                $last = '14:30';
+            } elseif($last == '14'){
+                $last = '15:30';
+            }  elseif($last == '15'){
+                $last = '15:00';
+            } elseif($last == '16'){
+                $last = '16:30';
+            }  elseif($last == '17'){
+                $last = '16:00';
+            } elseif($last == '18'){
+                $last = '17:30';
+            } elseif($last == '19'){
+                $last = '17:00';
+            } elseif($last == '20'){
+                $last = '18:30';
+            } elseif($last == '21'){
+                $last = '18:00';
+            } elseif($last == '22'){
+                $last = '19:30';
+            } elseif($last == '23'){
+                $last = '19:00';
+            } elseif($last == '24'){
+                $last = '20:30';
+            } 
+    
             return $first.' - '.$last;
-
-        }
+    
+        } 
 
         foreach ($bk as $value) {
 
@@ -99,6 +159,10 @@
                 $value['bk_status'],
                 $value['bk_where'],
             );
+        }
+
+        if (empty($api['data'])) {
+            $api['data'] = [];
         }
 
     }

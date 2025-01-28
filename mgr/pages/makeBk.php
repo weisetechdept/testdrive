@@ -58,6 +58,9 @@
         .home-content {
             margin-top: 60px;
         }
+        .text-center {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -74,41 +77,29 @@
                     <div class="row home-content">
                         <div class="col-12">
                             <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">การจองทั้งหมด</h4>
+                                <h4 class="mb-0 font-size-18">ลูกทีมของคุณ</h4>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <div class="col-12">
+                    <div class="row mt-2" id="member">
+                        <div class="col-12 col-md-8 col-lg-6">
                             <div class="card m-b-30">
                                 <div class="card-body">
                                    
-                                    <table id="datatable" class="table table-responsive">
+                                    <table class="table dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th>รหัส</th>
-                                                <th>ลูกค้า</th>
-                                                <th>วัน</th>
-                                                <th>เวลา</th>
-                                                <th>รถยนต์</th>
-                                                <th>ที่มา</th>
-                                                <th>ผู้ดูแล</th>
-                                                <th>สถานะ</th>
-                                                <th>จัดการ</th>
+                                                <th>ชื่อ - นามสกุล</th>
+                                                <th width="50px">จำนวน</th>
+                                                <th width="80px">จัดการ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr v-for="m in member">
+                                                <td>{{ m.name }}</td>
+                                                <td class="text-center">{{ m.bkTotal }}</td>
+                                                <td><a :href="'/mgr/list/' + m.id" class="btn btn-sm btn-outline-primary">ดูข้อมูล</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -174,76 +165,19 @@
 
     <!-- Datatables init -->
     <script>
-       $('#datatable').DataTable({
-            "order": [[ 1, "desc" ]],
-            "language": {
-                "paginate": {
-                    "previous": "<i class='mdi mdi-chevron-left'>",
-                    "next": "<i class='mdi mdi-chevron-right'>"
-                },
-                "lengthMenu": "แสดง _MENU_ รายชื่อ",
-                "zeroRecords": "ขออภัย ไม่มีข้อมูล",
-                "info": "หน้า _PAGE_ ของ _PAGES_",
-                "infoEmpty": "ไม่มีข้อมูล",
-                "search": "ค้นหา:",
-            },
-            "drawCallback": function () {
-                $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-            },
-            ajax: '/mgr/system/list.api.php?get=list&sale=<?php echo $id; ?>',
-            "columns" : [
-                {'data':'0'},
-                {'data':'1'},
-                {'data':'3'},
-                {'data':'4'},
-                {'data':'2'},
-                {'data':'6',
-                    "render": function ( data, type, full, meta ) {
-                        if(data == '1'){
-                            return '<span class="badge badge-success">ออนไลน์</span>';
-                        }else if(data == '2'){
-                            return '<span class="badge badge-primary">เซลล์</span>';
-                        } else if(data == '3') {
-                            return '<span class="badge badge-info">TBR</span>';
-                        }  else if(data == '4') {
-                            return '<span class="badge badge-secondary">Walk-in</span>';
-                        }
-                    }
-                },
-                {'data':'7'},
-                { 
-                    'data': '5',
-                    sortable: false,
-                    "render": function ( data, type, full, meta ) {
-                        if(data == '0'){
-                            return '<span class="badge badge-soft-warning">ยังไม่ทดลองขับ</span>';
-                        } else if(data == '1') {
-                            return '<span class="badge badge-soft-primary">เบิกกุญแจ</span>';
-                        } else if(data == '2') {
-                            return '<span class="badge badge-soft-success">สำเร็จ</span>';
-                        } else if(data == '10') {
-                            return '<span class="badge badge-soft-danger">ยกเลิก</span>';
-                        }
-                    }
-                },
-                { 
-                    'data': '0',
-                    sortable: false,
-                    "render": function ( data, type, full, meta ) {
-                        return '<a href="/mgr/de/'+data+'" class="btn btn-sm btn-outline-primary editBtn" role="button"><span class="mdi mdi-account-edit"></span> จัดการ</a>';
-                    }
-                }
-            ],
-        });
+       
 
-        var count = new Vue({
-            el: '#count',
+        var member = new Vue({
+            el: '#member',
             data: {
-                all: 0,
+                member: [],
             },
             mounted: function () {
-                axios.get('/mgr/system/list.api.php?get=count').then(response => {
-                    this.all = response.data.count.all;
+                axios.get('/mgr/system/makeBk.api.php?get=sales').then(response => {
+
+                    console.log(response.data);
+                    this.member = response.data.teamData;
+
                 });
             }
         });

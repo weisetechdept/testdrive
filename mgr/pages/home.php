@@ -104,10 +104,16 @@
                                         <h5 class="card-title mb-0 text-white">จองทั้งหมด</h5>
                                     </div>
                                     <div class="row d-flex align-items-center mb-0">
+
                                         <div class="col-8">
+
                                             <h2 class="d-flex align-items-center mb-0 text-white">
                                                 {{ count.booking }}
                                             </h2>
+
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <span class="badge badge-light ml-1">ดูข้อมูล</span>
                                         </div>
                                     </div>
 
@@ -130,6 +136,9 @@
                                                 {{ count.waiting }}
                                             </h2>
                                         </div>
+                                        <div class="col-4 text-right">
+                                            <span class="badge badge-light ml-1">ดูข้อมูล</span>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -139,21 +148,26 @@
                    
 
                     <div class="col-6 col-xl-3 pr1">
-                        <div class="card bg-success border-success">
-                            <div class="card-body">
-                                <div class="mb-1">
-                                    <h5 class="card-title mb-0 text-white">สำเร็จ</h5>
-                                </div>
-                                <div class="row d-flex align-items-center mb-0">
-                                    <div class="col-8">
-                                        <h2 class="d-flex align-items-center mb-0 text-white">
-                                            {{ count.success }}
-                                        </h2>
+                        <a href="/mgr/done">
+                            <div class="card bg-success border-success">
+                                <div class="card-body">
+                                    <div class="mb-1">
+                                        <h5 class="card-title mb-0 text-white">สำเร็จ</h5>
                                     </div>
-                                </div>
+                                    <div class="row d-flex align-items-center mb-0">
+                                        <div class="col-8">
+                                            <h2 class="d-flex align-items-center mb-0 text-white">
+                                                {{ count.success }}
+                                            </h2>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                                <span class="badge badge-light ml-1">ดูข้อมูล</span>
+                                            </div>
+                                    </div>
 
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-6 col-xl-3 pl1">
@@ -168,6 +182,9 @@
                                             {{ count.cancel }}
                                         </h2>
                                     </div>
+                                    <div class="col-4 text-right">
+                                            <span class="badge badge-light ml-1">ดูข้อมูล</span>
+                                        </div>
                                 </div>
 
                             </div>
@@ -177,16 +194,16 @@
 </div>
                 <div class="jump-btn">
                     <div class="row">
-                        <a href="/mgr/adsign">
-                            <img src="/assets/images/mgr-btn-2.png" class="img-fluid pr-2 pl-2">
+                        <a href="/mgr/makeBk">
+                            <img src="/assets/images/btn-mgr-booking.png" class="img-fluid pr-2 pl-2">
                         </a>
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <a href="/mgr/list">
                             <img src="/assets/images/mgr-btn-1.png" class="img-fluid pr-2 pl-2">
                         </a>
-                    </div>
+                    </div> -->
                 </div>
                     <div class="row">
                         <div class="col-12">

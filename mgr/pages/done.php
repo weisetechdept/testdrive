@@ -79,16 +79,36 @@
                         </div>
                     </div>
 
+                    <div class="row mt-2" id="count">
+                        <div class="col-12 pr1">
+                            <div class="card bg-primary border-primary">
+                                <div class="card-body">
+                                    <div class="mb-1">
+                                        <h5 class="card-title mb-0 text-white">จองทั้งหมดในทีม</h5>
+                                    </div>
+                                    <div class="row d-flex align-items-center mb-0">
+                                        <div class="col-8">
+                                            <h2 class="d-flex align-items-center mb-0 text-white">
+                                                {{ all }}
+                                            </h2>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row mt-2">
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="card-body">
                                    
-                                    <table id="datatable" class="table table-responsive">
+                                    <table id="datatable" class="table dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th>รหัส</th>
                                                 <th>ลูกค้า</th>
+                                                
                                                 <th>วัน</th>
                                                 <th>เวลา</th>
                                                 <th>รถยนต์</th>
@@ -100,7 +120,6 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -190,11 +209,18 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/mgr/system/list.api.php?get=list&sale=<?php echo $id; ?>',
+            ajax: '/mgr/system/list.api.php?get=list',
             "columns" : [
-                {'data':'0'},
                 {'data':'1'},
-                {'data':'3'},
+                {'data':'3',
+                    "render": function ( data, type, full, meta ) {
+                        var d = new Date(data);
+                        var month = d.getMonth()+1;
+                        var day = d.getDate();
+                        var output = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month;
+                        return output;
+                    }
+                },
                 {'data':'4'},
                 {'data':'2'},
                 {'data':'6',

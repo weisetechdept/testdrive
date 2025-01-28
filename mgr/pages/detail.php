@@ -347,7 +347,6 @@
                                 id: <?php echo $id; ?>
                             }).then(res => {
                                 //console.log(res);
-                                
                                 if(res.data.status == 200) 
                                     swal("สำเร็จ", "ยกเลิกการจองสำเร็จ", "success",{ 
                                         button: "ตกลง"
