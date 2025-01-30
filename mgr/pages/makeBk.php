@@ -99,7 +99,7 @@
                                             <tr v-for="m in member">
                                                 <td>{{ m.name }}</td>
                                                 <td class="text-center">{{ m.bkTotal }}</td>
-                                                <td><a :href="'/mgr/list/' + m.id" class="btn btn-sm btn-outline-primary">ดูข้อมูล</a></td>
+                                                <td><a :href="'/mgr/list/' + m.id + '/all'" class="btn btn-sm btn-outline-primary">ดูข้อมูล</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -174,9 +174,7 @@
             },
             mounted: function () {
                 axios.get('/mgr/system/makeBk.api.php?get=sales').then(response => {
-
                     this.member = response.data.teamData;
-
                 });
             }
         });
