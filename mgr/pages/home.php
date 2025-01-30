@@ -69,7 +69,7 @@
             
         }
         .home-content {
-            margin-top: 50px;
+            margin-top: 45px;
         }
         .fc-title {
             color: #fff;
@@ -95,9 +95,15 @@
                 <div class="container-fluid">
 
                 <div class="row home-content">
+                    <div class="col-12 col-xl-12 pr1 mb-2">
+                        <h5>การแสดงผลข้อมูล</h5>
+                        <select class="form-control mb-2" v-model="search.date" @change="getSelectDate">
+                            <option v-for="sd in selectDate" :value="sd.value">{{ sd.name }}</option>
+                        </select>
+                    </div>
 
                     <div class="col-6 col-xl-3 pr1">
-                        <a href="/mgr/list/all">
+                        <a :href="'/mgr/list/all/'+ search.date">
                             <div class="card bg-primary border-primary">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -124,7 +130,7 @@
 
                     
                     <div class="col-6 col-xl-3 pl1">
-                        <a href="/mgr/adsign">
+                        <a :href="'/mgr/adsign' + search.date">
                             <div class="card bg-warning border-warning">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -148,7 +154,7 @@
                    
 
                     <div class="col-6 col-xl-3 pr1">
-                        <a href="/mgr/done">
+                        <a :href="'/mgr/done/' + search.date">
                             <div class="card bg-success border-success">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -171,7 +177,7 @@
                     </div>
 
                     <div class="col-6 col-xl-3 pl1">
-                        <a href="/mgr/cancel">
+                        <a :href="'/mgr/cancel/' + search.date">
                             <div class="card bg-danger border-danger">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -207,6 +213,30 @@
                         </a>
                     </div> -->
                 </div>
+                <div class="row">
+                    <div class="col-12 col-xl-3 pl1">
+                            <a :href="'/mgr/testBk/'+ search.date">
+                                <div class="card bg-light border-light">
+                                    <div class="card-body">
+                                        <div class="mb-1">
+                                            <h5 class="card-title mb-0 text-black">ทดลองขับและจอง</h5>
+                                        </div>
+                                        <div class="row d-flex align-items-center mb-0">
+                                            <div class="col-6 col-md-8">
+                                                <h2 class="d-flex align-items-center mb-0 text-black">
+                                                    {{ count.booked }}
+                                                </h2>
+                                            </div>
+                                            <div class="col-6 col-md-4 text-right">
+                                                <span class="badge badge-success ml-1"> ดูข้อมูล </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
@@ -304,6 +334,7 @@
          var testdrive = new Vue({
             el: '#testdrive',
             data: {
+                selectDate: [],
                 car: [],
                 select: {
                     car: 0
@@ -312,15 +343,23 @@
                     booking: 0,
                     waiting: 0,
                     success: 0,
-                    cancel: 0
+                    cancel: 0,
+                    booked: 0
+                },
+                search: {
+                    date: ''
                 }
             },
             mounted: function() {
-                axios.get('/mgr/system/booking.api.php?get=count').then(function(response) {
+                axios.get('/mgr/system/booking.api.php?get=count&date=').then(function(response) {
+                    console.log(response.data);
+                    testdrive.selectDate = response.data.selectDate;
                     testdrive.count.booking = response.data.count.all;
                     testdrive.count.waiting = response.data.count.asgn;
                     testdrive.count.success = response.data.count.succ;
                     testdrive.count.cancel = response.data.count.canc;
+                    testdrive.count.booked = response.data.count.bk;
+                    testdrive.search.date = response.data.selectDate[0].value;
                 });
 
                 axios.get('/sales/system/car-event.api.php').then(function(response) {
@@ -346,6 +385,24 @@
                     axios.get('/mgr/system/event.api.php?c='+this.select.car).then(function(response) {
                         $('#calendar').fullCalendar('removeEvents');
                         $('#calendar').fullCalendar('addEventSource', response.data);
+                    });
+                },
+                getSelectDate() {
+                    swal({
+                        title: "Loading...",
+                        text: "Please wait",
+                        icon: "/assets/images/loading.gif",
+                        button: false,
+                        closeOnClickOutside: false,
+                        closeOnEsc: false
+                    });
+                    axios.get(`/mgr/system/booking.api.php?get=count&date=${testdrive.search.date}`).then(function(response) {
+                        testdrive.count.booking = response.data.count.all;
+                        testdrive.count.waiting = response.data.count.asgn;
+                        testdrive.count.success = response.data.count.succ;
+                        testdrive.count.cancel = response.data.count.canc;
+                        testdrive.count.booked = response.data.count.bk;
+                        swal.close();
                     });
                 }
             }

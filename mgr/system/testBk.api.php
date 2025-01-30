@@ -29,17 +29,14 @@
 
     if($_GET['get'] == 'list'){ 
 
-        if($_GET['sale'] == 'all'){
-            $sale = mgr($id);
-        } else {
-            $sale = array($_GET['sale']);
-        }
-
         $date_form = date('Y-m-01', strtotime($_GET['date']));
         $date_to = date('Y-m-t', strtotime($_GET['date']));
 
+        $sale = mgr($id);
+
+        $db->join('status_log s','s.stat_parent = b.bk_id','INNER');
         $db->join('car c','c.car_id = b.bk_car','LEFT');
-        $bk = $db->where('bk_parent', $sale, "IN")->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->get('booking b');
+        $bk = $db->where('bk_parent', $sale, "IN")->where('bk_status',2)->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->get('booking b');
 
         function customTime2($time){
 

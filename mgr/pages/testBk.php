@@ -2,7 +2,7 @@
     session_start();
     if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'leader'){
         header('Location: /404');
-    } 
+    }
  
 ?>
 <!DOCTYPE html>
@@ -84,13 +84,13 @@
                             <div class="card m-b-30">
                                 <div class="card-body">
                                    
-                                    <table id="datatable" class="table table-responsive">
+                                    <table id="datatable" class="table dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th>รหัส</th>
                                                 <th>ลูกค้า</th>
-                                                <th width="100px">วัน</th>
-                                                <th width="100px">เวลา</th>
+                                                
+                                                <th>วัน</th>
+                                                <th>เวลา</th>
                                                 <th>รถยนต์</th>
                                                 <th>ที่มา</th>
                                                 <th>ผู้ดูแล</th>
@@ -100,7 +100,6 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -190,11 +189,18 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/mgr/system/list.api.php?get=list&sale=<?php echo $id; ?>&date=<?php echo $date; ?>',
+            ajax: '/mgr/system/testBk.api.php?get=list&date=<?php echo $date; ?>',
             "columns" : [
-                {'data':'0'},
                 {'data':'1'},
-                {'data':'3'},
+                {'data':'3',
+                    "render": function ( data, type, full, meta ) {
+                        var d = new Date(data);
+                        var month = d.getMonth()+1;
+                        var day = d.getDate();
+                        var output = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month;
+                        return output;
+                    }
+                },
                 {'data':'4'},
                 {'data':'2'},
                 {'data':'6',
@@ -207,12 +213,6 @@
                             return '<span class="badge badge-info">TBR</span>';
                         }  else if(data == '4') {
                             return '<span class="badge badge-secondary">Walk-in</span>';
-                        }  else if(data == '6') {
-                            return 'unknow';
-                        }  else if(data == '7') {
-                            return 'unknow';
-                        }  else if(data == '5') {
-                            return 'unknow';
                         }
                     }
                 },
@@ -256,7 +256,7 @@
 
     </script>
 
- 
+
     <!-- App js -->
     <script src="/assets/js/theme.js"></script>
 

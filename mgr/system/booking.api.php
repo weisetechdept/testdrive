@@ -23,6 +23,25 @@
     }
 
     if($_GET['get'] == "count"){
+
+        $thaim = array();
+        $thaimonth=array("มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
+
+        $api['selectDate'] = array();
+        for($i=0;$i<9;$i++){
+            $api['selectDate'][] = array(
+                'value' => date('Y-m-01', strtotime("-$i month")),
+                'name' => $thaimonth[date('n', strtotime("-$i month")) - 1] . ' ' . (date('Y', strtotime("-$i month")) + 543)
+            );
+        }
+
+        if(empty($_GET['date'])){
+            $date_form = date('Y-m-01');
+            $date_to = date('Y-m-t');
+        } else {
+            $date_form = date('Y-m-01', strtotime($_GET['date']));
+            $date_to = date('Y-m-t', strtotime($_GET['date']));
+        }
         
         function mgr($data){
             global $db_nms;
@@ -39,17 +58,22 @@
             return array_unique($team);
         }
 
-        $countAll = $db->where('bk_parent', mgr($id),'IN')->getValue("booking","count(*)");
-        $countAsgn = $db->where('bk_parent', $id)->getValue("booking","count(*)");
-        $countSuc = $db->where('bk_parent', mgr($id),'IN')->where("bk_status",2)->getValue("booking","count(*)");
-        $countCan = $db->where('bk_parent', mgr($id),'IN')->where("bk_status",10)->getValue("booking","count(*)");
+        $countAll = $db->where('bk_parent', mgr($id),'IN')->where("bk_date", $date_form,">=")->where("bk_date", $date_to,"<=")->getValue("booking","count(*)");
+        $countAsgn = $db->where('bk_parent', $id)->where("bk_date", $date_form,">=")->where("bk_date", $date_to,"<=")->getValue("booking","count(*)");
+        $countSuc = $db->where('bk_parent', mgr($id),'IN')->where("bk_status",2)->where("bk_date", $date_form,">=")->where("bk_date", $date_to,"<=")->getValue("booking","count(*)");
+        $countCan = $db->where('bk_parent', mgr($id),'IN')->where("bk_status",10)->where("bk_date", $date_form,">=")->where("bk_date", $date_to,"<=")->getValue("booking","count(*)");
+
+        $db->join("status_log s","s.stat_parent = b.bk_id","INNER");
+        $countBK = $db->where('bk_parent', mgr($id),'IN')
+                ->where("bk_date", $date_form,">=")->where("bk_date", $date_to,"<=")
+                ->get("booking b");
 
         $api['count'] = array(
             'all' => $countAll,
             'asgn' => $countAsgn,
             'succ' => $countSuc,
-            'canc' => $countCan
-
+            'canc' => $countCan,
+            'bk' => count($countBK)
         );
 
     }

@@ -88,7 +88,6 @@
                                         <thead>
                                             <tr>
                                                 <th>ลูกค้า</th>
-                                                
                                                 <th>วัน</th>
                                                 <th>เวลา</th>
                                                 <th>รถยนต์</th>
@@ -138,11 +137,7 @@
 
         </div>
       
-
     </div>
- 
-
-  
     <div class="menu-overlay"></div>
 
     <!-- jQuery  -->
@@ -189,7 +184,7 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/mgr/system/cancel.api.php?get=list',
+            ajax: '/mgr/system/cancel.api.php?get=list&date=<?php echo $date;?>',
             "columns" : [
                 {'data':'1'},
                 {'data':'3',

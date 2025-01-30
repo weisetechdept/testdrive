@@ -30,9 +30,11 @@
     if($_GET['get'] == 'list'){ 
 
         $sale = mgr($id);
+        $date_form = date('Y-m-01', strtotime($_GET['date']));
+        $date_to = date('Y-m-t', strtotime($_GET['date']));
 
         $db->join('car c','c.car_id = b.bk_car','LEFT');
-        $bk = $db->where('bk_parent', $sale, "IN")->where('bk_status',10)->get('booking b');
+        $bk = $db->where('bk_parent', $sale, "IN")->where('bk_status',10)->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->get('booking b');
 
         function customTime2($time){
 

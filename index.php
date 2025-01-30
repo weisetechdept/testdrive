@@ -133,7 +133,11 @@
         require_once('mgr/pages/booking-new.php');
     });
 
-    $router->get( '/mgr/list/(.*)', function($id) {
+    $router->get( '/mgr/testBk/(.*)', function($date) {
+        require_once('mgr/pages/testBk.php');
+    });
+
+    $router->get( '/mgr/list/(.*)/(.*)', function($id, $date) {
         require_once('mgr/pages/list.php');
     });
 
@@ -145,11 +149,11 @@
         require_once('mgr/pages/adsign.php');
     });
 
-    $router->get( '/mgr/done', function() {
+    $router->get( '/mgr/done/(.*)', function($date) {
         require_once('mgr/pages/done.php');
     });
 
-    $router->get( '/mgr/cancel', function() {
+    $router->get( '/mgr/cancel/(.*)', function($date) {
         require_once('mgr/pages/cancel.php');
     });
 
