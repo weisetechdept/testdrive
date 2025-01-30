@@ -79,7 +79,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2 mb-2">
+                    <!-- <div class="row mt-2 mb-2">
                         <div class="col-6 col-xl-3 pr1">
                             <div class="card bg-success border-success">
                                 <div class="card-body">
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="row mt-2">
                         <div class="col-12">
