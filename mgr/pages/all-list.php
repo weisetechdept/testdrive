@@ -79,7 +79,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2 mb-2">
+                    <!-- <div class="row mt-2 mb-2">
                         <div class="col-6 col-xl-3 pr1">
                             <div class="card bg-primary border-primary">
                                 <div class="card-body">
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="row mt-2">
                         <div class="col-12">
@@ -260,19 +260,19 @@
             ],
         });
 
-        var count = new Vue({
-            el: '#count',
-            data: {
-                all: 0,
-                monthName: ''
-            },
-            mounted: function () {
-                axios.get('/mgr/system/all-list.api.php?get=count').then(response => {
-                    //console.log(response.data);
-                    this.all = response.data.count.all;
-                });
-            }
-        });
+        // var count = new Vue({
+        //     el: '#count',
+        //     data: {
+        //         all: 0,
+        //         monthName: ''
+        //     },
+        //     mounted: function () {
+        //         axios.get('/mgr/system/all-list.api.php?get=count').then(response => {
+        //             //console.log(response.data);
+        //             this.all = response.data.count.all;
+        //         });
+        //     }
+        // });
 
     </script>
 
