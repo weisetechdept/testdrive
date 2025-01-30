@@ -156,8 +156,6 @@
 
                 $sales = $db_nms->where('id',$value['bk_parent'])->getOne('db_member');
 
-                
-    
                 $api['data'][] = array(
                     $value['bk_id'],
                     $value['bk_fname'],
@@ -168,6 +166,7 @@
                     $value['bk_where'],
                     $sales['first_name'].' '.$sales['last_name']
                 );
+                
             }
         }
 

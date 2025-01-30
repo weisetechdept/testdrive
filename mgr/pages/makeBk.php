@@ -99,7 +99,7 @@
                                             <tr v-for="m in member">
                                                 <td>{{ m.name }}</td>
                                                 <td class="text-center">{{ m.bkTotal }}</td>
-                                                <td><a :href="'/mgr/list/' + m.id + '/all'" class="btn btn-sm btn-outline-primary">ดูข้อมูล</a></td>
+                                                <td><a :href="'/mgr/alllist/' + m.id" class="btn btn-sm btn-outline-primary">ดูข้อมูล</a></td>
                                             </tr>
                                         </tbody>
                                     </table>

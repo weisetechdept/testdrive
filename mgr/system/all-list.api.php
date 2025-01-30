@@ -29,17 +29,20 @@
 
     if($_GET['get'] == 'list'){ 
 
-        if($_GET['sale'] == 'all'){
-            $sale = mgr($id);
+      
+        $sale = array($_GET['sale']);
+        
+
+        if(isset($_GET['date'])){
+            $date_form = date('Y-m-01', strtotime($_GET['date']));
+            $date_to = date('Y-m-t', strtotime($_GET['date']));
         } else {
-            $sale = array($_GET['sale']);
+            $date_form = date('Y-m-01');
+            $date_to = date('Y-m-t');
         }
 
-        $date_form = date('Y-m-01', strtotime($_GET['date']));
-        $date_to = date('Y-m-t', strtotime($_GET['date']));
-
         $db->join('car c','c.car_id = b.bk_car','LEFT');
-        $bk = $db->where('bk_parent', $sale, "IN")->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->get('booking b');
+        $bk = $db->where('bk_parent', $sale, "IN")->where('bk_status',2)->get('booking b');
 
         function customTime2($time){
 
@@ -179,17 +182,19 @@
 
     if($_GET['get'] == 'count'){
 
-        $date_form = date('Y-m-01', strtotime($_GET['date']));
-        $date_to = date('Y-m-t', strtotime($_GET['date']));
-
-        $nameMonth = date('F Y', strtotime($_GET['date']));
-
-        $thaimonth = array("มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
+        if(isset($_GET['date'])){
+            $date_form = date('Y-m-01', strtotime($_GET['date']));
+            $date_to = date('Y-m-t', strtotime($_GET['date']));
+            $nameMonth = date('F Y', strtotime($_GET['date']));
+        } else {
+            $date_form = date('Y-m-01');
+            $date_to = date('Y-m-t');
+            $nameMonth = date('F Y');
+        }
 
         $countAll = $db->where('bk_parent', mgr($id),'IN')->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->getValue("booking","count(*)");
         $api['count'] = array(
             'all' => $countAll,
-            'monthName' => $thaimonth[date('n', strtotime($_GET['date'])) - 1].' '.(date('Y', strtotime($_GET['date'])) + 543)
         );
 
     }

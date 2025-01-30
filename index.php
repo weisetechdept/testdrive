@@ -137,6 +137,10 @@
         require_once('mgr/pages/testBk.php');
     });
 
+    $router->get( '/mgr/alllist/(.*)', function($id) {
+        require_once('mgr/pages/all-list.php');
+    });
+
     $router->get( '/mgr/list/(.*)/(.*)', function($id, $date) {
         require_once('mgr/pages/list.php');
     });

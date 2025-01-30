@@ -2,7 +2,7 @@
     session_start();
     if($_SESSION['pp_login'] !== true && $_SESSION['pp_permission'] !== 'leader'){
         header('Location: /404');
-    }
+    } 
  
 ?>
 <!DOCTYPE html>
@@ -68,28 +68,28 @@
 
         <div class="main-content">
 
-            <div class="page-content pt-4">
+            <div class="page-content pt-4" id="count">
                 <div class="container-fluid">
 
                     <div class="row home-content">
                         <div class="col-12">
                             <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">การจองของเดือน </h4>
+                                <h4 class="mb-0 font-size-18">การจอง</h4>
                             </div>
                         </div>
                     </div>
 
                     <div class="row mt-2 mb-2">
                         <div class="col-6 col-xl-3 pr1">
-                            <div class="card bg-success border-success">
+                            <div class="card bg-primary border-primary">
                                 <div class="card-body">
                                     <div class="mb-1">
-                                        <h5 class="card-title mb-0 text-white">สำเร็จ</h5>
+                                        <h5 class="card-title mb-0 text-white">จองทั้งหมด</h5>
                                     </div>
                                     <div class="row d-flex align-items-center mb-0">
                                         <div class="col-6 col-md-8">
                                             <h2 class="d-flex align-items-center mb-0 text-white">
-                                                0
+                                                {{ all }}
                                             </h2>
                                         </div>
                                     </div>
@@ -106,9 +106,10 @@
                                     <table id="datatable" class="table table-responsive">
                                         <thead>
                                             <tr>
+                                                <th>รหัส</th>
                                                 <th>ลูกค้า</th>
-                                                <th>วัน</th>
-                                                <th>เวลา</th>
+                                                <th width="100px">วัน</th>
+                                                <th width="100px">เวลา</th>
                                                 <th>รถยนต์</th>
                                                 <th>ที่มา</th>
                                                 <th>ผู้ดูแล</th>
@@ -126,6 +127,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -134,7 +136,6 @@
                             </div>
                         </div>
                     </div>
-
 
                 </div>
             </div>
@@ -207,18 +208,11 @@
             "drawCallback": function () {
                 $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
             },
-            ajax: '/mgr/system/done.api.php?get=list&date=<?php echo $date; ?>',
+            ajax: '/mgr/system/all-list.api.php?get=list&sale=<?php echo $id; ?>',
             "columns" : [
+                {'data':'0'},
                 {'data':'1'},
-                {'data':'3',
-                    "render": function ( data, type, full, meta ) {
-                        var d = new Date(data);
-                        var month = d.getMonth()+1;
-                        var day = d.getDate();
-                        var output = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month;
-                        return output;
-                    }
-                },
+                {'data':'3'},
                 {'data':'4'},
                 {'data':'2'},
                 {'data':'6',
@@ -231,6 +225,12 @@
                             return '<span class="badge badge-info">TBR</span>';
                         }  else if(data == '4') {
                             return '<span class="badge badge-secondary">Walk-in</span>';
+                        }  else if(data == '6') {
+                            return 'unknow';
+                        }  else if(data == '7') {
+                            return 'unknow';
+                        }  else if(data == '5') {
+                            return 'unknow';
                         }
                     }
                 },
@@ -260,24 +260,24 @@
             ],
         });
 
-        // var count = new Vue({
-        //     el: '#count',
-        //     data: {
-        //         all: 0,
-        //     },
-        //     mounted: function () {
-        //         axios.get('/mgr/system/list.api.php?get=count').then(response => {
-        //             this.all = response.data.count.all;
-        //         });
-        //     }
-        // });
+        var count = new Vue({
+            el: '#count',
+            data: {
+                all: 0,
+                monthName: ''
+            },
+            mounted: function () {
+                axios.get('/mgr/system/all-list.api.php?get=count').then(response => {
+                    //console.log(response.data);
+                    this.all = response.data.count.all;
+                });
+            }
+        });
 
     </script>
-
 
     <!-- App js -->
     <script src="/assets/js/theme.js"></script>
 
 </body>
-
 </html>
