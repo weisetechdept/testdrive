@@ -231,7 +231,14 @@
                             return '<span class="badge badge-info">TBR</span>';
                         }  else if(data == '4') {
                             return '<span class="badge badge-secondary">Walk-in</span>';
+                        }  else if(data == '5') {
+                            return 'unknow';
+                        }  else if(data == '6') {
+                            return 'unknow';
+                        }  else if(data == '7') {
+                            return 'unknow';
                         }
+                        
                     }
                 },
                 {'data':'7'},
