@@ -70,7 +70,7 @@
 
             <div class="page-content pt-4">
                 <div class="container-fluid">
-
+<div id="count">
                     <div class="row home-content">
                         <div class="col-12">
                             <div class="d-flex align-items-center justify-content-between">
@@ -78,6 +78,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row mt-2 mb-2">
+                        <div class="col-6 col-xl-3 pl1">
+                            <div class="card bg-danger border-danger">
+                                <div class="card-body">
+                                    <div class="mb-1">
+                                        <h5 class="card-title mb-0 text-white">ยกเลิก</h5>
+                                    </div>
+                                    <div class="row d-flex align-items-center mb-0">
+                                        <div class="col-6 col-md-8">
+                                            <h2 class="d-flex align-items-center mb-0 text-white">
+                                                {{ all }}
+                                            </h2>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+</div>
 
                     <div class="row mt-2">
                         <div class="col-12">
@@ -237,17 +257,17 @@
             ],
         });
 
-        // var count = new Vue({
-        //     el: '#count',
-        //     data: {
-        //         all: 0,
-        //     },
-        //     mounted: function () {
-        //         axios.get('/mgr/system/list.api.php?get=count').then(response => {
-        //             this.all = response.data.count.all;
-        //         });
-        //     }
-        // });
+        var count = new Vue({
+            el: '#count',
+            data: {
+                all: 0,
+            },
+            mounted: function () {
+                axios.get('/mgr/system/cancel.api.php?get=count&date=<?php echo $date;?>').then(response => {
+                    this.all = response.data.count.all;
+                });
+            }
+        });
 
     </script>
 

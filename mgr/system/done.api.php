@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    $api = array();
     require_once '../../db-conn.php';
     date_default_timezone_set("Asia/Bangkok");
 
@@ -175,11 +176,20 @@
 
     }
 
+
     if($_GET['get'] == 'count'){
 
-        $countAll = $db->where('bk_parent', mgr($id),'IN')->getValue("booking","count(*)");
+        $date_form = date('Y-m-01', strtotime($_GET['date']));
+        $date_to = date('Y-m-t', strtotime($_GET['date']));
+
+        $nameMonth = date('F Y', strtotime($_GET['date']));
+
+        $thaimonth = array("มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
+
+        $countAll = $db->where('bk_parent', mgr($id),'IN')->where('bk_status',2)->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->getValue("booking","count(*)");
         $api['count'] = array(
-            'all' => $countAll
+            'all' => $countAll,
+            'monthName' => $thaimonth[date('n', strtotime($_GET['date'])) - 1].' '.(date('Y', strtotime($_GET['date'])) + 543)
         );
 
     }

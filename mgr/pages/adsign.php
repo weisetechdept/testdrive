@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2" id="count">
+                    <!-- <div class="row mt-2" id="count">
                         <div class="col-12 pl1">
                             <div class="card bg-warning border-warning">
                                 <div class="card-body">
@@ -99,7 +99,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <div class="row mt-2">
                         <div class="col-12">
@@ -259,17 +259,17 @@
             ],
         });
 
-        var count = new Vue({
-            el: '#count',
-            data: {
-                all: 0,
-            },
-            mounted: function () {
-                axios.get('/mgr/system/adsign.api.php?get=count').then(response => {
-                    this.all = response.data.count.all;
-                });
-            }
-        });
+        // var count = new Vue({
+        //     el: '#count',
+        //     data: {
+        //         all: 0,
+        //     },
+        //     mounted: function () {
+        //         axios.get('/mgr/system/adsign.api.php?get=count').then(response => {
+        //             this.all = response.data.count.all;
+        //         });
+        //     }
+        // });
     </script>
 
 

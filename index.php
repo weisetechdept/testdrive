@@ -149,7 +149,7 @@
         require_once('mgr/pages/detail.php');
     });
 
-    $router->get( '/mgr/adsign', function() {
+    $router->get( '/mgr/adsign/(.*)', function($date) {
         require_once('mgr/pages/adsign.php');
     });
 

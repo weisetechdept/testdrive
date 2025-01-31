@@ -127,10 +127,9 @@
                             </div>
                         </a>
                     </div>
-
                     
-                    <div class="col-6 col-xl-3 pl1">
-                        <a :href="'/mgr/adsign' + search.date">
+                    <!-- <div class="col-6 col-xl-3 pl1">
+                        <a :href="'/mgr/adsign/' + search.date">
                             <div class="card bg-warning border-warning">
                                 <div class="card-body">
                                     <div class="mb-1">
@@ -150,7 +149,7 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> -->
                    
 
                     <div class="col-6 col-xl-3 pr1">
@@ -169,6 +168,29 @@
                                         <div class="col-6 col-md-4 text-right">
                                                 <span class="badge badge-light ml-1">ดูข้อมูล</span>
                                             </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-6 col-xl-3 pl1">
+                        <a :href="'/mgr/testBk/'+ search.date">
+                            <div class="card bg-light border-light">
+                                <div class="card-body">
+                                    <div class="mb-1">
+                                        <h5 class="card-title mb-0 text-black">ทดลองขับและจอง (BK)</h5>
+                                    </div>
+                                    <div class="row d-flex align-items-center mb-0">
+                                        <div class="col-6 col-md-8">
+                                            <h2 class="d-flex align-items-center mb-0 text-black">
+                                                {{ count.booked }}
+                                            </h2>
+                                        </div>
+                                        <div class="col-6 col-md-4 text-right">
+                                            <span class="badge badge-success ml-1"> ดูข้อมูล </span>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -199,7 +221,8 @@
                         </a>
                     </div>
 
-</div>
+                </div>
+
                 <div class="jump-btn">
                     <div class="row">
                         <a href="/mgr/makeBk">
@@ -213,30 +236,7 @@
                         </a>
                     </div> -->
                 </div>
-                <div class="row">
-                    <div class="col-12 col-xl-3 pl1">
-                            <a :href="'/mgr/testBk/'+ search.date">
-                                <div class="card bg-light border-light">
-                                    <div class="card-body">
-                                        <div class="mb-1">
-                                            <h5 class="card-title mb-0 text-black">ทดลองขับและจอง</h5>
-                                        </div>
-                                        <div class="row d-flex align-items-center mb-0">
-                                            <div class="col-6 col-md-8">
-                                                <h2 class="d-flex align-items-center mb-0 text-black">
-                                                    {{ count.booked }}
-                                                </h2>
-                                            </div>
-                                            <div class="col-6 col-md-4 text-right">
-                                                <span class="badge badge-success ml-1"> ดูข้อมูล </span>
-                                            </div>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">

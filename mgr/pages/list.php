@@ -68,36 +68,36 @@
 
         <div class="main-content">
 
-            <div class="page-content pt-4" id="count">
+            <div class="page-content pt-4">
                 <div class="container-fluid">
-
-                    <div class="row home-content">
-                        <div class="col-12">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">การจองของเดือน {{ monthName }}</h4>
+                    <div id="count">
+                        <div class="row home-content">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">การจองของเดือน {{ monthName }}</h4>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- <div class="row mt-2 mb-2">
-                        <div class="col-6 col-xl-3 pr1">
-                            <div class="card bg-primary border-primary">
-                                <div class="card-body">
-                                    <div class="mb-1">
-                                        <h5 class="card-title mb-0 text-white">จองทั้งหมด</h5>
-                                    </div>
-                                    <div class="row d-flex align-items-center mb-0">
-                                        <div class="col-6 col-md-8">
-                                            <h2 class="d-flex align-items-center mb-0 text-white">
-                                                {{ all }}
-                                            </h2>
+                        <div class="row mt-2 mb-2">
+                            <div class="col-6 col-xl-3 pr1">
+                                <div class="card bg-primary border-primary">
+                                    <div class="card-body">
+                                        <div class="mb-1">
+                                            <h5 class="card-title mb-0 text-white">จองทั้งหมด</h5>
+                                        </div>
+                                        <div class="row d-flex align-items-center mb-0">
+                                            <div class="col-6 col-md-8">
+                                                <h2 class="d-flex align-items-center mb-0 text-white">
+                                                    {{ all }}
+                                                </h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
-
+                    </div>
                     <div class="row mt-2">
                         <div class="col-12">
                             <div class="card m-b-30">
@@ -260,19 +260,19 @@
             ],
         });
 
-        // var count = new Vue({
-        //     el: '#count',
-        //     data: {
-        //         all: 0,
-        //         monthName: ''
-        //     },
-        //     mounted: function () {
-        //         axios.get('/mgr/system/list.api.php?get=count&date=<?php echo $date; ?>').then(response => {
-        //             this.all = response.data.count.all,
-        //             this.monthName = response.data.count.monthName
-        //         });
-        //     }
-        // });
+        var count = new Vue({
+            el: '#count',
+            data: {
+                all: 0,
+                monthName: ''
+            },
+            mounted: function () {
+                axios.get('/mgr/system/list.api.php?get=count&date=<?php echo $date; ?>').then(response => {
+                    this.all = response.data.count.all,
+                    this.monthName = response.data.count.monthName
+                });
+            }
+        });
 
     </script>
 
