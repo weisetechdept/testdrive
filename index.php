@@ -149,6 +149,10 @@
         require_once('mgr/pages/detail.php');
     });
 
+    $router->get( '/mgr/report/', function() {
+        require_once('mgr/pages/report.php');
+    });
+
     $router->get( '/mgr/adsign/(.*)', function($date) {
         require_once('mgr/pages/adsign.php');
     });

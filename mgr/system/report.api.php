@@ -70,14 +70,20 @@
 
             if ($sale) {
 
-                $db->join('status_log s', 'b.bk_id = s.stat_parent', 'RIGHT');
-                $bktd = $db->where('bk_parent', $sale['id'])->where('bk_datetime',$date_form,">=")->where('bk_datetime',$date_to,"<=")->get('booking b');
+         
+
+                $testd = $db->where('bk_parent', $sale['id'])->where('bk_datetime',$date_form,">=")->where('bk_datetime',$date_to,"<=")->where('bk_status',2)->getValue('booking',"count(*)");
+
+                $db->join('status_log s', 'b.bk_id = s.stat_parent', 'INNER');
+                $bktd = $db->where('bk_parent', $sale['id'])->where('bk_datetime',$date_form,">=")->where('bk_datetime',$date_to,"<=")->where('bk_status',2)->getValue('booking b',"count(*)");
+
+                
 
                 $api['teamData'][] = array(
                     'id' => $sale['id'],
                     'name' => $sale['first_name'].' '.$sale['last_name'].($sale['nickname'] ? ' ('.$sale['nickname'].')' : ''),
-                    'testdrive' => count($bktd),
-                    'booking' => isset($bktd['stat_key']) ? $bktd['stat_key'] : 0,
+                    'testdrive' => $testd,
+                    'booking' => $bktd,
                     'rawData' => $bktd
                 );
             }

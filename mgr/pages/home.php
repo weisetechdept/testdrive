@@ -359,7 +359,7 @@
                     testdrive.count.success = response.data.count.succ;
                     testdrive.count.cancel = response.data.count.canc;
                     testdrive.count.booked = response.data.count.bk;
-                    testdrive.search.date = response.data.selectDate[0].value;
+                    testdrive.search.date = response.data.selectDate[0].value; 
                 });
 
                 axios.get('/sales/system/car-event.api.php').then(function(response) {

@@ -18,6 +18,9 @@
                 <li>
                     <a href="/mgr/booking" class="waves-effect"><i class="mdi mdi-format-list-numbered"></i><span>จองรถทดลองขับ</span></a>
                 </li>
+                <li>
+                    <a href="/mgr/report" class="waves-effect"><i class="mdi mdi-buffer"></i><span>รายงาน</span></a>
+                </li>
             </ul>
 
         </div>

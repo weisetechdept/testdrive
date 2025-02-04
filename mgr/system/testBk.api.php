@@ -170,16 +170,23 @@
             }
         }
 
-        
-
-
     }
 
     if($_GET['get'] == 'count'){
 
-        $countAll = $db->where('bk_parent', mgr($id),'IN')->getValue("booking","count(*)");
+        $date_form = date('Y-m-01', strtotime($_GET['date']));
+        $date_to = date('Y-m-t', strtotime($_GET['date']));
+        $api = array();
+
+
+        $thaimonth = array("มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+
+        $db->join('status_log s','s.stat_parent = b.bk_id','INNER');
+        $countAll = $db->where('bk_parent', mgr($id),'IN')->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->getValue("booking b","count(*)");
+
         $api['count'] = array(
-            'all' => $countAll
+            'all' => $countAll,
+            'date' => date($thaimonth[date('m', strtotime($date_form))-1].' '.(date('Y', strtotime($date_form))+543))
         );
 
     }

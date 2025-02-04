@@ -174,9 +174,10 @@
     $member = json_decode($team['detail']);
 
     $db->join('status_log s','s.stat_parent = b.bk_parent','LEFT');
-    $booking = $db->where("bk_datetime", $form_date,">=")->where("bk_datetime", $to_date,"<=")
+    $booking = $db->where("bk_date", $form_date,">=")->where("bk_date", $to_date,"<=")
                 ->where('bk_where',$where,"IN") 
                 ->where('bk_parent',$member,"IN")
+                ->where('bk_status','2')
                 ->get('booking b');
 
     $rs = array();
@@ -210,6 +211,8 @@
                 $book['scopeData'][$key]['bk_lname'] = $value['bk_lname'];
                 $book['scopeData'][$key]['bk_id'] = $value['bk_id'];
                 $book['scopeData'][$key]['bk_date'] = date('d/m/Y', strtotime($value['bk_date']));
+                $book['scopeData'][$key]['bk_where'] = $value['bk_where'];
+                $book['scopeData'][$key]['bk_stat'] = $value['bk_status'];
             }
 
         } else {
@@ -224,6 +227,8 @@
             $book['scopeData'][$key]['bk_lname'] = $value['bk_lname'];
             $book['scopeData'][$key]['bk_id'] = $value['bk_id'];
             $book['scopeData'][$key]['bk_date'] = date('d/m/Y', strtotime($value['bk_date']));
+            $book['scopeData'][$key]['bk_where'] = $value['bk_where'];
+            $book['scopeData'][$key]['bk_stat'] = $value['bk_status'];
 
         }
 

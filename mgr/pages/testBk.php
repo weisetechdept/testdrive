@@ -74,7 +74,7 @@
                     <div class="row home-content">
                         <div class="col-12">
                             <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">การจองทั้งหมด</h4>
+                                <h4 class="mb-0 font-size-18">การจองทั้งหมดเดือน </h4>
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,6 @@
                                         <thead>
                                             <tr>
                                                 <th>ลูกค้า</th>
-                                                
                                                 <th>วัน</th>
                                                 <th>เวลา</th>
                                                 <th>รถยนต์</th>
@@ -242,17 +241,19 @@
             ],
         });
 
-        // var count = new Vue({
-        //     el: '#count',
-        //     data: {
-        //         all: 0,
-        //     },
-        //     mounted: function () {
-        //         axios.get('/mgr/system/list.api.php?get=count').then(response => {
-        //             this.all = response.data.count.all;
-        //         });
-        //     }
-        // });
+        var count = new Vue({
+            el: '#count',
+            data: {
+                all: 0,
+                
+            },
+            mounted: function () {
+                axios.get('/mgr/system/testBk.api.php?get=count&date=<?php echo $date; ?>').then(response => {
+
+                    console.log(response.data);
+                });
+            }
+        });
 
     </script>
 

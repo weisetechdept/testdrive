@@ -128,7 +128,7 @@
                                                         <td>{{ data.bk_car }}</td>
                                                         <td>{{ data.bk_date }}</td>
                                                         <td>{{ data.bk_time }}</td>
-                                                        <td></td>
+                                                        <td>{{ data.bk_stat }}</td>
                                                         <td>{{ data.bk_status }}</td>
                                                         <td>{{ data.bk_sales }}</td>
                                                         <td class="text-center">{{ data.bk_team }}</td>
@@ -226,7 +226,6 @@
 
         },
         mounted () {
-
             axios.post('/inbound/system/report-mgr-detail.api.php', {
                 date: this.search.date,
                 group: this.search.group,

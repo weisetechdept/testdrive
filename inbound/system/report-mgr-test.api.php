@@ -27,7 +27,7 @@
         function bhRs($id){
             if($id == '1'){
                 return 'HO';
-            } elseif($id == '2'){
+            } elseif($id == '2' || $id == '3'){
                 return 'TM';
             } else {
                 return 'N/A';
@@ -35,7 +35,7 @@
         }   
 
 
-        $bh = array('1','2');
+        $bh = array('1','2','3');
         foreach($bh as $b){
             $api['byTeam'][bhRs($b)]['ALL']['inDataALL'] = 0;
             $api['byTeam'][bhRs($b)]['ALL']['inDataBKALL'] = 0;
@@ -62,7 +62,7 @@
                     $cars = array();
                     $db->join("status_log s","s.stat_parent = b.bk_id","LEFT");
                     $db->groupBy("b.bk_id");
-                    $book_cars = $db->where("bk_datetime", $form_date,">=")->where("bk_datetime", $to_date,"<=")->where('bk_parent', $sales, "IN")->get("booking b");
+                    $book_cars = $db->where("bk_date", $form_date,">=")->where("bk_date", $to_date,"<=")->where('bk_status',2)->where('bk_parent', $sales, "IN")->get("booking b");
 
 
                         foreach($book_cars as $value){
@@ -121,7 +121,7 @@
 
         }
 
-        $bh = array('1','2');
+        $bh = array('1','2',3);
         foreach($bh as $b){
             $group = $db_nms->where('branch',$b)->get('db_user_group');
             foreach($group as $g){
@@ -190,7 +190,7 @@
         $cars = array();
         $db->join("status_log s","s.stat_parent = b.bk_id","LEFT");
         $db->groupBy("b.bk_id");
-        $book_cars = $db->where("bk_datetime", $form_date,">=")->where("bk_datetime", $to_date,"<=")->get("booking b");
+        $book_cars = $db->where("bk_date", $form_date,">=")->where("bk_date", $to_date,"<=")->get("booking b");
 
         foreach($book_cars as $value){
 
