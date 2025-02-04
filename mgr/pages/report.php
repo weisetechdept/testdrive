@@ -123,8 +123,8 @@
                                                 <td>{{ d.name }}</td>
                                                 <td class="text-center">{{ d.testdrive }}</td>
                                                 <td class="text-center">{{ d.booking }}</td>
-                                                <td></td>
-                                                <td></td>
+                                                <td class="text-center">{{ d.percentage }}</td>
+                                                <td class="text-center">{{ d.booth }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -84,7 +84,8 @@
                     'name' => $sale['first_name'].' '.$sale['last_name'].($sale['nickname'] ? ' ('.$sale['nickname'].')' : ''),
                     'testdrive' => $testd,
                     'booking' => $bktd,
-                    'rawData' => $bktd
+                    'percentage' => $bktd > 0 ? round(($bktd / $testd) * 100, 2) : 0,
+                    'booth' => '-'
                 );
             }
         }
