@@ -97,7 +97,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th class="text-center">{{ reportAll.testdrive }}</th>
+                                                <th class="text-center"><a :href="'/mgr/done/' + search.month">{{ reportAll.testdrive }}</a></th>
                                                 <th class="text-center">{{ reportAll.booking }}</th>
                                                 <th class="text-center">{{ reportAll.percentage }}</th>
                                                 <th class="text-center">{{ reportAll.booth }}</th>

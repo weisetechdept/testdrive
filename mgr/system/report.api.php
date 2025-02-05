@@ -58,9 +58,9 @@
         $td_bk = $db->where('bk_parent',$team,"IN")->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_where',2)->where('bk_status',2)->getValue('booking b',"count(*)");
 
         $api['reportAll'] = array(
-            'testdrive' => $testd,
-            'booth' => $booth,
-            'booking' => $td_bk,
+            'testdrive' => $testd ?: 0,
+            'booth' => $booth ?: 0,
+            'booking' => $td_bk ?: 0,
             'percentage' => $td_bk > 0 ? round(($td_bk / $testd) * 100, 2) : 0
         );
         
@@ -69,13 +69,10 @@
             $sale = $db_nms->where('id',$t)->getOne('db_member');
 
             if ($sale) {
-
-         
-
-                $testd = $db->where('bk_parent', $sale['id'])->where('bk_datetime',$date_form,">=")->where('bk_datetime',$date_to,"<=")->where('bk_status',2)->getValue('booking',"count(*)");
+                $testd = $db->where('bk_parent', $sale['id'])->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_status',2)->getValue('booking',"count(*)");
 
                 $db->join('status_log s', 'b.bk_id = s.stat_parent', 'INNER');
-                $bktd = $db->where('bk_parent', $sale['id'])->where('bk_datetime',$date_form,">=")->where('bk_datetime',$date_to,"<=")->where('bk_status',2)->getValue('booking b',"count(*)");
+                $bktd = $db->where('bk_parent', $sale['id'])->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_status',2)->getValue('booking b',"count(*)");
 
                 
 
