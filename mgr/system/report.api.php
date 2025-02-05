@@ -49,10 +49,9 @@
         }
 
         // $d_form = date('Y-01-01');
-        // $d_to = date('Y-01-t');
-
+        // $d_to = date('Y-01-t');`
         $testd = $db->where('bk_parent',$team,"IN")->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_where',2)->where('bk_status',2)->getValue('booking',"count(*)");
-        $booth = $db->where('bk_parent',$team,"IN")->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_where',2)->where('bk_status',5)->getValue('booking',"count(*)");
+        $booth = $db->where('bk_parent',$team,"IN")->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_where',6)->where('bk_status',5)->getValue('booking',"count(*)");
 
         $db->join('status_log s', 'b.bk_id = s.stat_parent', 'INNER');
         $td_bk = $db->where('bk_parent',$team,"IN")->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_where',2)->where('bk_status',2)->getValue('booking b',"count(*)");
@@ -66,7 +65,7 @@
         
     
         foreach($team as $t){
-            $sale = $db_nms->where('id',$t)->getOne('db_member');
+            $sale = $db_nms->where('id',$t)->where('verify',1)->getOne('db_member');
 
             if ($sale) {
                 $testd = $db->where('bk_parent', $sale['id'])->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_status',2)->getValue('booking',"count(*)");
@@ -74,7 +73,7 @@
                 $db->join('status_log s', 'b.bk_id = s.stat_parent', 'INNER');
                 $bktd = $db->where('bk_parent', $sale['id'])->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_status',2)->getValue('booking b',"count(*)");
 
-                
+                $booth = $db->where('bk_parent', $sale['id'])->where('bk_date',$date_form,">=")->where('bk_date',$date_to,"<=")->where('bk_where',6)->where('bk_status',2)->getValue('booking',"count(*)");
 
                 $api['teamData'][] = array(
                     'id' => $sale['id'],
@@ -82,7 +81,7 @@
                     'testdrive' => $testd,
                     'booking' => $bktd,
                     'percentage' => $bktd > 0 ? round(($bktd / $testd) * 100, 2) : 0,
-                    'booth' => '-'
+                    'booth' => $booth
                 );
             }
         }

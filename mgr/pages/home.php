@@ -127,30 +127,6 @@
                             </div>
                         </a>
                     </div>
-                    
-                    <!-- <div class="col-6 col-xl-3 pl1">
-                        <a :href="'/mgr/adsign/' + search.date">
-                            <div class="card bg-warning border-warning">
-                                <div class="card-body">
-                                    <div class="mb-1">
-                                        <h5 class="card-title mb-0 text-white">รอส่งต่อ</h5>
-                                    </div>
-                                    <div class="row d-flex align-items-center mb-0">
-                                        <div class="col-6 col-md-8">
-                                            <h2 class="d-flex align-items-center mb-0 text-white">
-                                                {{ count.waiting }}
-                                            </h2>
-                                        </div>
-                                        <div class="col-6 col-md-4 text-right">
-                                            <span class="badge badge-light ml-1">ดูข้อมูล</span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </a>
-                    </div> -->
-                   
 
                     <div class="col-6 col-xl-3 pr1">
                         <a :href="'/mgr/done/' + search.date">
@@ -235,6 +211,12 @@
                             <img src="/assets/images/mgr-btn-1.png" class="img-fluid pr-2 pl-2">
                         </a>
                     </div> -->
+                </div>
+
+                <div class="col-12">
+                    <div class="row">
+                        <a href="/mgr/report" class="btn btn-outline-info btn-block mb-3">ดูรายงานทั้งหมด</a>
+                    </div>
                 </div>
 
                     <div class="row">

@@ -108,7 +108,7 @@
                                         </tbody>
                                     </table>
                                    
-                                    <table class="table table-responsive table-bordered">
+                                    <table class="table table-responsive">
                                         <thead>
                                             <tr>
                                                 <th>ชื่อเซลล์</th>
@@ -120,7 +120,7 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="d in reportData">
-                                                <td>{{ d.name }}</td>
+                                                <td width="200px">{{ d.name }}</td>
                                                 <td class="text-center">{{ d.testdrive }}</td>
                                                 <td class="text-center">{{ d.booking }}</td>
                                                 <td class="text-center">{{ d.percentage }}</td>
