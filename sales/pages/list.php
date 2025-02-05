@@ -213,6 +213,8 @@
                             return '<span class="badge badge-secondary">ทำคอนเท้นต์</span>';
                         } else if(data == '6') {
                             return '<span class="badge badge-secondary">ออกบูธ</span>';
+                        } else if(data == '7') {
+                            return '<span class="badge badge-secondary">นอกสถานที่</span>';
                         }
                     }
                 },

@@ -47,6 +47,13 @@
                     'datetime' => DateThai($value['img_datetime']),
                     'id' => $value['img_id']
                 );
+            } else {
+                $api['verifyDLS'] = array(
+                    'img' => '',
+                    'datetime' => '',
+                    'id' => ''
+                );
+
             }
 
         }
@@ -63,7 +70,5 @@
     } else {
         $api['up_img'] = '';
     }
-
-    
 
     print_r(json_encode($api));

@@ -55,6 +55,7 @@
     $request = json_decode(file_get_contents('php://input'));
     $time = $request->time;
     $n = count($time);
+    $api = array();
 
     if($n < 1){
         $api = array('status' => 'failed','message' => 'กรุณาเลือกเวลาที่ต้องการจอง');
@@ -66,11 +67,15 @@
             if($quota < 3){
 
                 $chk_uniq = $db->where('bk_car',$request->car)->where('bk_date',$request->date)->where('bk_status',array('0','1','2'),'IN')->get('booking');
-
-                $chk = json_decode($chk_uniq['bk_time']);
-                foreach ($chk as $value) {
-                    array_search($value, $time) !== false ? $api['chk_time'] = 'failed' : '';
+                if (isset($chk_uniq['bk_time'])) {
+                    $chk = json_decode($chk_uniq['bk_time']);
+                    foreach ($chk as $value) {
+                        array_search($value, $time) !== false ? $api['chk_time'] = 'failed' : '';
+                    }
+                } else {
+                    $api['chk_time'] = 'success';
                 }
+                
 
                 if($api['chk_time'] == 'failed'){
                     $api['status'] = 'failed';

@@ -161,6 +161,9 @@
         #checktime {
             display: none;
         }
+        .bk_detail {
+            display: none;
+        }
     </style>
 </head>
 
@@ -208,21 +211,29 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="mb-3">
+                                    
                                         <div class="form-group">
-                                            <label>จุดประสงค์การจอง</label>
+                                            <label>จุดประสงค์</label>
                                             <div class="form-group">
                                                 <div class="rdo-grp">
+                                                    <h5>ทดลองขับ</h5>
                                                     <input id="rdo1" type="radio" @click="changeObj01" name="radio"/>
-                                                    <label for="rdo1"><span></span><span>ทดลองขับ</span></label>
+                                                    <label class="mr-2" for="rdo1"><span></span><span>มาที่โชว์รูม</span></label>
+
+                                                    <input id="rdo1" type="radio" @click="changeObj04" name="radio"/>
+                                                    <label for="rdo1"><span></span><span>นอกสถานที่</span></label>
+
+                                                    <h5 class="mt-2">ใช้งานอื่นๆ</h5>
+
                                                     <input id="rdo2" type="radio" @click="changeObj02" name="radio"/>
-                                                    <label for="rdo2"><span></span><span>ทำคอนเท้นต์</span></label>
+                                                    <label class="mr-2" for="rdo2"><span></span><span>ทำคอนเท้นต์</span></label>
+
                                                     <input id="rdo3" type="radio" @click="changeObj03" name="radio"/>
                                                     <label for="rdo3"><span></span><span>ออกบูธ</span></label>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -460,6 +471,15 @@
                     document.querySelector('.bk_detail').style.display = 'block';
                     this.selected.where = '6';
                 },
+                changeObj04: function() {
+                    this.display.input01 = 'ชื่อลูกค้า (ไม่ใส่คำนำหน้า)';
+                    this.display.input02 = 'นามสกุล (ลูกค้า)';
+                    this.display.input03 = 'เบอร์โทรศัพท์ (ลูกค้า)';
+                    document.querySelector('.to-event').style.display = 'none';
+                    document.querySelector('.bk_detail').style.display = 'block';
+                    this.selected.note = '';
+                    this.selected.where = '7';
+                },
                 handleChange(e) {
                     const { value, checked } = e.target
                     if (checked) {
@@ -539,7 +559,7 @@
                             note: testdrive.selected.note,
                             event: testdrive.selected.event
                         }).then(function(response) {
-
+                            console.log(response.data);
                             if(response.data.status == 'success'){
                                 swal("สำเร็จ", "เพิ่มสมาชิกเรียบร้อย", "success",{ 
                                     button: "ตกลง"

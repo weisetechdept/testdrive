@@ -180,11 +180,19 @@
                                                 <td v-else-if="detail.where == '4'"><span class="badge badge-soft-secondary">Walk-in</span></td>
                                                 <td v-else-if="detail.where == '5'"><span class="badge badge-soft-secondary">ทำคอนเท้นต์</span></td>
                                                 <td v-else-if="detail.where == '6'"><span class="badge badge-soft-secondary">ออกบูธ</span></td>
+                                                <td v-else-if="detail.where == '7'"><span class="badge badge-soft-secondary">นอกสถานที่</span></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row" v-if="detail.where == '6'">
+                        <div class="col-lg-6 col-md-12">
+                                <div class="alert alert-info" role="alert">รายการนี้จะนำไปใช้: {{ detail.bk_note }}</div>
+  
                         </div>
                     </div>
 

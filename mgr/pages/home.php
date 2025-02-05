@@ -156,7 +156,7 @@
                             <div class="card bg-light border-light">
                                 <div class="card-body">
                                     <div class="mb-1">
-                                        <h5 class="card-title mb-0 text-black">ทดลองขับและจอง (BK)</h5>
+                                        <h5 class="card-title mb-0 text-black">จอง (BK)</h5>
                                     </div>
                                     <div class="row d-flex align-items-center mb-0">
                                         <div class="col-6 col-md-8">
