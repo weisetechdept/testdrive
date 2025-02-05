@@ -192,7 +192,7 @@
             $owner = $parent['first_name'].''.$nickn.' - '.getTeam($parent['id']);
         }
 
-        $find = $db->where('bk_where',array('2','7'),"IN")->where('bk_fname', '%' . substr($value['bk_fname'],3) . '%', 'LIKE')->get('booking');
+        $find = $db->where('bk_where',array('2','7'),"IN")->where('bk_lname', '%' . substr($value['bk_lname'],3) . '%', 'LIKE')->get('booking');
 
         $api['detail'] = array(
             'id' => $value['bk_id'],
