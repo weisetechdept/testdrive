@@ -96,6 +96,14 @@
             position: relative;
             display: block;
         }
+        .find-warning {
+            border: 1px solid #ff0000;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-style: dashed;
+            color: #ff0000;
+            font-size: 14pt;
+        }
     </style>
 </head>
 
@@ -191,7 +199,7 @@
 
                     <div class="row" v-if="detail.where == '6'">
                         <div class="col-lg-6 col-md-12">
-                                <div class="alert alert-info" role="alert">รายการนี้จะนำไปใช้: {{ detail.bk_note }}</div>
+                                <div class="alert alert-info" role="alert">รายการนี้จะนำไปใช้ (กดที่ชื่อเพื่อดูรายละเอีียด): {{ detail.bk_note }}</div>
   
                         </div>
                     </div>
@@ -223,6 +231,15 @@
                                             <h4 class="mb-2 font-size-14">*โปรดกรอกเลขบัตร ปชช. ลูกค้าให้ถูกต้อง ก่อนจ่ายกุญแจ</h4>
                                             <input class="form-control" v-model="nlsID" type="number">
                                         </div>
+                                    </div>
+
+                                    <div v-if="findData.count >= 2" class="find-warning">
+                                        <p>***เฝ้าระวัง ลูกค้ามีการทดลองขับหลายครั้ง (ใกล้เคียง {{ findData.count }} ครั้ง)</p>
+                                        <p>รายการนี้อาจมีการทดลองซ่ำหลายครั้ง โปรดจวจสอบว่าเป็นประสงค์ของลูกค้าในการขอทดลองขับจริงหรือไม่ ก่อนทำการจ่ายกุญแจ<br />
+                                        ข้อมูลที่ใกล้เคียง :</p>
+                                        <ul>
+                                            <li v-for="fd in findData.raw"><a :href="'/admin/de/' + fd.bk_id" target="_blank">รหัส {{ fd.bk_id }} - ชื่อ {{ fd.bk_fname }} {{ fd.bk_lname }}</a> - {{ fd.bk_date }}</li>
+                                        </ul>
                                     </div>
 
                                     <h4 class="mb-2 font-size-18">จัดการ การจองนี้</h4>
@@ -443,7 +460,8 @@
                     mileage: '',
                     id: '',
                     car: ''
-                }
+                },
+                findData: []
             },
             mounted () {
                 
@@ -451,6 +469,7 @@
                     dedrive.detail = response.data.detail;
                     dedrive.docs = response.data.docs;
                     dedrive.send.car = response.data.detail.car_id;
+                    dedrive.findData = response.data.detail.findData;
                     console.log(response);
                 });
  

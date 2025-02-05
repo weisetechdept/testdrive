@@ -9,6 +9,8 @@
 */
     $id = $_GET['id'];
 
+
+
     function getTeam($uid){
         global $db_nms;
         $team = $db_nms->get('db_user_group');
@@ -190,6 +192,8 @@
             $owner = $parent['first_name'].''.$nickn.' - '.getTeam($parent['id']);
         }
 
+        $find = $db->where('bk_where',array('2','7'),"IN")->where('bk_fname', '%' . substr($value['bk_fname'],3) . '%', 'LIKE')->get('booking');
+
         $api['detail'] = array(
             'id' => $value['bk_id'],
             'name' => $value['bk_fname'].' '.$value['bk_lname'],
@@ -205,6 +209,10 @@
             'bk_note' => $value['bk_note'],
             'car_id' => $value['bk_car'],
             'nlsID' => $value['bk_nlsID'],
+            'findData' => array(
+                'count' => count($find),
+                'raw' => $find
+            )
         );
     }
 
