@@ -33,7 +33,6 @@
     $db->join("document d", "d.img_parent=b.bk_id", "RIGHT");
     $db->where('bk_id', $_GET['u'])->where('img_status', '1');
     $img = $db->get("booking b");
-
     
         foreach ($img as $value) {
 
@@ -47,14 +46,7 @@
                     'datetime' => DateThai($value['img_datetime']),
                     'id' => $value['img_id']
                 );
-            } else {
-                $api['verifyDLS'] = array(
-                    'img' => '',
-                    'datetime' => '',
-                    'id' => ''
-                );
-
-            }
+            } 
 
         }
 
