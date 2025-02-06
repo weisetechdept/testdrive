@@ -5,9 +5,12 @@
         header('Location: /404');
     }
     date_default_timezone_set("Asia/Bangkok");
+
+    $dateFirst = date('Y-m-01');
+    $dateEnd = date('Y-m-t');
     
     $db->join("booking b", "b.bk_car = c.car_id", "RIGHT");
-    $data = $db->get('car c');
+    $data = $db->where('bk_date',$dateFirst,">=")->where('bk_date',$dateEnd,"<=")->get('car c');
 
     $ho = 0;
     $tm = 0;
@@ -25,7 +28,6 @@
         if($count['bk_status'] == '2'){
             $success += 1;
         }
-
         if($count['bk_status'] == '10'){
             $cancel += 1;
         }

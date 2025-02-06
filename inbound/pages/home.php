@@ -82,6 +82,13 @@
                 <div class="container-fluid">
 
                     <div class="row">
+                        <div class="col-12">
+                            <h4 class="header-title">ข้อมูลเดือนปัจจุบัน</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        
 
                         <div class="col-6 col-xl-3 pr1">
                             <div class="card bg-primary border-primary">
@@ -272,8 +279,6 @@
                     eventLimit: true,
                     events: []
                 });
-
-                
                 
             },
             methods: {
