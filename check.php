@@ -26,7 +26,7 @@
 ?>
 
 <form action="check.php" method="get">
-    <input type="text" name="p" placeholder="Threshold" value="90">
+    <input type="text" name="p" placeholder="Threshold" value="<?php echo $p; ?>">
     <input type="date" name="date_form" placeholder="Date Form" value="<?php echo $date_form; ?>">
     <input type="date" name="date_to" placeholder="Date To" value="<?php echo $date_to; ?>">
     <button type="submit">ค้นหา</button>
